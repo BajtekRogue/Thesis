@@ -136,51 +136,51 @@ Z aksjomatów prawdopodobieństwa wynika kilka użytecznych własności. Mianowi
 \end{itemize}
 \end{fact}
 
-\subsection{Zmienne losowe}
+\section{Zmienne losowe}
 
 \begin{definition}
-\textbf{Dyskretną zmienną losową} nazywamy funkcję $X : \Omega \to \mathbb{R}$, której obraz $\mathrm{im}(X)$ jest zbiorem przeliczalnym, zwykle podzbiorem $\mathbb{N}$. W tej pracy interesują nas tylko dyskretne zmienne losowe, także od teraz na dyskretną zmienną losową będziemy mówić po prostu zmienna losowa.  
+\textbf{Dyskretną zmienną losową} nazywamy funkcję $X : \Omega \to \mathbb{R}$, której obraz $\mathrm{im}(X)$ jest zbiorem przeliczalnym. W tej pracy interesują nas tylko dyskretne zmienne losowe, których obraz jest podzbiorem $\mathbb{N}$. Także od teraz na taką dyskretną zmienną losową będziemy mówić po prostu zmienna losowa.  
 \end{definition}
 
 \begin{definition}
-\textbf{Dystrybuantą} (ang.~Cumulative Distribution Function, CDF) zmiennej losowej $X$ nazywamy funkcję
+\textbf{Dystrybuantą} (ang.~Cumulative Distribution Function, CDF) zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy funkcję
 \[
-    F_X(x) = \mathbb{P}[X \leq x], \quad x \in \mathbb{R}.
+    F_X(t) = \mathbb{P}[X \leq t], \quad t \in \mathbb{R}.
 \]
 \end{definition}
 
 \begin{definition}
-Niech $X$ będzie dyskretną zmienną losowa. Funkcje 
+Niech $X:\Omega\to\mathbb{N}$ będzie zmienną losowa. Funkcje 
 \[
-    \rho_X(x)=\mathbb{P}[X = x], \quad x \in \mathbb{R}
+    \rho_X(k)=\mathbb{P}[X = k], \quad k \in \mathbb{N}
 \]
 nazywamy \textbf{funkcją masy prawdopodobieństwa} (ang.~Probability Mass Function, PMF)
 \end{definition}
 
 \begin{definition}
-\textbf{Wartością oczekiwaną} (średnią) zmiennej losowej $X$ nazywamy
+\textbf{Wartością oczekiwaną} (średnią) zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy
 \[
-    \mathbb{E}[X] = \sum_{x\in \mathrm{im}(X)} x \cdot \mathbb{P}[X = x],
+    \mathbb{E}[X] = \sum_{k = 0}^{\infty} k \cdot \mathbb{P}[X = k],
 \]
 o ile szereg ten jest zbieżny bezwzględnie.
 \end{definition}
 
 \begin{fact}\label{F:expected_value_tail_sum}
-Niech $X$ będzie zmienną losową. Wtedy 
+Niech $X:\Omega\to\mathbb{N}$ będzie zmienną losową. Wtedy 
 \[
-    \mathbb{E}[X] = \sum_{k=1}^{n} \mathbb{P}[X\ge k]
+    \mathbb{E}[X] = \sum_{k=1}^{\infty} \mathbb{P}[X\ge k]
 \]
 \end{fact}
 
 \begin{definition}
-\textbf{Wariancją} zmiennej losowej $X$ nazywamy
+\textbf{Wariancją} zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy
 \[
     \mathrm{Var}[X] = \mathbb{E}[X^2]-\mathbb{E}[X]^2.
 \]
 \end{definition}
 
 \begin{definition}
-Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi.  
+Niech $X,Y:\Omega\to\mathbb{N}$ będą zmiennymi losowymi.  
 Mówimy, że $X$ i $Y$ są \textbf{niezależne}, jeśli dla dowolnych wartości $x \in \mathrm{im}(X)$ oraz $y \in \mathrm{im}(Y)$ zachodzi:
 \[
 \mathbb{P}[X = x \land Y = y] = \mathbb{P}[X = x] \cdot \mathbb{P}[Y = y].
@@ -188,7 +188,7 @@ Mówimy, że $X$ i $Y$ są \textbf{niezależne}, jeśli dla dowolnych wartości 
 \end{definition}
 
 \begin{definition}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą zmiennymi losowymi. Mówimy, że są one \textbf{niezależne i o jednakowych rozkładach} (ang.~Independent and Idendically Distributed, IID) jeśli: 
+Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi. Mówimy, że są one \textbf{niezależne i o jednakowych rozkładach} (ang.~Independent and Idendically Distributed, IID) jeśli: 
 \begin{itemize}
     \item $F_{X_i} = F_{X_j}$ dla $1\le i,j \le n$
     \item Zmienne $X_i,X_j$ są niezależne dla $i\ne j$
@@ -196,21 +196,21 @@ Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą zmiennymi losowymi. Mówim
 \end{definition}
 
 \begin{fact}\label{F:max_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. Wtedy 
+Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. Wtedy 
 \[
     F_Y(t)=F_X^n(t)
 \]
 \end{fact}
 
 \begin{fact}\label{F:min_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. Wtedy 
+Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. Wtedy 
 \[
     F_Y(t)=1-(1-F_X(t))^n
 \]
 \end{fact}
 
 \begin{fact}\label{F:montonicity_of_expectation}
-Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi takim, że $X(\omega)\le Y(\omega)$ dla każdego $\omega\in\Omega$. Wtedy. 
+Niech $X,Y:\Omega\to\mathbb{N}$ będą zmiennymi losowymi takim, że $X(\omega)\le Y(\omega)$ dla każdego $\omega\in\Omega$. Wtedy. 
 \[
     \mathbb{E}[X] \le \mathbb{E}[Y]
 \]
@@ -218,7 +218,7 @@ Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi takim, że $X(\omega)\
 
 
 \begin{theorem}[Nierówność Jensena dla wartości oczekiwanej]\label{T:Jensen} 
-Niech $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą oraz $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
+Niech $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą oraz $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)]
 \]

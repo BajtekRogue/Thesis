@@ -1,0 +1,57 @@
+\documentclass[a4paper,12pt]{report}
+
+% Kodowanie i polskie znaki
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{amsthm}
+\newtheorem{definition}{Definicja}
+\newtheorem{fact}{Fakt}
+\newtheorem{theorem}{Twierdzenie}
+\newtheorem{formula}{Wzór}
+
+% Matematyka
+\usepackage{amsmath, amssymb, amsthm}
+
+% Grafika i rysunki
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Bibliografia
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
+
+% Hyperlinki
+\usepackage{hyperref}
+
+% Strona tytułowa
+\title{Probabilistyczne modele propagacji w grafach.}
+\author{Bartosz Łabuz}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\chapter{Wstęp}
+\input{wstep.tex}
+
+\chapter{Podstawy matematyczne}
+\input{math.tex}
+
+\chapter{Modele propagacji losowej}
+\input{modele.tex}
+
+\chapter{Analiza modelu SI}
+\input{SI.tex}
+
+
+\newpage
+\printbibliography
+
+\end{document}

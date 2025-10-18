@@ -15,7 +15,7 @@ czasy zarażenia kolejnych wierzchołków tworzą ciąg zmiennych losowych
 \[
 X_1 = 0, \quad X_{k} = X_{k-1} + U_k, \quad k\in\{2,3,\dots,n\},
 \]
-gdzie $U_1,Z_2,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_1,U_2,\dots,U_n$ są niezależne. 
+gdzie $U_1,U_2,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_1,U_2,\dots,U_n$ są niezależne. 
 
 Widzimy zatem, że
 \[
@@ -79,8 +79,10 @@ Zatem
     \lim_{n \to \infty}\mathbb{E}[Y_t] = 1+tp.
 \]
 
-Czas całkowitego zainfekowania grafu $\mathrm{P}_n$ to $Z = \max\{X_1,X_2,\dots,X_n\} = X_n$. Zatem rozkład zmiennej $Z$ jest już nam znany a wartość oczekiwana wynosi $\mathbb{E}[Z]=\frac{n-1}{p}$.
-
+Czas całkowitego zainfekowania grafu $\mathrm{P}_n$ to $Z = \max\{X_1,X_2,\dots,X_n\} = X_n$. Zatem rozkład zmiennej $Z$ jest już nam znany a wartość oczekiwana wynosi 
+\[
+    \mathbb{E}[Z]=\frac{n-1}{p}.
+\]
 \noindent
 Jeśli wierzchołek początkowy $s \ne 1, n$, to proces rozprzestrzeniania się infekcji możemy rozdzielić na dwa niezależne procesy stochastyczne, 
 zachodzące na podgrafach indukowanych przez zbiory:
@@ -97,13 +99,16 @@ z tym że infekcja w wierzchołku $s$ pełni rolę źródła w obu częściach.
 Następnie rozpatrzmy rodzinę grafów gwiazd $\mathrm{S}_n$. Przyjmujemy $V=\{0,1,2,\dots,n\}$ oraz, że wierzchołek $0$ jest środkiem gwiazdy. W modelu dla tej rodziny zakładamy również $s=0$. Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie. 
 Stąd mamy $X_v \sim \mathrm{Geo}(p)$ dla każdego $v\in\{1,2,\dots,n\}$. Zauważmy ponadto, że zmienne $X_1,X_2,\dots,X_n$ są od siebie niezależne.\\
 
-Kwestia $Y_t$ jest również dość prosta. Skoro każdy propagacja działa na każdym wierzchołku niezależnie to zmienna $Y_t$ jest wynikiem $n$ prób Bernoulliego. Sukces pojedynczej próby to prawdopodobieństwo, że zmienna $X_v$ o rozkładzie geometrycznym po conajwyżej $t$ jednostkach czasu osiągnie swój sukces. A więc jest to $\mathbb{P}[X_v\le t]$ co jest równe $1-q^t$. Podsumowując mamy
+Kwestia $Y_t$ jest również dość prosta. Skoro każdy propagacja działa na każdym wierzchołku niezależnie to zmienna $Y_t$ jest wynikiem $n$ prób Bernoulliego. Sukces pojedynczej próby to prawdopodobieństwo, że zmienna $X_v$ o rozkładzie geometrycznym po conajwyżej $t$ jednostkach czasu osiągnie swój sukces. A więc jest to $\mathbb{P}[X_v\le t]=1-q^t$. Podsumowując mamy
 \[
     Y_t \sim \mathrm{Bin}(n, 1-q^t)
 \]
-Stąd oczywiście otrzymujemy $\mathbb{E}[Y_t] = n\cdot (1-q^t)$. \\
+Stąd oczywiście otrzymujemy 
+\[
+    \mathbb{E}[Y_t] = n\cdot (1-q^t). 
+\]
 
-Przejdźmy teraz to zmiennej $Z$. Przypomnijmy, że $Z=\max\{X_1,x_2,\dots,X_n\}$. Skoro zmienne te są IID, to z ~\ref{F:max_CDF} mamy 
+Przejdźmy teraz to zmiennej $Z$. Przypomnijmy, że $Z=\max\{X_1,X_2,\dots,X_n\}$. Skoro zmienne te są IID, to z ~\ref{F:max_CDF} mamy 
 \[
     \mathbb{P}[Z\le t] = (1-q^t)^n
 \]
@@ -119,13 +124,13 @@ Policzmy teraz wartość oczekiwaną $Z$ na mocy ~\ref{F:expected_value_tail_sum
 &= \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} (-1)^{j+1} (q^j)^k 
  = \sum_{j=1}^{n} \binom{n}{j} \frac{(-1)^{j+1}}{1-q^j}.
 \end{align*}
-Nie jest to jednak przyzwoity wynik i nie ma postaci zwartej. Spróbujmy zatem wyznaczyć asymptotykę $\mathbb{E}[Z]$. Skoro $\mathbb{E}[Z] = \sum_{k=0}^{\infty}  1 - (1-q^k)^n$ to kładząc $f(x) = 1 - (1 - e^{-\alpha x})^n$ gdzie $\alpha = -\log(q)$ z \ref{T:approximation_of_sum_by_an_integral} możemy oszacować tą sumę. Oczywiście $f(0)=1$ a $f(\infty)=0$ oraz $f$ jest malejąca a więc
+Nie jest to jednak przyzwoity wynik i nie ma postaci zwartej. Spróbujmy zatem wyznaczyć asymptotykę $\mathbb{E}[Z]$. Skoro $\mathbb{E}[Z] = \sum_{k=0}^{\infty}  1 - (1-q^k)^n$ to z \ref{T:approximation_of_sum_by_an_integral} możemy oszacować tą sumę. Połóżmy $f(x) = 1 - (1 - e^{-\alpha x})^n$ gdzie $\alpha = -\log(q)$. Oczywiście $f(0)=1$ , $f(\infty)=0$ oraz $f$ jest malejąca a więc
 \[
     \int_{0}^{\infty} f(x) \; \mathrm{d}x \le \mathbb{E}[Z] \le  1 + \int_{0}^{\infty} f(x) \; \mathrm{d}x
 \]
-Całka ta jest równa $\frac{-1}{\log(q)} H_n$ (~\ref{F:integral_1}). Finalnie, podstawiając $H_n \sim \log(n)$ otrzymujemy
+Całka ta jest równa $\frac{-1}{\log(q)} H_n$ (patrz ~\ref{F:integral_1}). Finalnie, podstawiając $H_n \sim \log(n)$ jak i $-\log(q)=\log(\frac{1}{1-p})$ otrzymujemy
 \[
-    \mathbb{E}[Z] \sim -\frac{\log(n)}{\log(q)}
+    \mathbb{E}[Z] \sim \frac{\log(n)}{\log(\frac{1}{1-p})}
 \]
 
 
@@ -145,8 +150,6 @@ oraz
     \item $\mathbb{E}[X_v] = \frac{\mathrm{d}(s,v)}{p}$
     \item $\mathrm{Var}[X_v] = \frac{\mathrm{d}(s,v)(1 - p)}{p^2}$
 \end{itemize}
-
-
 Niech $\{\ell_1,\dots, \ell_m\}$ będą liściami w $G$. Wtedy mamy 
 \[
     Z = \max_{1\le i \le m} X_{\ell _i}
@@ -158,7 +161,7 @@ Wiemy, że funkcja $\max\{x_1,\dots, x_m\}$ jest wypukła więc z nierówności 
 \]
 Dla ograniczenie górnego korzystamy z ~\ref{F:max_inequality} oraz ~\ref{F:montonicity_of_expectation} i dostajemy
 \[
-    \mathbb{E}[Z]=\mathbb{E}[\max_{1\le i \le m} T_{\ell _i}] \le \sum_{i=1}^{m}\mathbb{E}[T_{\ell _i}] = \sum_{i=1}^{m} \frac{d_i}{p} = \frac{1}{p} \sum_{i=1}^{m} d_i \le \frac{1}{p} md_1=\frac{mh}{p}
+    \mathbb{E}[Z]=\mathbb{E}[\max_{1\le i \le m} X_{\ell _i}] \le \sum_{i=1}^{m}\mathbb{E}[X_{\ell _i}] = \sum_{i=1}^{m} \frac{d_i}{p} = \frac{1}{p} \sum_{i=1}^{m} d_i \le \frac{1}{p} md_1=\frac{mh}{p}
 \]
 Ostatecznie 
 \[

@@ -17,3 +17,5 @@ doc/build/*.idx
 doc/build/*.ilg
 doc/build/*.ind
 doc/build/*.bcf
+
+src/pycache/*

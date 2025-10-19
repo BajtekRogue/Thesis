@@ -18,4 +18,4 @@ doc/build/*.ilg
 doc/build/*.ind
 doc/build/*.bcf
 
-src/pycache/*
+src/__pycache__

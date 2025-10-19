@@ -37,6 +37,10 @@ Graf $G$ nazywamy \textbf{spójnym}, jeśli pomiędzy każdą parą wierzchołk�
 Dla grafu spójnego $G$ definiujemy odległość między $u$ oraz $v$ dla $u,v\in V$ jako długość najkrótszej ścieżki pomiędzy $u$ i $v$. Oznaczamy ją $\mathrm{d}(u,v)$.
 \end{definition}
 
+\begin{definition}
+Niech $G$ będzie grafem\ a $u\in V$. \textbf{Ekscentrycznością} $u$ nazywamy $\epsilon(u) = \max_{v\in V} \mathrm{d}(u,v)$.    
+\end{definition}
+
 \section{Rodziny grafów}
 
 \begin{definition}
@@ -217,12 +221,12 @@ Niech $X,Y:\Omega\to\mathbb{N}$ będą zmiennymi losowymi takim, że $X(\omega)\
 \end{fact}
 
 
-\begin{theorem}[Nierówność Jensena dla wartości oczekiwanej]\label{T:Jensen} 
+\begin{fact}[Nierówność Jensena dla wartości oczekiwanej]\label{F:Jensen} 
 Niech $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą oraz $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)]
 \]
-\end{theorem}
+\end{fact}
 
 
 \section{Znane rozkłady prawdopodobieństwa}
@@ -288,9 +292,9 @@ Niech $X_1, X_2, \dots, X_m$ będą niezależnymi zmiennymi losowymi o rozkładz
 \end{fact}
 
 
-\section{Sumy i całki}
+\section{Tożsamości i nierówności}
 
-\begin{theorem}\label{T:approximation_of_sum_by_an_integral}
+\begin{fact}\label{F:approximation_of_sum_by_an_integral}
 Niech $a,b\in\mathbb{N}$, $a<b$ oraz $f:[a;b]\to\mathbb{R}$ będzie funkcją ciągłą i monotoniczą.
 Jeśli $f$ jest rosnąca to
 \[
@@ -300,48 +304,43 @@ Jeśli $f$ jest malejąca to
 \[
     \int_{a}^b f(x)\; \mathrm{d}x \le \sum_{k=a}^{b} f(k)\le f(a) + \int_{a}^b f(x)\; \mathrm{d}x
 \]
-\end{theorem}
+\end{fact}
 
-\begin{formula}\label{F:binomial}
+\begin{fact}\label{F:binomial}
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{C}$. Wtedy
 \[
     \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}= (x+y)^n
 \]
-\end{formula}
+\end{fact}
 
-\begin{formula}\label{F:binomial1}
+\begin{fact}\label{F:binomial1}
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{C}$. Wtedy
 \[
     \sum_{k=0}^{n} k\binom{n}{k} x^k y^{n-k} = nx(x+y)^{n-1}
 \]
-\end{formula}
+\end{fact}
 
-\begin{formula}\label{F:harmonic_integral}
-Niech $n\in\mathbb{N}$ oraz niech $H_n$ oznacza $n$'tą liczbę harmoniczną. Wtedy
+\begin{fact}\label{F:harmonic_upper_bound}
+Niech $H_n$ oznacza $n$'tą liczbę harmoniczną. Wtedy
 \[
-    \int_{0}^{1} \frac{1-x^n}{1-x} \; \mathrm{d}x = H_n
+    H_n \le 1 + \log(n)
 \]
-\end{formula}
+\end{fact}
 
-\begin{formula}\label{F:integral_1}
-Niech $n\in\mathbb{N}$ oraz $\alpha>0$. Wtedy
+\begin{fact}[Nierówność między średnimi]\label{F:AM_GM}
+Niech $x_1,x_2,\dots,x_n\ge 0$. Wtedy
 \[
-    \int_{0}^{\infty} 1-(1-e^{-\alpha x})^n \; \mathrm{d}x = \frac{1}{\alpha} H_n
+    \sqrt[n]{x_1x_2\cdots x_n} \le \frac{x_1 + x_2 + \cdots + x_n}{n}
 \]
-\begin{proof}
-Podstawmy $u=1-e^{-\alpha x}$. Wtedy $\mathrm{d}u = \alpha e^{-\alpha x} \;\mathrm{d}x$ a więc $\mathrm{d}x = \frac{1}{\alpha} \frac{1}{1-u} \;\mathrm{d}u$. Ponadto $u(0) = 0, \quad u(\infty) = 1$ bo $\alpha > 0$. Zatem całka ma postać
+Równoważnie możemy zapisać
 \[
-    \int_{0}^{1} 1-u^n \cdot \frac{1}{\alpha} \frac{1}{1-u} \;\mathrm{d}u = 
-    \frac{1}{\alpha} \int_{0}^{1} \frac{1-u^n}{1-u} \; \mathrm{d}u = 
-    \frac{1}{\alpha} H_n
+    \log(x_1x_2\cdots x_n) \le n\cdot \log\left(\frac{x_1 + x_2 + \cdots + x_n}{n}\right)
 \]
-gdzie ostatniua równość wynika z ~\ref{F:harmonic_integral}.
-\end{proof}
-\end{formula}
+\end{fact}
 
-\begin{formula}\label{F:max_inequality}
-Niech $x_1,x_2,\dots,x_n\in\mathbb{R}$. Wtedy
+\begin{fact}\label{F:log_vs_x}
+Niech $x \in (0;1)$. Wtedy
 \[
-    \max\{x_1,x_2,\dots,x_n\}\le x_1+x_2+\dots+x_n
+    \frac{1}{\log(\frac{1}{1-x})} \le \frac{1}{x}
 \]
-\end{formula}
+\end{fact}

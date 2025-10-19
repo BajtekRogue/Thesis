@@ -45,21 +45,24 @@ Dla każdego $v \in V$ zdefiniujmy zmienną losową
 \[
 X_v = \min \{ t \in \mathbb{N} : \mathbf{X}_t(v) = I \},
 \]
-która określa \textbf{pierwszą chwilę czasu zarażenia} wierzchołka $v$.
+która określa pierwszą chwilę czasu zarażenia wierzchołka $v$.
 Jeśli taka chwila nie istnieje (tzn. w danym przebiegu procesu wierzchołek $v$ nigdy się nie zarazi),
 to przyjmujemy $X_v = \infty$.
-Zauważmy, że dla każdego $t \in \mathbb{N}$ zachodzi $ \mathbb{P}[\mathbf{X}_t(v) = I] = \mathbb{P}[X_v \le t] $. 
-Następnie definiujemy zmienną losową $Y_t = |\mathcal{I}_t|$ oznaczającą \textbf{liczbę zainfekowanych wierzchołków} w chwili $t$. Dodatkowo niech $Z = \max_{v \in V} X_v$ będzie zmienną losową opisującą czas całkowitego zarażenia grafu.
-
+Zauważmy, że dla każdego $t \in \mathbb{N}$ zachodzi $ \mathbb{P}[\mathbf{X}_t(v) = I] = \mathbb{P}[X_v \le t] $. \\
+Następnie definiujemy zmienną losową 
+\[
+    Y_t = |\mathcal{I}_t|
+\]
+oznaczającą liczbę zainfekowanych wierzchołków w chwili $t$. \\ 
+Dodatkowo definiujemy zmienną losową opisującą czas całkowitego zarażenia grafu:
+\[
+    Z = \max_{v \in V} X_v
+\]
 W modelu \textbf{SI} interesują nas następujące wielkości:
 \begin{itemize}
-    \item rozkład prawdopodobieństwa zmiennych $X_v$,
-    \item wartość oczekiwana zmiennych, $\mathbb{E}[X_v]$,
-    \item wariancja czasu zarażenia, $\mathrm{Var}[X_v]$,
-    \item rozkład prawdopodobieństwa zmiennych, $Y_t$,
-    \item wartość oczekiwana zmiennych, $\mathbb{E}[Y_t]$,
-    \item rozkład prawdopodobieństwa zmiennej, $Z$,
-    \item wartość oczekiwana zmienneju, $\mathbb{E}[Z]$,
+    \item rozkład prawdopodobieństwa zmiennych $X_v$, $Y_t$ oraz $Z$
+    \item wartości oczekiwane zmiennych, $\mathbb{E}[X_v]$, $\mathbb{E}[Y_t]$ oraz $\mathbb{E}[Z]$
+    \item ograniczenia dolne, górne oraz asymptotyka powyższych wartości oczekiwanych kiedy wyznaczenie ich dokładje wartości nie będzie możliwe
 \end{itemize}
 
 

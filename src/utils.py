@@ -3,11 +3,11 @@ import random
 import numpy as np
 from tqdm import tqdm
 
-
 def graph_constructor(graph_family, n):
     builders = {
         "path": lambda k: nx.path_graph(k),
-        "star": lambda k: nx.star_graph(k)
+        "star": lambda k: nx.star_graph(k),
+        "tree": lambda k: nx.random_labeled_tree(k)
     }
     return builders[graph_family](n)
 
@@ -80,7 +80,8 @@ def generate_t_functions():
 def theoretical_expectation_Y(graph_family, n, p, t_values):
     functions = {
         "path": lambda n, p, t: 1 + p * t,
-        "star": lambda n, p, t: n * (1 - (1 - p) ** t)
+        "star": lambda n, p, t: n * (1 - (1 - p) ** t),
+        "tree": lambda n, p, t: np.zeros_like(n, dtype=float)
     }
     return [functions[graph_family](n, p, t) for t in t_values]
 
@@ -88,7 +89,8 @@ def theoretical_expectation_Y(graph_family, n, p, t_values):
 def theoretical_expectation_Z(graph_family, n, p):
     functions = {
         "path": lambda n, p: (n - 1) / p,
-        "star": lambda n, p: np.log(n) / np.log(1 / (1 - p))
+        "star": lambda n, p: np.log(n) / np.log(1 / (1 - p)),
+        "tree": lambda n, p: np.zeros_like(n, dtype=float)
     }
     return functions[graph_family](n, p)
 

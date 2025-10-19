@@ -4,11 +4,11 @@ from plot import *
 
 
 def main():
-    graph_family = "star" 
+    graph_family = "tree" 
     N = 1000             
     n_values = [100 * i for i in range(1, 11)]  
     p_values = [0.1, 0.2, 0.5]  
-    trials = 2000          
+    trials = 2000         
     t_functions = generate_t_functions()
 
     for p in p_values:

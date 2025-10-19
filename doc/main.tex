@@ -1,30 +1,50 @@
 \documentclass[a4paper,12pt]{report}
 
-% Kodowanie i polskie znaki
+% Kodowanie i język
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
+
+% Matematyka
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsthm}
+
+% Twierdzenia itp.
 \newtheorem{definition}{Definicja}
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
-\newtheorem{formula}{Wzór}
+\newtheorem{lemma}{Lemat}
 
-% Matematyka
-\usepackage{amsmath, amssymb, amsthm}
-
-% Grafika i rysunki
+% Grafika i reszta
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+% \usepackage[none]{hyphenat}
+\usepackage{csquotes}
+
+% Hiperłącza i sprytne referencje
+\usepackage{hyperref}
+
+% Spolszczenie nazw dla cleveref
+\usepackage[nameinlink,capitalise]{cleveref}
+
+\crefname{theorem}{Twierdzenie}{twierdzenia}
+\Crefname{theorem}{Twierdzenia}{Twierdzenia}
+
+\crefname{definition}{definicja}{definicje}
+\Crefname{definition}{Definicja}{Definicje}
+
+\crefname{fact}{Fakt}{fakty}
+\Crefname{fact}{Faktu}{Fakty}
+
+\crefname{lemma}{lemat}{lematy}
+\Crefname{lemma}{Lematu}{Lematy}
+
 
 % Bibliografia
-\usepackage{csquotes}
 \usepackage[backend=biber,style=numeric]{biblatex}
 \addbibresource{bibliography.bib}
-
-% Hyperlinki
-\usepackage{hyperref}
 
 % Strona tytułowa
 \title{Probabilistyczne modele propagacji w grafach.}
@@ -34,7 +54,6 @@
 \begin{document}
 
 \maketitle
-
 \tableofcontents
 \newpage
 
@@ -49,7 +68,6 @@
 
 \chapter{Analiza modelu SI}
 \input{SI.tex}
-
 
 \newpage
 \printbibliography

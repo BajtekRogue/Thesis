@@ -41,6 +41,19 @@
 \crefname{lemma}{lemat}{lematy}
 \Crefname{lemma}{Lematu}{Lematy}
 
+\newcommand{\graphfamily}[1]{%
+  \vspace{0.8em}
+  \noindent\textbf{#1}\\[0.3em]
+}
+
+\newcommand{\distribution}[1]{%
+  \vspace{0.8em}
+  \noindent\textbf{#1}\\[0.3em]
+}
+\renewcommand{\thefigure}{\arabic{figure}} 
+\makeatletter
+\@addtoreset{figure}{chapter} 
+\makeatother
 
 % Bibliografia
 \usepackage[backend=biber,style=numeric]{biblatex}

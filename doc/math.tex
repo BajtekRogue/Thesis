@@ -1,296 +1,81 @@
-\section{Podstawowe pojęcia grafów}
+\section{Notacja}
 
-\begin{definition}
-Grafem \textbf{nieskierowanym} nazywamy parę $G = (V, E)$, gdzie $V$ jest zbiorem wierzchołków, a $E \subseteq \{ \{u, v\} : u, v \in V, \; u \neq v \}$ jest zbiorem krawędzi.  
-Dla wierzchołków $u, v \in V$ istnieje krawędź pomiędzy nimi wtedy i tylko wtedy, gdy $\{u, v\} \in E$. Takie wierzchołki nazywamy \textbf{incydentnymi}.
-\end{definition}
+Przez $\mathbb{N}$ oznaczamy zbiór liczb naturalnych $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \{1,2,3,\dots\}$.  Moc zbioru $A$ oznaczamy $|A|$. Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
+Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\dots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną.
 
-\begin{definition}
-Dla $v \in V$ \textbf{stopiniem wierzchołka} $v$ nazywamy liczbę wierzchołków z nim sąsiadujących i oznaczamy przez $\mathrm{deg}(v)$.  
-Przez $\delta(G)$ oznaczamy najmniejszy, a przez $\Delta(G)$ największy stopień wierzchołka w grafie $G$.
-\end{definition}
+Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. Przez $\delta(G)$ i $\Delta(G)$ oznaczamy odpowiednio minimalny i maksymalny stopień wierzchołka w grafie $G$.
 
-\begin{definition}
-\textbf{Sąsiedztwem} wierzchołka $v$ nazywamy zbiór wszystkich wierzchołków z nim incydentnych:
-\[
-\mathrm{N}(v) = \{ u \in V : \{u, v\} \in E \}.
-\]
-\end{definition}
+Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. Funckję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante $X$ oznaczamy $F_X(t)$ dla $t\in\mathbb{R}$. Jeśli zmienne losowe $X_1,X_2,\dots, X_n$ są niezależne i o jednakowych rozkładach to mówimy, że są IID.
 
-\begin{definition}
-\textbf{Ścieżką} w grafie $G$ nazywamy ciąg wierzchołków $v_1, v_2, \dots, v_\ell$ taki, że
-\[
-\forall i \in \{1, \dots, \ell - 1\} \quad \{v_i, v_{i+1}\} \in E.
-\]
-Zbiór wszystkich ścieżek pomiędzy wierzchołkami $u, v$ oznaczamy przez $\Pi(u, v)$.
-\end{definition}
-
-\begin{definition}
-\textbf{Długością ścieżki} nazywamy liczbę krawędzi w niej występujących. Długość ścieżki $v_1, \dots, v_\ell$ jest równa $\ell - 1$.
-\end{definition}
-
-\begin{definition}
-Graf $G$ nazywamy \textbf{spójnym}, jeśli pomiędzy każdą parą wierzchołków $u, v \in V$ istnieje ścieżka. 
-\end{definition}
-
-\begin{definition}
-Dla grafu spójnego $G$ definiujemy odległość między $u$ oraz $v$ dla $u,v\in V$ jako długość najkrótszej ścieżki pomiędzy $u$ i $v$. Oznaczamy ją $\mathrm{d}(u,v)$.
-\end{definition}
-
-\begin{definition}
-Niech $G$ będzie grafem\ a $u\in V$. \textbf{Ekscentrycznością} $u$ nazywamy $\epsilon(u) = \max_{v\in V} \mathrm{d}(u,v)$.    
-\end{definition}
 
 \section{Rodziny grafów}
 
-\begin{definition}
-Graf \textbf{ścieżkowy} $\mathrm{P}_n$ to graf o wierzchołkach $v_1, \dots, v_n$ i krawędziach
-\[
-E = \{\{v_i, v_{i+1}\} : 1 \le i \le n-1\}.
-\]
-\end{definition}
+\graphfamily{Graf ścieżkowy}
+Dla $n \in \mathbb{N}_+$ graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$. Oznaczamy go przez $\mathrm{P}_n$.
 
-\begin{definition}
-Graf \textbf{gwiazda} $\mathrm{S}_n$ to graf o wierzchołkach $v_0, v_1, \dots, v_n$ i krawędziach
-\[
-E = \{\{v_0, v_{i}\} : 1 \le i \le n-1\}.
-\]
-\end{definition}
+\graphfamily{Graf gwiazda}
+Dla $n \in \mathbb{N}_+$ graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi $E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$. Oznaczamy go przez $\mathrm{S}_n$.
 
-\begin{definition}
-Graf \textbf{pełny} $\mathrm{K}_n$ to graf o wierzchołkach $v_1, \dots, v_n$, w którym każdy wierzchołek jest połączony z każdym innym:
-\[
-E = \{\{u, v\} : u, v \in V,\, u \neq v\}.
-\]
-\end{definition}
+\graphfamily{Graf pełny}
+Dla $n \in \mathbb{N}_+$ graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. Oznaczamy go przez $\mathrm{K}_n$.
 
-\begin{definition}
-Graf \textbf{cykliczny} $\mathrm{C}_n$ to graf o wierzchołkach $v_1, \dots, v_n$ i krawędziach
-\[
-E = \{\{v_i, v_{i+1}\} : 1 \le i \le n-1\} \cup \{\{v_n, v_1\}\}.
-\]
-\end{definition}
-
-\begin{definition}
-\textbf{Drzewo} to dowolny graf spójny i acykliczny.
-\end{definition}
-
-\begin{definition}
-    Niech $G=(V,E)$ będzie drzewem. Wierzchołek $v\in V$ nazywamy \textbf{liściem} jeśli $\mathrm{deg}(v)=1$.   
-\end{definition}
-
-\begin{fact}\label{F:tree_properties}
-Niech $G=(V,E)$ będzie drzewem. Wtedy:
-\begin{itemize}
-    \item $|E|=|V|-1$.
-    \item Każde dwa wierzchołki są połączone dokładnie jedną ścieżką.
-    \item Dodanie dowolnej krawędzi do drzewa tworzy dokładnie jeden cykl.
-    \item Usunięcie dowolnej krawędzi z drzewa powoduje, że graf przestaje być spójny.
-    \item Istnieje conajmniej jeden liść.
-\end{itemize}
-\end{fact}
-
-\section{Pojęcie prawdopodobieństwa}
-
-\begin{definition}
-Niech $\Omega$ będzie niepustym zbiorem.  
-Zbiór $\mathcal{F} \subseteq \mathcal{P}(\Omega)$ nazywamy  \textbf{$\sigma$-algebrą} na $\Omega$, jeżeli spełnia następujące warunki:
-\begin{itemize}
-    \item[(1)] $\Omega \in \mathcal{F}$,
-    \item[(2)] jeśli $A \in \mathcal{F}$, to $A^c \in \mathcal{F}$,
-    \item[(3)] jeśli $(A_n)_{n \in \mathbb{N}} \subseteq \mathcal{F}$ , to $\bigcup_{n \in \mathbb{N}} A_n \in \mathcal{F}$.
-\end{itemize}
-\end{definition}
-
-\begin{fact}\label{F:sigma_algebra}
-Z powyższej definicji wynikają natychmiastowe własności:
-\begin{itemize}
-    \item $\varnothing \in \mathcal{F}$,
-    \item jeśli $(A_n)_{n \in \mathbb{N}} \subseteq \mathcal{F}$, to  $\bigcap_{n \in \mathbb{N}} A_n \in \mathcal{F}$,
-    \item jeśli $A, B \in \mathcal{F}$, to $A \cup B$, $A \cap B$, $A \setminus B\in \mathcal{F}$.
-\end{itemize}
-\end{fact}
-
-\begin{definition}
-\textbf{Przestrzenią probabilistyczną} nazywamy trójkę $(\Omega, \mathcal{F}, \mathbb{P})$, gdzie:
-\begin{itemize}
-    \item $\Omega$ — przestrzeń zdarzeń elementarnych,
-    \item $\mathcal{F}$ — $\sigma$-ciało podzbiorów $\Omega$,
-    \item $\mathbb{P}:\mathcal{F}\to [0;1]$ — funkcja prawdopodobieństwa.
-\end{itemize}
-\end{definition}
-
-\noindent
-Funkcja $\mathbb{P}$ spełnia następujące \textbf{aksjomaty prawdopodobieństwa}:
-\begin{itemize}
-    \item[(1)] $\mathbb{P}[\varnothing] = 0$,
-    \item[(2)] $\mathbb{P}[\Omega] = 1$,
-    \item[(3)] dla dowolnej rodziny rozłącznych zbiorów $(E_n)_{n \in \mathbb{N}} \subseteq \mathcal{F}$ zachodzi
-    \[
-        \mathbb{P}\left[\bigcup_{n \in \mathbb{N}} E_n\right] = \sum_{n \in \mathbb{N}} \mathbb{P}[E_n].
-    \]
-\end{itemize}
-
-\begin{fact}\label{F:prb}
-Z aksjomatów prawdopodobieństwa wynika kilka użytecznych własności. Mianowicie dla $A,B\in\mathcal{F}$:
-\begin{itemize}
-    \item $\mathbb{P}[A^c] = 1 - \mathbb{P}[A]$,
-    \item jeśli $A \subseteq B$, to $\mathbb{P}[A] \leq \mathbb{P}[B]$,
-    \item $\mathbb{P}[A \cup B] = \mathbb{P}[A] + \mathbb{P}[B] - \mathbb{P}[A \cap B]$.
-\end{itemize}
-\end{fact}
-
-\section{Zmienne losowe}
-
-\begin{definition}
-\textbf{Dyskretną zmienną losową} nazywamy funkcję $X : \Omega \to \mathbb{R}$, której obraz $\mathrm{im}(X)$ jest zbiorem przeliczalnym. W tej pracy interesują nas tylko dyskretne zmienne losowe, których obraz jest podzbiorem $\mathbb{N}$. Także od teraz na taką dyskretną zmienną losową będziemy mówić po prostu zmienna losowa.  
-\end{definition}
-
-\begin{definition}
-\textbf{Dystrybuantą} (ang.~Cumulative Distribution Function, CDF) zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy funkcję
-\[
-    F_X(t) = \mathbb{P}[X \leq t], \quad t \in \mathbb{R}.
-\]
-\end{definition}
-
-\begin{definition}
-Niech $X:\Omega\to\mathbb{N}$ będzie zmienną losowa. Funkcje 
-\[
-    \rho_X(k)=\mathbb{P}[X = k], \quad k \in \mathbb{N}
-\]
-nazywamy \textbf{funkcją masy prawdopodobieństwa} (ang.~Probability Mass Function, PMF)
-\end{definition}
-
-\begin{definition}
-\textbf{Wartością oczekiwaną} (średnią) zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy
-\[
-    \mathbb{E}[X] = \sum_{k = 0}^{\infty} k \cdot \mathbb{P}[X = k],
-\]
-o ile szereg ten jest zbieżny bezwzględnie.
-\end{definition}
-
-\begin{fact}\label{F:expected_value_tail_sum}
-Niech $X:\Omega\to\mathbb{N}$ będzie zmienną losową. Wtedy 
-\[
-    \mathbb{E}[X] = \sum_{k=1}^{\infty} \mathbb{P}[X\ge k]
-\]
-\end{fact}
-
-\begin{definition}
-\textbf{Wariancją} zmiennej losowej $X:\Omega\to\mathbb{N}$ nazywamy
-\[
-    \mathrm{Var}[X] = \mathbb{E}[X^2]-\mathbb{E}[X]^2.
-\]
-\end{definition}
-
-\begin{definition}
-Niech $X,Y:\Omega\to\mathbb{N}$ będą zmiennymi losowymi.  
-Mówimy, że $X$ i $Y$ są \textbf{niezależne}, jeśli dla dowolnych wartości $x \in \mathrm{im}(X)$ oraz $y \in \mathrm{im}(Y)$ zachodzi:
-\[
-\mathbb{P}[X = x \land Y = y] = \mathbb{P}[X = x] \cdot \mathbb{P}[Y = y].
-\]
-\end{definition}
-
-\begin{definition}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi. Mówimy, że są one \textbf{niezależne i o jednakowych rozkładach} (ang.~Independent and Idendically Distributed, IID) jeśli: 
-\begin{itemize}
-    \item $F_{X_i} = F_{X_j}$ dla $1\le i,j \le n$
-    \item Zmienne $X_i,X_j$ są niezależne dla $i\ne j$
-\end{itemize}  
-\end{definition}
-
-\begin{fact}\label{F:max_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. Wtedy 
-\[
-    F_Y(t)=F_X^n(t)
-\]
-\end{fact}
-
-\begin{fact}\label{F:min_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. Wtedy 
-\[
-    F_Y(t)=1-(1-F_X(t))^n
-\]
-\end{fact}
-
-\begin{fact}\label{F:montonicity_of_expectation}
-Niech $X,Y:\Omega\to\mathbb{N}$ będą zmiennymi losowymi takim, że $X(\omega)\le Y(\omega)$ dla każdego $\omega\in\Omega$. Wtedy. 
-\[
-    \mathbb{E}[X] \le \mathbb{E}[Y]
-\]
-\end{fact}
+\graphfamily{Graf cykliczny}
+Dla $n \in \mathbb{N}_+$ graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi 
+$E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$. Oznaczamy go przez $\mathrm{C}_n$.
 
 
-\begin{fact}[Nierówność Jensena dla wartości oczekiwanej]\label{F:Jensen} 
-Niech $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą oraz $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
-\[
-    g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)]
-\]
-\end{fact}
+\section{Rozkłady prawdopodobieństwa}
 
-
-\section{Znane rozkłady prawdopodobieństwa}
-
-\begin{definition}
-\textbf{Próba Bernoulliego} to doświadczenie losowe, którego wynik może być jednym z dwóch:
+\distribution{Rozkład Bernoulliego}
+Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch:
 \begin{itemize}
     \item sukces z prawdopodobieństwem  $p \in (0;1)$
     \item porażka z prawdopodobieństwem  $1 - p$
 \end{itemize}  
+Zmienna losowa $X$ przyjmująca wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki ma rozkład Bernoulliego. Oznaczamy $X \sim \mathrm{Ber}(p)$.
+ 
 
-Zmienna losowa przyjmująca wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki ma \textbf{rozkład Bernoulliego} oznaczany przez $\mathrm{Ber}(p)$.
-\end{definition}
-
-\begin{definition}
-\textbf{Rozkład dwumianowy} opisuje liczbę sukcesów w $n$ próbach Bernoulliego
-Niech $X$ będzie zmienną losową przyjmującą wartości w $\{0,1,\dots,n\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+\distribution{Rozkład dwumianowy}
+Rozkład dwumianowy opisuje liczbę sukcesów w $n$ próbach Bernoulliego. Niech $X$ będzie zmienną losową przyjmującą wartości w $\{0,1,\dots,n\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{n}{k}p^k(1-p)^{n-k}, \quad k \in \{0,1,\dots,n\}.
 \]
 Wartość oczekiwana i wariancja mają postać:
-\begin{itemize}
-    \item $\mathbb{E}[X] = np$
-    \item $\mathrm{Var}[X] = np(1-p)$
-\end{itemize} 
-Oznaczamy: $X \sim \mathrm{Bin}(n,p)$.
-\end{definition}
+\[
+    \mathbb{E}[X] = np, \quad \mathrm{Var}[X] = np(1-p)
+\]
+Oznaczamy $X \sim \mathrm{Bin}(n,p)$.
 
-\begin{definition}
-\textbf{Rozkład geometryczny} opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu.  
-Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+ = \{1,2,3,\dots\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+\distribution{Rozkład geometryczny}
+Rozkład geometryczny opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu.  
+Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
-\mathbb{P}[X = k] = p(1 - p)^{k-1}, \quad k \in \mathbb{N}_+.
+    \mathbb{P}[X = k] = p(1 - p)^{k-1}, \quad k \in \mathbb{N}_+.
 \]
-Dystrybuanta jest równa $\mathbb{P}[X\le t] = 1 = (1-p)^t$.
+Dystrybuanta jest równa:
+\[
+    \mathbb{P}[X\le t] = 1 = (1-p)^t
+\]
 Wartość oczekiwana i wariancja mają postać:
-\begin{itemize}
-    \item $\mathbb{E}[X] = \frac{1}{p}$
-    \item $\mathrm{Var}[X] = \frac{1 - p}{p^2}$
-\end{itemize}  
-Oznaczamy: $X \sim \mathrm{Geo}(p)$.
-\end{definition}
+\[
+    \mathbb{E}[X] = \frac{1}{p}, \quad \mathrm{Var}[X] = \frac{1 - p}{p^2}
+\]
+Oznaczamy $X \sim \mathrm{Geo}(p)$.
 
-\begin{definition}
-\textbf{Rozkład ujemny dwumianowy (negative binomial)} opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów.  
+\distribution{Rozkład ujemny dwumianowy}
+Rozkład ujemny dwumianowy opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów.  
 Niech $X$ oznacza liczbę prób, przy czym każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$, a liczba sukcesów $m \in \mathbb{N}_+$ jest ustalona.  
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{k-1}{m-1} p^m (1 - p)^{k - m}, \quad k \ge m.
 \]
 Wartość oczekiwana i wariancja mają postać:
-\begin{itemize}
-    \item $\mathbb{E}[X] = \frac{m}{p}$
-    \item $\mathrm{Var}[X] = \frac{m(1 - p)}{p^2}$
-\end{itemize} 
-Oznaczamy: $X \sim \mathrm{NegBin}(m, p)$.
-\end{definition}
-
-\begin{fact}\label{F:sum_of_geo_RV}
-Niech $X_1, X_2, \dots, X_m$ będą niezależnymi zmiennymi losowymi o rozkładzie geometrycznym $\mathrm{Geo}(p)$ oraz $Y=X_1 + X_2 + \dots + X_m$. Wtedy $Y \sim \mathrm{NegBin}(m, p)$.
-\end{fact}
-
+\[
+    \mathbb{E}[X] = \frac{m}{p}, \quad \mathrm{Var}[X] = \frac{m(1 - p)}{p^2}
+\]
+Oznaczamy $X \sim \mathrm{NegBin}(m, p)$.
 
 \section{Tożsamości i nierówności}
 
@@ -306,35 +91,10 @@ Jeśli $f$ jest malejąca to
 \]
 \end{fact}
 
-\begin{fact}\label{F:binomial}
-Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{C}$. Wtedy
-\[
-    \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}= (x+y)^n
-\]
-\end{fact}
-
-\begin{fact}\label{F:binomial1}
-Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{C}$. Wtedy
-\[
-    \sum_{k=0}^{n} k\binom{n}{k} x^k y^{n-k} = nx(x+y)^{n-1}
-\]
-\end{fact}
-
 \begin{fact}\label{F:harmonic_upper_bound}
-Niech $H_n$ oznacza $n$'tą liczbę harmoniczną. Wtedy
+Niech $n\in\mathbb{N}_+$. Wtedy
 \[
     H_n \le 1 + \log(n)
-\]
-\end{fact}
-
-\begin{fact}[Nierówność między średnimi]\label{F:AM_GM}
-Niech $x_1,x_2,\dots,x_n\ge 0$. Wtedy
-\[
-    \sqrt[n]{x_1x_2\cdots x_n} \le \frac{x_1 + x_2 + \cdots + x_n}{n}
-\]
-Równoważnie możemy zapisać
-\[
-    \log(x_1x_2\cdots x_n) \le n\cdot \log\left(\frac{x_1 + x_2 + \cdots + x_n}{n}\right)
 \]
 \end{fact}
 
@@ -343,4 +103,66 @@ Niech $x \in (0;1)$. Wtedy
 \[
     \frac{1}{\log(\frac{1}{1-x})} \le \frac{1}{x}
 \]
+\end{fact}
+
+\begin{fact}[Nierówność między średnimi]\label{F:AM_GM}
+Niech $x_1,x_2,\dots,x_n\ge 0$. Wtedy
+\[
+    \sqrt[n]{x_1\cdots x_n} \le \frac{x_1  + \cdots + x_n}{n}
+\]
+Równoważnie możemy zapisać
+\[
+    \log(x_1\cdots x_n) \le n\cdot \log\left(\frac{x_1 + \cdots + x_n}{n}\right)
+\]
+\end{fact}
+
+\begin{fact}\label{F:binomial_0}
+Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
+\[
+    \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}= (x+y)^n
+\]
+\end{fact}
+
+\begin{fact}\label{F:binomial_1}
+Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
+\[
+    \sum_{k=0}^{n} k\binom{n}{k} x^k y^{n-k} = nx(x+y)^{n-1}
+\]
+\end{fact}
+
+\begin{fact}\label{F:max_CDF}
+Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. Wtedy 
+\[
+    F_Y(t)=F_X^n(t)
+\]
+\end{fact}
+
+\begin{fact}\label{F:min_CDF}
+Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. Wtedy 
+\[
+    F_Y(t)=1-(1-F_X(t))^n
+\]
+\end{fact}
+
+\begin{fact}\label{F:sum_of_geo_RV}
+Niech $X_1, X_2, \dots, X_m$ będą niezależnymi zmiennymi losowymi o rozkładzie geometrycznym $\mathrm{Geo}(p)$ oraz $Y=X_1 + X_2 + \cdots + X_m$. Wtedy 
+\[
+    Y \sim \mathrm{NegBin}(m, p)
+\]
+\end{fact}
+
+
+\begin{fact}\label{F:montonicity_of_expectation}
+Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi takim, że dla każdego $\omega\in\Omega$ zachodzi $X(\omega)\le Y(\omega)$. Wtedy. 
+\[
+    \mathbb{E}[X] \le \mathbb{E}[Y]
+\]
+\end{fact}
+
+\begin{fact}[Nierówność Jensena dla wartości oczekiwanej]\label{F:Jensen} 
+Niech $n\in\mathbb{N}_+$ oraz $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą zaś $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
+\[
+    g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)]
+\]
+Jeśli $g$ jest wklęsła to nierówność zachodzi w drugą stronę.
 \end{fact}

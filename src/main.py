@@ -190,10 +190,10 @@ def main():
     graph_family = "cycle" 
     source = 0
     p = 0.2
-    N = 1000 
+    N = 30
     trials_distribution = 5000
-    trials_expectation = 1000        
-    n_values = np.linspace(1, N, 20, dtype=int)
+    trials_expectation = 10000        
+    n_values = np.linspace(3, N, N - 3, dtype=int)
     t_limit = theoretical_expectation_full_infection(graph_family, N, p)
     t_values = np.linspace(1, t_limit, 20, dtype=int)
 

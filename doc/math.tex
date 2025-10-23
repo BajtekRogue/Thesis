@@ -5,7 +5,7 @@ Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\dots+\frac{1}{n}$ oznaczamy $n$
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. Przez $\delta(G)$ i $\Delta(G)$ oznaczamy odpowiednio minimalny i maksymalny stopień wierzchołka w grafie $G$.
 
-Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. Funckję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante $X$ oznaczamy $F_X(t)$ dla $t\in\mathbb{R}$. Jeśli zmienne losowe $X_1,X_2,\dots, X_n$ są niezależne i o jednakowych rozkładach to mówimy, że są IID.
+Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. Funkcję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante $X$ oznaczamy $F_X(t)$ dla $t\in\mathbb{R}$. Jeśli zmienne losowe $X_1,X_2,\dots, X_n$ są niezależne i o jednakowych rozkładach to mówimy, że są IID.
 
 
 \section{Rodziny grafów}
@@ -77,6 +77,27 @@ Wartość oczekiwana i wariancja mają postać:
 \]
 Oznaczamy $X \sim \mathrm{NegBin}(m, p)$.
 
+\distribution{Rozkład normalny}
+Zdefiniujmy funkcje
+\[
+    \varphi(t)=\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}, \quad \mathbf{\Phi}(t)=\int_{-\infty}^{t} \varphi(x)\;\mathrm{d}x
+\]
+Niech $\mu \in \mathbb{R}$ oraz $\sigma > 0$. Zmienna losowa $X$ ma rozkład normalny, jeśli jej funkcja gęstości wyraża się wzorem:
+\[
+f_X(t) = \frac{1}{\sigma}\cdot\varphi\Big(\frac{t-\mu}{\sigma}\Big), \quad t \in \mathbb{R}.
+\]
+Dystrybuanta jest równa:
+\[
+\mathbb{P}[X \le t] = \mathbf{\Phi}\Big(\frac{t-\mu}{\sigma}\Big), \quad t \in \mathbb{R}.
+\]
+Wartość oczekiwana i wariancja:
+\[
+\mathbb{E}[X] = \mu, \quad \mathrm{Var}[X] = \sigma^2.
+\]
+Oznaczenie: $X \sim \mathcal{N}(\mu, \sigma^2)$.
+
+Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny. Zauważmy, że $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
+
 \section{Tożsamości i nierówności}
 
 \begin{fact}\label{F:approximation_of_sum_by_an_integral}
@@ -127,6 +148,34 @@ Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
 \[
     \sum_{k=0}^{n} k\binom{n}{k} x^k y^{n-k} = nx(x+y)^{n-1}
+\]
+\end{fact}
+
+\begin{fact}\label{F:geo_0}
+Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
+\[
+    \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}
+\]
+\end{fact}
+
+\begin{fact}\label{F:geo_1}
+Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
+\[
+    \sum_{k=0}^{n} k\cdot x^k=\frac{x}{(1-x)^2}\cdot (nx^{n+1}-(n+1)x^n+1)
+\]
+\end{fact}
+
+\begin{fact}\label{F:geo_0_inf}
+Niech $x\in (-1;1)$. Wtedy
+\[
+    \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}
+\]
+\end{fact}
+
+\begin{fact}\label{F:geo_1_inf}
+Niech $x\in (-1;1)$. Wtedy
+\[
+    \sum_{k=0}^{\infty} k\cdot x^k=\frac{x}{(1-x)^2}
 \]
 \end{fact}
 

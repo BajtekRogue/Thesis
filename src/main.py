@@ -170,7 +170,7 @@ def theoretical_expectation_full_infection(graph_family, n, p):
         "star": lambda n, p: np.log(n) / np.log(1 / (1 - p)),
         "tree": lambda n, p: np.zeros_like(n, dtype=float) if isinstance(n, np.ndarray) else 0,
         "complete": lambda n, p: np.full_like(n, 2, dtype=float) if isinstance(n, np.ndarray) else 2,
-        "cycle": lambda n, p: (n - 1) / (2 * p)  
+        "cycle": lambda n, p: n / (2 * p)  - np.sqrt(n * (1 - p) / (2 * np.pi)) / p
     }
     return functions[graph_family](n, p)
 
@@ -190,23 +190,23 @@ def main():
     graph_family = "cycle" 
     source = 0
     p = 0.2
-    N = 30
+    N = 1000
     trials_distribution = 5000
-    trials_expectation = 10000        
-    n_values = np.linspace(3, N, N - 3, dtype=int)
+    trials_expectation = 2000        
+    n_values = np.linspace(1, N, 20, dtype=int)
     t_limit = theoretical_expectation_full_infection(graph_family, N, p)
     t_values = np.linspace(1, t_limit, 20, dtype=int)
 
-    os.makedirs(f"./img/{graph_family}", exist_ok=True)
+    # os.makedirs(f"./img/{graph_family}", exist_ok=True)
 
-    t_value, distribution_final_infection = compute_final_infection_distribution(graph_family, N, p, source, trials_distribution)
-    plot_final_infection_distribution(graph_family, N, p, distribution_final_infection, t_value)
+    # t_value, distribution_final_infection = compute_final_infection_distribution(graph_family, N, p, source, trials_distribution)
+    # plot_final_infection_distribution(graph_family, N, p, distribution_final_infection, t_value)
 
-    t_values, total_infection_count = compute_final_infection_expectation(graph_family, N, p, source, trials_expectation, t_values)
-    plot_final_infection_expectations(graph_family, N, p, t_values, total_infection_count)
+    # t_values, total_infection_count = compute_final_infection_expectation(graph_family, N, p, source, trials_expectation, t_values)
+    # plot_final_infection_expectations(graph_family, N, p, t_values, total_infection_count)
 
-    data_full_infection, _ = compute_full_infection_data(graph_family, N, p, source, trials_distribution)
-    plot_full_infection_distribution(graph_family, N, p, data_full_infection)
+    # data_full_infection, _ = compute_full_infection_data(graph_family, N, p, source, trials_distribution)
+    # plot_full_infection_distribution(graph_family, N, p, data_full_infection)
 
     means_full_infection = []
     for n in tqdm(n_values):

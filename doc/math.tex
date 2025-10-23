@@ -200,6 +200,19 @@ Niech $X_1, X_2, \dots, X_m$ będą niezależnymi zmiennymi losowymi o rozkładz
 \]
 \end{fact}
 
+\begin{fact}\label{F:sum_of_normal_RV}
+Niech $X \sim \mathcal{N}(\mu_1,\sigma_1^2)$ oraz $Y \sim \mathcal{N}(\mu_2,\sigma_2^2)$ będą niezależnymi zmiennymi losowymi. Wtedy 
+\[
+    X + Y \sim \mathcal{N}(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)
+\]
+\end{fact}
+
+\begin{fact}\label{F:E_abs_normal}
+Niech $X \sim \mathcal{N}(\mu,\sigma^2)$. Wtedy
+\[
+    \mathbb{E}[|X|] = 2\sigma\cdot \varphi\Big(\frac{\mu}{\sigma}\Big)+\mu\cdot (2\mathbf{\Phi}\Big(\frac{\mu}{\sigma}\Big)-1)
+\]
+\end{fact}
 
 \begin{fact}\label{F:montonicity_of_expectation}
 Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi takim, że dla każdego $\omega\in\Omega$ zachodzi $X(\omega)\le Y(\omega)$. Wtedy. 

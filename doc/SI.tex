@@ -258,20 +258,61 @@ Wykonaliśmy dość sporo obliczeń jak na tak mały graf. Możemy zauważyć wi
 
 \section{Analiza dla grafów cyklicznych}
 
-Przejdźmy teraz do grafów zawierających cykle. Oczywiście najprostrzy taki graf to graf cykliczny $\mathrm{C}_n$. Niech źródłem będzie wierzchołek $n$. Ustalmy wierzchołek $k\in\{1,2,\dots,n-1\}$. Prowadzą do niego dwie ścieżki od źródła: jedna o długości $k$, druga o długości $n-k$. Propagacja rozchodzi się po nich równolegle i niezależnie. Dla $j\in \{1,2,\dots,n-1\} $ połóżmy $N_j\sim \mathrm{NegBin}(j,p)$. Zmienne te są niezależne. Mamy wtedy 
+Przejdźmy teraz do grafów zawierających cykle. Najprostrzy taki graf to graf cykliczny $\mathrm{C}_n$. Niech źródłem będzie wierzchołek $n$. Ustalmy wierzchołek $k\in\{1,2,\dots,n-1\}$. Niech $a=\min\{k,n-k\}$ oraz $b=\max\{k,n-k\}$. Oczywiście $a\le b$. Od źródła do tego wierzchołka są dwie ścieżki: jedna o długości $a$, druga o długości $b$. Propagacja rozchodzi się po nich równolegle i niezależnie. Dla $j\in \{1,2,\dots,n-1\} $ połóżmy $N_j\sim \mathrm{NegBin}(j,p)$. Zmienne te są niezależne. Mamy wtedy 
 \[
-    X_k \sim \min\{N_k, N_{n-k}\}
+    X_k \sim \min\{N_a, N_b\}
 \]
 Niech $F_j(t)$ będzie dystrybuantą zmiennej $N_j$. Z \Cref{F:min_CDF} mamy 
 \[
-    \mathbb{P}[X\le t] = 1 - (1-F_k(t))\cdot(1-F_{n-k}(t))
+    \mathbb{P}[X_k\le t] = 1 - (1-F_a(t))\cdot(1-F_b(t))
 \]
-Nie ma co liczyć na wyznaczenie eleganckiej postaci na PMF czy CDF dla $X_k$. Postarjamy się lepiej oszacować wartość oczekiwaną. Oczywiście $X_k\le N_k$ jak i $X_k\le N_{n-k}$ stąd
+Nie ma co liczyć na wyznaczenie eleganckiej postaci na PMF czy CDF dla $X_k$. 
+% Postarjamy się lepiej oszacować wartość oczekiwaną. Oczywiście $X_k\le N_k$ jak i $X_k\le N_{n-k}$ stąd
+% \[
+%     \mathbb{E}[X_k]\le\min\{\mathbb{E}[N_k], \mathbb{E}[N_{n-k}]\} = \min\left\{\frac{k}{p}, \frac{n-k}{p}\right\}=\frac{1}{p}\cdot \min\{k,n-k\}
+% \]
+% Zauważmy, że $\min\{k,n-k\}=\mathrm{d}(s,k)$. Okazuje się, że oczekiwany czas potrzebny do poinformowania wierzchołka w danej odległości jest mniejszy niż dla grafów ścieżkowych, co spowodowane jest istnieniem dwóch ścieżek.
+Postaramy się więc przybliżyć wartość oczekiwaną dla dużych $n$. Z centralnego twierdzenia granicznego możemy przybliżyć $N_a \approx A,\; N_b \approx B$ dla $ A\sim \mathcal{N}(\mu_a,\sigma^2_a),\; B \sim \mathcal{N}(\mu_b,\sigma^2_b)$ gdzie 
 \[
-    \mathbb{E}[X_k]\le\min\{\mathbb{E}[N_k], \mathbb{E}[N_{n-k}]\} = \min\left\{\frac{k}{p}, \frac{n-k}{p}\right\}=\frac{1}{p}\cdot \min\{k,n-k\}
+    \mu_a=\frac{a}{p},\quad \sigma^2_a=\frac{aq}{p^2}, \quad \mu_b=\frac{b}{p},\quad \sigma^2_b=\frac{bq}{p^2}
 \]
-Zauważmy, że $\min\{k,n-k\}=\mathrm{d}(n,k)$. Okazuje się, że oczekiwan czas potrzebny do poinformowania wierzchołka w danej odległości jest mniejszy niż dla grafów ścieżkowych, co spowodowane jest istnieniem dwóch ścieżek.
+Zatem mamy
+\[
+    \mathbb{E}[X_k] \approx \mathbb{E}[\min\{A,B\}]=\mathbb{E}[\frac{1}{2}\cdot(A+B-|A-B|)]=\frac{1}{2}\cdot (\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|])
+\]
+Korzystając z \Cref{F:sum_of_normal_RV} mamy $C \sim \mathcal{N}(\mu_a-\mu_b,\sigma_a^2+\sigma_b^2)$ gdzie $C=A-B$. Oznaczmy $\eta=\mu_a-\mu_b$ oraz $\xi=\sqrt{\sigma_a^2+\sigma_b^2}$. Z \Cref{F:E_abs_normal} dostajemy $\mathbb{E}[C]=2\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)+\eta\cdot (2\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-1)$. Ostatecznie 
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}[X_k] \approx
+& \frac{1}{2}\cdot (\mu_a+\mu_b-2\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)+\eta\cdot (2\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-1)) \\
+& = \frac{\mu_a+\mu_b}{2}-\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)-(\mu_a-\mu_b)\cdot(\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-\frac{1}{2}) \\
+&=\mu_a (1-\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big))+\mu_b\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-\eta\varphi\Big(\frac{\eta}{\xi}\Big)
+\end{aligned}
+\end{equation*}
+Przenalizujmy teraz zachowanie asymptotyczne otrzymanego wyrażenia. Skoro $a+b=n$ to niech $a=rn, \; b=(1-r)n$ dla pewnego $r\in(0;1)$. Dalej 
+\[
+    \frac{\eta}{\xi}=\frac{\mu_a-\mu_b}{\sqrt{\sigma_a^2+\sigma_b^2}}=\frac{\frac{a}{p}-\frac{b}{p}}{\sqrt{\frac{aq}{p^2}+\frac{bq}{p^2}}}=\frac{(2r-1)\sqrt{n}}{\sqrt{q}}
+\]
+Musimy rozważyc dwa przypadki.
 
+Jeśli $a<b$, co za tym idzie $r\ne \frac{1}{2}$ to $\frac{\eta}{\xi}\to -\infty$ wraz z $n\to \infty$. Wtedy też $\varphi\Big(\frac{\eta}{\xi}\Big)\to 0$ oraz $\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)\to 0$ a więc $\mathbb{E}[X_k] \to \frac{a}{p}$. 
+
+Zaś gdy $a=b$ jak i $r=\frac{1}{2}$ to $\frac{\eta}{\xi}=0$. Pamiętamy, że $\varphi(0)=\frac{1}{\sqrt{2\pi}}$ oraz $\mathbf{\Phi}(0)=\frac{1}{2}$. Wstawiając otrzymamy $\mathbb{E}[X_k] \to \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}$. 
+Podsumowując mamy następujący wynik:
+\[
+    \mathbb{E}[X_k] \sim \frac{\min\{k,n-k\}}{p}
+\]
+Jest to całkowicie zgodne z intuicją. Wierzchołki w grafie $\mathrm{C}_n$ zachowują się podobnie jak w grafach $\mathrm{P}_n$.
+Zauważmy, że łatwo możemy teraz wyznaczyć $\mathbb{E}[Z]$. Dla $n$ patrzystego najdalej oddalony wierzchołek od źródła to $\frac{n}{2}$ a dla $n$ nieparzystego to $\lfloor \frac{n\pm 1}{2}\rfloor$. Asymptotycznie nie ma to znaczenia, możemy przyjąć $k=\frac{n}{2}$. Stąd
+\[
+    \mathbb{E}[Z]=\mathbb{E}[\max_{1\le k < n} X_k] \approx \mathbb{E}[X_{\frac{n}{2}}] \approx \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}
+\]
+Również intuicyjny wynik. Aby się upewnić czy nie przesadziliśmy z szacowanie zwrócmy się ku symulacji. Dla $p=0.2$, $n\in\{3,4,\dots, 1000\}$ policzmy wartość oczekiwaną całkowitego zarażenia po razy $2000$ razy. Z wykresu widzimy, że empiryczny wynik pokrywa się asymptotycznie z teoretycznym.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{../img/cycle/full_infection_expectation.png}
+    \caption{$\mathbb{E}[Z]$ dla $\mathrm{C_n}$ w funkcji $n$}
+\end{figure}
 
 \section{Analiza dla grafów pełnych}
 

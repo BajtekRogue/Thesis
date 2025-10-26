@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
 
+
 % Matematyka
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -15,6 +16,9 @@
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
+\newtheorem{summ}{Suma}
+\newtheorem{inequality}{Nierówność}
+
 
 % Grafika i reszta
 \usepackage{graphicx}
@@ -29,17 +33,21 @@
 % Spolszczenie nazw dla cleveref
 \usepackage[nameinlink,capitalise]{cleveref}
 
-\crefname{theorem}{Twierdzenie}{twierdzenia}
+\crefname{theorem}{Twierdzenie}{Twierdzenia}
 \Crefname{theorem}{Twierdzenia}{Twierdzenia}
 
-\crefname{definition}{definicja}{definicje}
-\Crefname{definition}{Definicja}{Definicje}
+\crefname{fact}{Fakt}{Faktu}
+\Crefname{fact}{Faktu}{Faktu}
 
-\crefname{fact}{Fakt}{fakty}
-\Crefname{fact}{Faktu}{Fakty}
+\crefname{lemma}{Lemat}{Lematu}
+\Crefname{lemma}{Lematu}{Lematu}
 
-\crefname{lemma}{lemat}{lematy}
-\Crefname{lemma}{Lematu}{Lematy}
+\crefname{inequality}{Nierówność}{Nierówności}
+\Crefname{inequality}{Nierówności}{Nierówności}
+
+\crefname{summ}{Suma}{Sumy}
+\Crefname{summ}{Sumy}{Sumy}
+
 
 \newcommand{\graphfamily}[1]{%
   \vspace{0.8em}
@@ -56,8 +64,8 @@
 \makeatother
 
 % Bibliografia
-\usepackage[backend=biber,style=numeric]{biblatex}
-\addbibresource{bibliography.bib}
+% \usepackage[backend=biber,style=numeric]{biblatex}
+% \addbibresource{bibliography.bib}
 
 % Strona tytułowa
 \title{Probabilistyczne modele propagacji w grafach.}
@@ -82,7 +90,7 @@
 \chapter{Analiza modelu SI}
 \input{SI.tex}
 
-\newpage
-\printbibliography
+% \newpage
+% \printbibliography
 
 \end{document}

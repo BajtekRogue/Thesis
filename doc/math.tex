@@ -1,11 +1,11 @@
 \section{Notacja}
 
-Przez $\mathbb{N}$ oznaczamy zbiór liczb naturalnych $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \{1,2,3,\dots\}$.  Moc zbioru $A$ oznaczamy $|A|$. Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
-Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\dots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną.
+Przez $\mathbb{N}$ oznaczamy zbiór $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \{1,2,3,\dots\}$. Moc zbioru $A$ oznaczamy $|A|$. Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
+Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. Przez $\delta(G)$ i $\Delta(G)$ oznaczamy odpowiednio minimalny i maksymalny stopień wierzchołka w grafie $G$.
 
-Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. Funkcję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante $X$ oznaczamy $F_X(t)$ dla $t\in\mathbb{R}$. Jeśli zmienne losowe $X_1,X_2,\dots, X_n$ są niezależne i o jednakowych rozkładach to mówimy, że są IID.
+Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. Funkcję masy prawdopodobieństwa (PMF) oznaczamy $\mathbb{P}[X=t]$ a dystrybuante (CDF) oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
 
 
 \section{Rodziny grafów}
@@ -16,12 +16,12 @@ Dla $n \in \mathbb{N}_+$ graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, 
 \graphfamily{Graf gwiazda}
 Dla $n \in \mathbb{N}_+$ graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi $E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$. Oznaczamy go przez $\mathrm{S}_n$.
 
-\graphfamily{Graf pełny}
-Dla $n \in \mathbb{N}_+$ graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. Oznaczamy go przez $\mathrm{K}_n$.
-
 \graphfamily{Graf cykliczny}
 Dla $n \in \mathbb{N}_+$ graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi 
 $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$. Oznaczamy go przez $\mathrm{C}_n$.
+
+\graphfamily{Graf pełny}
+Dla $n \in \mathbb{N}_+$ graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. Oznaczamy go przez $\mathrm{K}_n$.
 
 
 \section{Rozkłady prawdopodobieństwa}
@@ -34,12 +34,11 @@ Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z
 \end{itemize}  
 Zmienna losowa $X$ przyjmująca wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki ma rozkład Bernoulliego. Oznaczamy $X \sim \mathrm{Ber}(p)$.
  
-
 \distribution{Rozkład dwumianowy}
 Rozkład dwumianowy opisuje liczbę sukcesów w $n$ próbach Bernoulliego. Niech $X$ będzie zmienną losową przyjmującą wartości w $\{0,1,\dots,n\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
-\mathbb{P}[X = k] = \binom{n}{k}p^k(1-p)^{n-k}, \quad k \in \{0,1,\dots,n\}.
+\mathbb{P}[X = k] = \binom{n}{k}p^k{(1-p)}^{n-k}, \quad k \in \{0,1,\dots,n\}.
 \]
 Wartość oczekiwana i wariancja mają postać:
 \[
@@ -52,11 +51,11 @@ Rozkład geometryczny opisuje liczbę prób Bernoulliego potrzebnych do uzyskani
 Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
-    \mathbb{P}[X = k] = p(1 - p)^{k-1}, \quad k \in \mathbb{N}_+.
+    \mathbb{P}[X = k] = p{(1 - p)}^{k-1}, \quad k \in \mathbb{N}_+.
 \]
 Dystrybuanta jest równa:
 \[
-    \mathbb{P}[X\le t] = 1 = (1-p)^t
+    \mathbb{P}[X\le t] = 1 = {(1-p)}^t
 \]
 Wartość oczekiwana i wariancja mają postać:
 \[
@@ -69,7 +68,7 @@ Rozkład ujemny dwumianowy opisuje liczbę prób Bernoulliego potrzebnych do uzy
 Niech $X$ oznacza liczbę prób, przy czym każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$, a liczba sukcesów $m \in \mathbb{N}_+$ jest ustalona.  
 Wtedy:
 \[
-\mathbb{P}[X = k] = \binom{k-1}{m-1} p^m (1 - p)^{k - m}, \quad k \ge m.
+\mathbb{P}[X = k] = \binom{k-1}{m-1} p^m {(1 - p)}^{k - m}, \quad k \ge m.
 \]
 Wartość oczekiwana i wariancja mają postać:
 \[
@@ -98,133 +97,138 @@ Oznaczenie: $X \sim \mathcal{N}(\mu, \sigma^2)$.
 
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny. Zauważmy, że $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
-\section{Tożsamości i nierówności}
+\section{Fakty, sumy i nierówności}
 
-\begin{fact}\label{F:approximation_of_sum_by_an_integral}
-Niech $a,b\in\mathbb{N}$, $a<b$ oraz $f:[a;b]\to\mathbb{R}$ będzie funkcją ciągłą i monotoniczą.
-Jeśli $f$ jest rosnąca to
-\[
-    \int_{a}^b f(x)\; \mathrm{d}x \le \sum_{k=a}^{b} f(k)\le f(b) + \int_{a}^b f(x)\; \mathrm{d}x
-\]
-Jeśli $f$ jest malejąca to 
-\[
-    \int_{a}^b f(x)\; \mathrm{d}x \le \sum_{k=a}^{b} f(k)\le f(a) + \int_{a}^b f(x)\; \mathrm{d}x
-\]
-\end{fact}
-
-\begin{fact}\label{F:harmonic_upper_bound}
-Niech $n\in\mathbb{N}_+$. Wtedy
-\[
-    H_n \le 1 + \log(n)
-\]
-\end{fact}
-
-\begin{fact}\label{F:log_vs_x}
-Niech $x \in (0;1)$. Wtedy
-\[
-    \frac{1}{\log(\frac{1}{1-x})} \le \frac{1}{x}
-\]
-\end{fact}
-
-\begin{fact}[Nierówność między średnimi]\label{F:AM_GM}
-Niech $x_1,x_2,\dots,x_n\ge 0$. Wtedy
-\[
-    \sqrt[n]{x_1\cdots x_n} \le \frac{x_1  + \cdots + x_n}{n}
-\]
-Równoważnie możemy zapisać
-\[
-    \log(x_1\cdots x_n) \le n\cdot \log\left(\frac{x_1 + \cdots + x_n}{n}\right)
-\]
-\end{fact}
-
-\begin{fact}\label{F:binomial_0}
-Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
-\[
-    \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}= (x+y)^n
-\]
-\end{fact}
-
-\begin{fact}\label{F:binomial_1}
-Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
-\[
-    \sum_{k=0}^{n} k\binom{n}{k} x^k y^{n-k} = nx(x+y)^{n-1}
-\]
-\end{fact}
-
-\begin{fact}\label{F:geo_0}
-Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
-\[
-    \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}
-\]
-\end{fact}
-
-\begin{fact}\label{F:geo_1}
-Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
-\[
-    \sum_{k=0}^{n} k\cdot x^k=\frac{x}{(1-x)^2}\cdot (nx^{n+1}-(n+1)x^n+1)
-\]
-\end{fact}
-
-\begin{fact}\label{F:geo_0_inf}
-Niech $x\in (-1;1)$. Wtedy
-\[
-    \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}
-\]
-\end{fact}
-
-\begin{fact}\label{F:geo_1_inf}
-Niech $x\in (-1;1)$. Wtedy
-\[
-    \sum_{k=0}^{\infty} k\cdot x^k=\frac{x}{(1-x)^2}
-\]
-\end{fact}
-
-\begin{fact}\label{F:max_CDF}
+\begin{fact}\label{fact:max_CDF}
 Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. Wtedy 
 \[
     F_Y(t)=F_X^n(t)
 \]
 \end{fact}
 
-\begin{fact}\label{F:min_CDF}
+\begin{fact}\label{fact:min_CDF}
 Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. Wtedy 
 \[
-    F_Y(t)=1-(1-F_X(t))^n
+    F_Y(t)=1-{(1-F_X(t))}^n
 \]
 \end{fact}
 
-\begin{fact}\label{F:sum_of_geo_RV}
-Niech $X_1, X_2, \dots, X_m$ będą niezależnymi zmiennymi losowymi o rozkładzie geometrycznym $\mathrm{Geo}(p)$ oraz $Y=X_1 + X_2 + \cdots + X_m$. Wtedy 
+\begin{fact}\label{fact:sum_of_bin_RV}
+Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,p)$ będą niezależnymi zmiennymi losowymi. Wtedy 
+\[
+    X + Y \sim \mathrm{Bin}(n+m, p)
+\]
+\end{fact}
+
+\begin{fact}\label{fact:sum_of_geo_RV}
+Niech $X_1, X_2, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID oraz $Y=X_1 +  \cdots + X_m$. Wtedy 
 \[
     Y \sim \mathrm{NegBin}(m, p)
 \]
 \end{fact}
 
-\begin{fact}\label{F:sum_of_normal_RV}
+\begin{fact}\label{fact:sum_of_normal_RV}
 Niech $X \sim \mathcal{N}(\mu_1,\sigma_1^2)$ oraz $Y \sim \mathcal{N}(\mu_2,\sigma_2^2)$ będą niezależnymi zmiennymi losowymi. Wtedy 
 \[
     X + Y \sim \mathcal{N}(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)
 \]
 \end{fact}
 
-\begin{fact}\label{F:E_abs_normal}
-Niech $X \sim \mathcal{N}(\mu,\sigma^2)$. Wtedy
+\begin{summ}\label{summ:binomial_0}
+Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
 \[
-    \mathbb{E}[|X|] = 2\sigma\cdot \varphi\Big(\frac{\mu}{\sigma}\Big)+\mu\cdot (2\mathbf{\Phi}\Big(\frac{\mu}{\sigma}\Big)-1)
+    \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}= {(x+y)}^n
 \]
-\end{fact}
+\end{summ}
 
-\begin{fact}\label{F:montonicity_of_expectation}
-Niech $X,Y:\Omega\to\mathbb{R}$ będą zmiennymi losowymi takim, że dla każdego $\omega\in\Omega$ zachodzi $X(\omega)\le Y(\omega)$. Wtedy. 
+\begin{summ}\label{summ:binomial_1}
+Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
 \[
-    \mathbb{E}[X] \le \mathbb{E}[Y]
+    \sum_{k=0}^{n} k\cdot\binom{n}{k} x^k y^{n-k} = nx{(x+y)}^{n-1}
 \]
-\end{fact}
+\end{summ}
 
-\begin{fact}[Nierówność Jensena dla wartości oczekiwanej]\label{F:Jensen} 
+\begin{summ}\label{summ:geo_0}
+Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
+\[
+    \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}
+\]
+\end{summ}
+
+\begin{summ}\label{summ:geo_1}
+Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
+\[
+    \sum_{k=0}^{n} k\cdot x^k=\frac{x}{{(1-x)}^2}\cdot (nx^{n+1}-(n+1)x^n+1)
+\]
+\end{summ}
+
+\begin{summ}\label{summ:geo_0_inf}
+Niech $x\in (-1;1)$. Wtedy
+\[
+    \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}
+\]
+\end{summ}
+
+\begin{summ}\label{summ:geo_1_inf}
+Niech $x\in (-1;1)$. Wtedy
+\[
+    \sum_{k=0}^{\infty} k\cdot x^k=\frac{x}{{(1-x)}^2}
+\]
+\end{summ}
+
+\begin{inequality}\label{inequality:approximation_of_sum_by_an_integral}
+Niech $a,b\in\mathbb{N}$, $a<b$ oraz $f:[a;b]\to\mathbb{R}$ będzie funkcją ciągłą i malejąca. Wtedy
+\[
+    \int_{a}^b f(x)\; \mathrm{d}x \le \sum_{k=a}^{b} f(k)\le f(a) + \int_{a}^b f(x)\; \mathrm{d}x
+\]
+\end{inequality}
+
+\begin{inequality}\label{inequality:harmonic_upper_bound}
+Niech $n\in\mathbb{N}_+$. Wtedy
+\[
+    H_n \le 1 + \log(n)
+\]
+\end{inequality}
+
+\begin{inequality}\label{inequality:log_vs_x}
+Niech $x \in (0;1)$. Wtedy
+\[
+    \frac{1}{\log(\frac{1}{1-x})} \le \frac{1}{x}
+\]
+\end{inequality}
+
+\begin{inequality}[Nierówność między średnimi]\label{inequality:AM_GM}
+Niech $x_1,x_2,\dots,x_n\ge 0$. Wtedy
+\[
+    \log(x_1\cdots x_n) \le n\cdot \log\left(\frac{x_1 + \cdots + x_n}{n}\right)
+\]
+Równość zachodzi wtedy i tylko wtedy gdy $x_1=\cdots=x_n$.
+\end{inequality}
+
+\begin{inequality}[Nierówność Markova]\label{inequality:Markov}
+Niech $X$ będzie zmienną losową taką, że $X\ge 0$ oraz $\mathbb{E}[X]< \infty$. Wtedy dla dowolnego $t>0$
+\[
+    \mathbb{P}[X\ge t] \le \frac{\mathbb{E}}{t}
+\]
+\end{inequality}
+
+\begin{inequality}[Nierówność Cauchy’ego-Schwarza]\label{inequality:Cauchy_Schwarz}
+Niech $X,Y$ będą zmiennymi losowymi takimi, że $\mathbb{E}[X^2],\mathbb{E}[Y^2]< \infty$. Wtedy
+\[
+    \mathbb{E}[X\cdot Y] \le \sqrt{\mathbb{E}[X^2]}\cdot \sqrt{\mathbb{E}[Y^2]}
+\]
+\end{inequality}
+
+\begin{inequality}[Nierówność Jensena dla wartości oczekiwanej]\label{inequality:Jensen} 
 Niech $n\in\mathbb{N}_+$ oraz $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą zaś $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)]
 \]
-Jeśli $g$ jest wklęsła to nierówność zachodzi w drugą stronę.
-\end{fact}
+Jeśli $g$ jest wklęsła to nierówność zachodzi w drugą stronę. W szczególności, ponieważ $\max$ jest funkcją wypukłą, a $\min$ wklęsłą, mamy:
+\[
+    \max(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[\max(X_1,\dots,X_n)]
+\]
+\[
+    \min(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \ge \mathbb{E}[\min(X_1,\dots,X_n)]
+\]
+\end{inequality}

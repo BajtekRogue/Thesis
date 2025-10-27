@@ -8,7 +8,7 @@ taką, że $\mathbf{X}_t(v) = Q$ wtedy i tylko wtedy, gdy wierzchołek $v$ w chw
 
 \section{Model SI}
 
-Model \textbf{Susceptible--Infected (SI)} opisuje propagację w sieci, w której każdy wierzchołek znajduje się w jednym z dwóch stanów: podatny ($S$) lub zainfekowany ($I$).  
+Model \textbf{Susceptible—Infected (SI)} opisuje propagację w sieci, w której każdy wierzchołek znajduje się w jednym z dwóch stanów: podatny ($S$) lub zainfekowany ($I$).  
 Początkowo ustalony wierzchołek $s \in V$ znajduje się w stanie $I$, natomiast pozostałe wierzchołki są w stanie $S$. Mamy więc $\mathcal{Q} = \{S, I\}$.
 W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$.  
 Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.  
@@ -69,7 +69,7 @@ W modelu \textbf{SI} interesują nas następujące wielkości:
 
 \section{Model SIS}
 
-Model \textbf{Susceptible--Infected--Susceptible (SIS)} rozszerza model \textbf{SI} o powracanie wierzchołków zarażonych do stanu podatnego. Wierzchołek zainfekowany może powrócić do stanu podatnego z prawdopodobieństwem $\alpha \in (0;1)$. Tutaj mamy również $\mathcal{Q} = \{S, I\}$.
+Model \textbf{Susceptible—Infected—Susceptible (SIS)} rozszerza model \textbf{SI} o powracanie wierzchołków zarażonych do stanu podatnego. Wierzchołek zainfekowany może powrócić do stanu podatnego z prawdopodobieństwem $\alpha \in (0;1)$. Tutaj mamy również $\mathcal{Q} = \{S, I\}$.
 W modelu \textbf{SIS} liczba zainfekowanych wierzchołków może oscylować w czasie i nie musi osiągnąć stanu pełnego zakażenia. Dla upraszczenia notacji kładziemy $\beta=1-\alpha $.
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \[
@@ -93,7 +93,7 @@ S, & \text{jeśli } v \neq s
 
 \section{Model SIR}
 
-Model \textbf{Susceptible--Infected--Recovered (SIR)} rozszerza model \textbf{SI} o dodanie trzeciego stanu. Stanem tym jest $R$ (Recovered). Mamy zatem $\mathcal{Q} = \{S, I, R\}$.
+Model \textbf{Susceptible—Infected—Recovered (SIR)} rozszerza model \textbf{SI} o dodanie trzeciego stanu. Stanem tym jest $R$ (Recovered). Mamy zatem $\mathcal{Q} = \{S, I, R\}$.
 Stan $R$ jest trwały — wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić. Zarażony wierzchołek może przejść z $I$ do stanu $R$ z prawdopodobieństwem $\gamma \in (0;1)$. Dla upraszczenia notacji kładziemy 
 \begin{itemize}
     \item $\delta=1-\gamma$

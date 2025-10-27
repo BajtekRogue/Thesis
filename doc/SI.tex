@@ -193,7 +193,7 @@ Dla $\mathbb{E}[Y_t]$ po raz kolejny mamy idealne dopasowanie. Dla $\mathbb{E}[Z
 
 \section{Ograniczenia na czas zarażenia}
 
-Po rozważeniu dwóch rodzin grafów dostrzegamy znaczną różnicę w wartościach oczekiwnaych zmiennych $Y_t$ oraz $Z$. Dla grafów ścieżkowych minimalna liczb rund potrzebnych do zainfekowania całego grafu wynosi $t=n-1$ natomiast dla gwiazd jest to zaledwie $t=1$. Widzimy, że w pewnym sensie najlepszy przypadek sprzyjający szybkiej propagacji jest taki, w którym źródło $s$ jest połączone z wszyskimi pozostałymi wierzchołkami grafu. Z drugiej strony najgorsza sytuacja ma miejsce, jeśli istnieje daleko oddalony węzeł, szczególnie z mało liczbą ścieżek do niego prowadzących, tak jak dla grafów ścieżkowych. Teraz postaramy się uogólnić tą obserwację. 
+Po rozważeniu dwóch rodzin grafów dostrzegamy znaczną różnicę w wartościach oczekiwnaych zmiennych $Y_t$ oraz $Z$. Dla grafów ścieżkowych minimalna liczb rund potrzebnych do zainfekowania całego grafu wynosi $t=n-1$ natomiast dla gwiazd jest to zaledwie $t=1$. Widzimy, że w pewnym sensie najlepszy przypadek sprzyjający szybkiej propagacji jest taki, w którym źródło $s$ jest połączone z wszyskimi pozostałymi wierzchołkami grafu. Z drugiej strony najgorsza sytuacja ma miejsce, jeśli istnieje daleko oddalony węzeł, szczególnie z mało liczbą ścieżek do niego prowadzących, tak jak dla grafów ścieżkowych. Teraz postaramy się uogólnić tę obserwację. 
 
 \begin{theorem}\label{theorem:montonicity_of_total_infection}
 Niech $G=(V,E)$ będzie grafem spójnym a $G'=(V,E')$ spójnym podgrafem $G$. Załóżmy, że $\mathbf{X}$ jest procesem stochastycznym w modelu SI na $G$ oraz $G'$ jednocześnie z tym samym źródłem $s\in V$. Jeśli przez $X_v'$, $Y_t'$ oraz $Z'$ oznaczymy zmienne losowe w $G'$ odpowiadające tym w  $G$ to zachodzą następujące nierówności:
@@ -215,7 +215,7 @@ Niech $G=(V,E)$ będzie grafem o $n$ wierzchołkach zaś $s\in V$ będzie ustalo
 \end{theorem}
 
 \begin{proof}
-Dla $0\le j \le h$ kładziemy $A_j = \{v \in V : \mathrm{d}(s,v) = j\}$ oraz $a_j= |A_j|$. Oczywiście $a_0=1$ a więc $a_1+\cdots+ a_h = n -1 $. Dalej zdefiniujmy zmienne losowe $T_j = \min\{t\in\mathbb{N} : A_j \subseteq \mathcal{I}_t\}$. Zmienna $T_j$ określa czas potrzebny do zainfekowania wierzchołków oddalonych o $j$ od źródła. Udowodnijmy teraz przydatny lemmat.
+Dla $0\le j \le h$ kładziemy $A_j = \{v \in V : \mathrm{d}(s,v) = j\}$ oraz $a_j= |A_j|$. Oczywiście $a_0=1$ a więc $a_1+\cdots+ a_h = n -1 $. Dalej zdefiniujmy zmienne losowe $T_j = \min\{t\in\mathbb{N} : A_j \subseteq \mathcal{I}_t\}$. Zmienna $T_j$ określa czas potrzebny do zainfekowania wierzchołków oddalonych o $j$ od źródła. Udowodnijmy teraz przydatny lemat.
 
 \begin{lemma}\label{lemma:helper_lemma}
 Niech $U_j = T_j - T_{j-1}$ dla $1 \le j \le h$. Wtedy:
@@ -241,7 +241,7 @@ Wróćmy do udowadniania ograniczenia na $\mathbb{E}[Z]$. Mamy $T_h = \sum_{j=1}
 &\le h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{1}{h} \sum_{j=1}^{h} a_j\Big) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{n-1}{h}\Big) \Big) \\
 \end{aligned}
 \end{equation*}
-gdzie w linijce pierwszej wykorzystujemy \cref{lemma:helper_lemma}, w drugiej \cref{inequality:harmonic_upper_bound} a w piątej z nierówności między średnimi (\ref{inequality:AM_GM}).
+gdzie w linijce pierwszej wykorzystujemy \cref{lemma:helper_lemma}, w drugiej \cref{inequality:harmonic_upper_bound} a w piątej nierówność między średnimi (\ref{inequality:AM_GM}).
 \end{proof}
 
 Porównajmy przed chwilą udowodnione twierdzenie z poprzednimi wynikami. Dla rodziny $\mathrm{P}_n$ mamy $h = n - 1$. Dodatkowo korzystając z \Cref{inequality:log_vs_x} mamy
@@ -338,7 +338,7 @@ Podsumowując mamy następujący wynik:
 \]
 Jest to całkowicie zgodne z intuicją. Wierzchołki w grafie $\mathrm{C}_n$ zachowują się podobnie jak w grafach $\mathrm{P}_n$.
 
-W celu wyznaczenie rozkładu $Y_t$ dokonajmy obserwacji, że gdy dwie drogi zarażania spotkają się to propagacja dobiega końca. Każda z tych drug jak w przypadku grafu ścieżkowego ma rozkład dwumianowy. Możemy zapisać zatem
+W celu wyznaczenie rozkładu $Y_t$ dokonajmy obserwacji, że gdy dwie drogi zarażania spotkają się to propagacja dobiega końca. Każda z tych dróg jak w przypadku grafu ścieżkowego ma rozkład dwumianowy. Możemy zapisać zatem
 \[
     Y_t \sim \min\{n, 1+ L_t + R_t\}, \quad L_t,R_t\sim \mathrm{Bin}(t,p)
 \] 
@@ -508,7 +508,7 @@ Aby ogarniczyć $\mathbb{E}[Z]$ z góry skorzystamy z \Cref{theorem:upper_bound_
     \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}
 \]
 
-Ograniczenia te są różnych rzędów wielkości. Jednakże nie da się ich poprawić dla ogólnego drzewa znając tylko liczbę jego wierzchołków i wysokość. Ustalmy $n\in\mathbb{N}_+$ oraz $h\in\{1,2,\dots,n-1\}$ i poszukajmy drzew o $n$ wierzchołkach i wysokości $h$ osiągających zarówno dolne jak i górne ograniczenie na $\mathbb{E}[Z]$. Dla dolnej nierówności możemy wziąść drzewo składające się ze ścieżki długości $h$ oraz $n-1-h$ liści bezpośrednio przy korzeniu. Wtedy $\mathbb{E}[Z] \approx \frac{h}{p}$. Aby znaleść drzewo osiągające górne ograniczenie musimy wrócic do dowodu \Cref{theorem:upper_bound_on_EZ}. Udowadniając granicę na wartość oczekiwaną korzystamy z trzech nierówności. Pierwsza z nich to \cref{inequality:harmonic_upper_bound}. Jest ona bardzo ciasna a ponadto niezależy od grafu. Druga z nich to nierównośc między średnią arytmetyczną a geometryczną (\ref{inequality:AM_GM}). Aby uzyskać równość potrzebujemy mieć $a_1=\cdots=a_h$. Czyli innymi słowy, nasze drzewo ma tyle samo węzłów na każdej głebokości. Połóżmy $a_1=b$. Wtedy $hb=n-1$ a więc $b=\lfloor\frac{n-1}{h}\rfloor$. Na koniec zostaje nierówność wynikająca z \Cref{lemma:helper_lemma}. Sam lemat daje nierówność, której nie da się poprawić, co wiemy poprzez analize dla grafów gwiazd. Lecz dla drzewa nędzie ona najmniej luźna, jeżeli każdy wierzchołek w warstwie $A_j$ będzie mieć dokładnie jedną krawędź łaczącą go z wierzchołkiem w warstiwe $A_{j+1}$, gdzie $0\le j\le h-1$. Zatem drzewo składa się z korzenia oraz $b$ rozłącznych ścieżek każda o długości $h$. I taki graf osiąga ograniczenie górne na $\mathbb{E}[Z]$. Widzimy zatem, że nasze ograniczenia nie są do poprawnienia bez dodatkowych parametrów grafu. Podsumowując możemy następująco szacować przewidywany czas całkowitego poinformowania drzewa o wysokości $h$:
+Ograniczenia te są różnych rzędów wielkości. Jednakże nie da się ich poprawić dla ogólnego drzewa znając tylko liczbę jego wierzchołków i wysokość. Ustalmy $n\in\mathbb{N}_+$ oraz $h\in\{1,2,\dots,n-1\}$ i poszukajmy drzew o $n$ wierzchołkach i wysokości $h$ osiągających zarówno dolne jak i górne ograniczenie na $\mathbb{E}[Z]$. Dla dolnej nierówności możemy wziąść drzewo składające się ze ścieżki długości $h$ oraz $n-1-h$ liści bezpośrednio przy korzeniu. Wtedy $\mathbb{E}[Z] \approx \frac{h}{p}$. Aby znaleść drzewo osiągające górne ograniczenie musimy wrócic do dowodu \Cref{theorem:upper_bound_on_EZ}. Udowadniając granicę na wartość oczekiwaną korzystamy z trzech nierówności. Pierwsza z nich to \cref{inequality:harmonic_upper_bound}. Jest ona bardzo ciasna a ponadto niezależy od grafu. Druga z nich to nierównośc między średnią arytmetyczną a geometryczną (\ref{inequality:AM_GM}). Aby uzyskać równość potrzebujemy mieć $a_1=\cdots=a_h$. Czyli innymi słowy, nasze drzewo ma tyle samo węzłów na każdej głebokości. Połóżmy $a_1=b$. Wtedy $hb=n-1$ a więc $b=\lfloor\frac{n-1}{h}\rfloor$. Na koniec zostaje nierówność wynikająca z \Cref{lemma:helper_lemma}. Sam lemat daje nierówność, której nie da się poprawić, co wiemy poprzez analize dla grafów gwiazd. Lecz dla drzewa będzie ona najmniej luźna, jeżeli każdy wierzchołek w warstwie $A_j$ będzie miał dokładnie jedną krawędź łaczącą go z wierzchołkiem w warstiwe $A_{j+1}$, gdzie $0\le j\le h-1$. Zatem drzewo składa się z korzenia oraz $b$ rozłącznych ścieżek, każda o długości $h$. I taki graf osiąga ograniczenie górne na $\mathbb{E}[Z]$. Widzimy zatem, że nasze ograniczenia nie są do poprawnienia bez dodatkowych parametrów grafu. Podsumowując możemy następująco szacować przewidywany czas całkowitego poinformowania drzewa o wysokości $h$:
 \[
     \frac{h}{p} \le \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}
 \]

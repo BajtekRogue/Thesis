@@ -1,7 +1,7 @@
 \section{Notacja}
 
 Przez $\mathbb{N}$ oznaczamy zbiór $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \{1,2,3,\dots\}$. Moc zbioru $A$ oznaczamy $|A|$. Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
-Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną.
+Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. Przez $\delta(G)$ i $\Delta(G)$ oznaczamy odpowiednio minimalny i maksymalny stopień wierzchołka w grafie $G$.
 
@@ -148,12 +148,12 @@ Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. Wtedy
 \]
 \end{summ}
 
-\begin{summ}\label{summ:geo_0}
-Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
-\[
-    \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}
-\]
-\end{summ}
+% \begin{summ}\label{summ:geo_0}
+% Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
+% \[
+%     \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}
+% \]
+% \end{summ}
 
 \begin{summ}\label{summ:geo_1}
 Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
@@ -162,19 +162,19 @@ Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. Wtedy
 \]
 \end{summ}
 
-\begin{summ}\label{summ:geo_0_inf}
-Niech $x\in (-1;1)$. Wtedy
-\[
-    \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}
-\]
-\end{summ}
+% \begin{summ}\label{summ:geo_0_inf}
+% Niech $x\in (-1;1)$. Wtedy
+% \[
+%     \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}
+% \]
+% \end{summ}
 
-\begin{summ}\label{summ:geo_1_inf}
-Niech $x\in (-1;1)$. Wtedy
-\[
-    \sum_{k=0}^{\infty} k\cdot x^k=\frac{x}{{(1-x)}^2}
-\]
-\end{summ}
+% \begin{summ}\label{summ:geo_1_inf}
+% Niech $x\in (-1;1)$. Wtedy
+% \[
+%     \sum_{k=0}^{\infty} k\cdot x^k=\frac{x}{{(1-x)}^2}
+% \]
+% \end{summ}
 
 \begin{inequality}\label{inequality:approximation_of_sum_by_an_integral}
 Niech $a,b\in\mathbb{N}$, $a<b$ oraz $f:[a;b]\to\mathbb{R}$ będzie funkcją ciągłą i malejąca. Wtedy

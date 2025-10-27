@@ -42,7 +42,7 @@ S, & \text{jeśli } v \neq s
 Zdefiniujmy teraz zmienne losowe opisujące istotne własności.
 Dla każdego $v \in V$ definiujmy zmienną losową
 \[
-X_v = \min \{ t \in \mathbb{N} : \mathbf{X}_t(v) = I \}
+X_v = \min \{ t \in \mathbb{N} : v \in \mathcal{I}_t \}
 \]
 która określa pierwszą chwilę czasu zarażenia wierzchołka $v$.
 Jeśli taka chwila nie istnieje (tzn.\ w danym przebiegu procesu wierzchołek $v$ nigdy się nie zarazi), to przyjmujemy $X_v = \infty$.
@@ -56,8 +56,10 @@ Następnie dla każdego $t\in\mathbb{N}$ definiujemy zmienną losową
 \]
 oznaczającą liczbę zainfekowanych wierzchołków w chwili $t$. Dodatkowo definiujemy zmienną losową opisującą czas całkowitego zarażenia grafu:
 \[
-    Z = \max_{v \in V} X_v
+    Z = \min \{ t \in \mathbb{N} : \mathcal{I}_t = V\}
 \]
+Alternatywnie możemy zapisać $Z = \max_{v \in V} X_v$.
+
 W modelu \textbf{SI} interesują nas następujące wielkości:
 \begin{itemize}
     \item rozkład prawdopodobieństwa zmiennych $X_v$, $Y_t$ oraz $Z$

@@ -199,21 +199,21 @@ def main():
 
     os.makedirs(f"./img/{graph_family}", exist_ok=True)
 
-    # t_value, distribution_final_infection = compute_final_infection_distribution(graph_family, N, p, source, trials_distribution)
-    # plot_final_infection_distribution(graph_family, N, p, distribution_final_infection, t_value)
+    t_value, distribution_final_infection = compute_final_infection_distribution(graph_family, N, p, source, trials_distribution)
+    plot_final_infection_distribution(graph_family, N, p, distribution_final_infection, t_value)
 
     t_values, total_infection_count = compute_final_infection_expectation(graph_family, N, p, source, trials_expectation, t_values)
     plot_final_infection_expectations(graph_family, N, p, t_values, total_infection_count)
 
-    # data_full_infection, _ = compute_full_infection_data(graph_family, N, p, source, trials_distribution)
-    # plot_full_infection_distribution(graph_family, N, p, data_full_infection)
+    data_full_infection, _ = compute_full_infection_data(graph_family, N, p, source, trials_distribution)
+    plot_full_infection_distribution(graph_family, N, p, data_full_infection)
 
-    # means_full_infection = []
-    # for n in tqdm(n_values):
-    #     _, mean_full_infection = compute_full_infection_data(graph_family, n, p, source, trials_expectation)
-    #     means_full_infection.append(mean_full_infection)
+    means_full_infection = []
+    for n in tqdm(n_values):
+        _, mean_full_infection = compute_full_infection_data(graph_family, n, p, source, trials_expectation)
+        means_full_infection.append(mean_full_infection)
 
-    # plot_full_infection_expectation(graph_family, p, n_values, means_full_infection)
+    plot_full_infection_expectation(graph_family, p, n_values, means_full_infection)
 
 
 if __name__ == "__main__":

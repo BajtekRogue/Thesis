@@ -71,9 +71,53 @@ Wartość oczekiwana wynosi więc:
 =\frac{4-3p}{p{(2-p)}^2}.
 \end{aligned}
 \end{equation*}
-
+(patrz \cref{summ:geo_0_inf} oraz \cref{summ:geo_1_inf}).
 Wykonaliśmy dość sporo obliczeń jak na tak mały graf. 
-Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model SI.
+Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model \textbf{SI}.\@
+
+\section{Całkowita infekcja pewna}
+
+Dość intuicyjny jest fakt, że każdy wierzchołek zostanie kiedyś zarażony z prawdopodobieństwem $1$.
+Co za tym idzie cały graf znajdzie się w stanie $I$ oraz $Z<\infty$.
+Postaramy się teraz formalnie tego dowieść.
+
+\begin{theorem}\label{theorem:total_infection}
+Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
+Wtedy zachodzą następujące tożsamości:
+\[
+    \mathbb{P}[X_v = \infty] = 0, \quad \lim_{t\to\infty} \mathbb{E}[Y_t] = |V|, \quad \mathbb{P}[Z < \infty] = 1.
+\]   
+\end{theorem}
+
+\begin{proof}
+Weźmy $v\in V\setminus\{s\}$.
+Wybierzemy ustaloną ścieżkę od $s$ do $v$, $s = u_0u_1u_2\dots u_\ell = v$ gdzie $\ell$ to długość tej ścieżki ($\ell\ge 1$).
+Aby $v$ został zainfekowane, wystarczy, że po kolei na tej ścieżce zajdą sukcesy transmisji.
+Rozważmy następujące zdarzenia zainfekowania tych wierzchołków w bloku czasu indeksowanym przez $k\in\mathbb{N}$:
+\[
+    A_k = \{\forall j\in\{1,\dots,\ell\}\quad X_{u_j}=k\ell+j\}.
+\]
+Próby transmisji w różnych rundach są niezależne a więc $\mathbb{P}[A_k]=p^\ell > 0$.
+Jeśli chociaż jedno ze zdarzeń $A_k$ zajdzie to wtedy $v\in\mathcal{I}_t$ dla pewnego $t$.
+Mamy zatem
+\begin{equation*}
+\begin{aligned}
+\mathbb{P}[X_v=\infty] &\le \mathbb{P}\Big[\bigcap_{k=0}^{\infty} A_k^c\Big] = \lim_{m\to \infty} \mathbb{P}\Big[\bigcup_{k=0}^m A_k^c\Big] \\
+&=\lim_{m\to\infty} \prod_{k=0}^{m} 1-p^\ell = \lim_{m\to\infty} (1-p^\ell)^{m+1}=0.
+\end{aligned}
+\end{equation*}
+Stąd oczywiscie $\mathbb{P}[X_v=\infty]=0$.
+Dalej zauważmy, że $0\le Y_t\le |V|$. 
+Z Twierdzenia Lebesgue o zbieżności ograniczonej mamy 
+\[
+    \lim_{t\to\infty} \mathbb{E}[Y_t]=\mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}[\lim_{t\to\infty} \sum_{v\in V} \mathbf{1}_{v\in\mathcal{I}_t}]=\mathbb{E}[\lim_{t\to\infty}\sum_{v\in V} 1 ] = \mathbb{E} [|V|] = |V|.
+\]
+Wreszcie 
+\[
+    \mathbb{P}[Z = \infty] =  \mathbb{P}[\max_{v\in V} X_v = \infty] = 0.
+\]
+Stąd $\mathbb{P}[Z<\infty]=1$.
+\end{proof}
 
 
 \section{Grafy ścieżkowe}
@@ -164,7 +208,7 @@ Następnie dla $n\in\{1,2,\dots,1000\}$ tą samą liczbą symulacji oszacujmy $\
     \label{fig:path_Z}
 \end{figure}
 
-Wyniki eksperymentu niemal idealnie pokrywają się z przewidywanymi kształtami, to jest $1+tp$ dla $\mathbb{E}[Y_t]$ (zob. \Cref{fig:path_Yt}) oraz $\frac{n-1}{p}$ dla $\mathbb{E}[Z]$ (zob. \Cref{fig:path_Z}).
+Wyniki eksperymentu niemal idealnie pokrywają się z przewidywanymi kształtami, to jest $1+tp$ dla $\mathbb{E}[Y_t]$ (zob. \cref{fig:path_Yt}) oraz $\frac{n-1}{p}$ dla $\mathbb{E}[Z]$ (zob. \cref{fig:path_Z}).
 
 
 
@@ -198,9 +242,9 @@ Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 \begin{aligned}
 \mathbb{E}[Z]
 &= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] 
-= \sum_{k=1}^{\infty} \big(1 - \mathbb{P}[Z \le k-1]\big)
-= \sum_{k=1}^{\infty} \big(1 - (1 - q^{k-1})^n\big) \\[2mm]
-&= \sum_{k=0}^{\infty} \big(1 - (1 - q^k)^n\big)
+= \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1]
+= \sum_{k=1}^{\infty} 1 - (1 - q^{k-1})^n \\[2mm]
+&= \sum_{k=0}^{\infty} 1 - (1 - q^k)^n
 = \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} (-1)^j q^{kj} \Big) \\[2mm]
 &= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} (-1)^{j+1} q^{kj}
 = \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} (-1)^{j+1} (q^j)^k \\[2mm]
@@ -214,7 +258,7 @@ Zauważmy, że
     \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - (1 - q^k)^n\big.
 \]
 Z \Cref{inequality:approximation_of_sum_by_an_integral} możemy przybliżyć tę sumę całką.  
-Niech $f(x) = 1 - (1 - e^{-\lambda x})^n$, gdzie $\lambda = -\log(q)$.  
+Niech $f(x) = 1 - {(1 - e^{-\lambda x})}^n$, gdzie $\lambda = -\log(q)$.  
 Oczywiście $f(0) = 1$, $f(\infty) = 0$, a funkcja $f$ jest malejąca, więc:
 \[
     \int_{0}^{\infty} f(x)\, \mathrm{d}x \le \mathbb{E}[Z] \le 1 + \int_{0}^{\infty} f(x)\, \mathrm{d}x.
@@ -240,7 +284,7 @@ Stąd asymptotyczny czas pełnego zarażenia grafu $\mathrm{S}_n$ ma postać:
 Przeprowadźmy teraz symulacje.  
 Ustalmy $p = 0.2$ oraz $n = 1000$.  
 Dla każdego $t \in \{1, 2, \dots, \log(n)\}$ wykonajmy $2000$ powtórzeń propagacji na $\mathrm{S}_n$, a następnie dla $n \in \{1, 2, \dots, 1000\}$ oszacujmy $\mathbb{E}[Z]$.  
-Wyniki przedstawiono na \Cref{fig:star_Yt,fig:star_Z}.
+Wyniki przedstawiono na \Cref{fig:star_Yt} oraz \Cref{fig:star_Z}.
 
 \begin{figure}[!ht]
     \centering
@@ -271,7 +315,7 @@ Teraz postaramy się uogólnić tę obserwację.
 
 \begin{theorem}\label{theorem:montonicity_of_total_infection}
 Niech $G = (V, E)$ będzie grafem spójnym, a $G' = (V, E')$ jego spójnym podgrafem.  
-Załóżmy, że $\mathbf{X}$ opisuje proces stochastyczny w modelu SI prowadzony równocześnie na $G$ oraz $G'$ z tym samym źródłem $s \in V$.  
+Załóżmy, że $\mathbf{X}$ opisuje proces stochastyczny w modelu \textbf{SI} prowadzony równocześnie na $G$ oraz $G'$ z tym samym źródłem $s \in V$.  
 Jeśli przez $X_v'$, $Y_t'$ oraz $Z'$ oznaczymy odpowiednie zmienne losowe dla $G'$, to zachodzą nierówności:
 \[
     X_v \le X_v', \quad Y_t \ge Y_t', \quad Z \le Z'.

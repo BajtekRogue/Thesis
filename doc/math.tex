@@ -39,7 +39,7 @@ Oznaczamy go przez $\mathrm{K}_n$.
 
 \section{Rozkłady prawdopodobieństwa}
 
-\distribution{Rozkład Bernoulliego}
+\distribution{Rozkład Bernoulliego $\mathrm{Ber}(p)$}
 Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch:
 \begin{itemize}
     \item sukces z prawdopodobieństwem  $p \in (0;1)$,
@@ -48,7 +48,7 @@ Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z
 Zmienna losowa $X$ przyjmująca wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki ma rozkład Bernoulliego. 
 Oznaczamy $X \sim \mathrm{Ber}(p)$.
  
-\distribution{Rozkład dwumianowy}
+\distribution{Rozkład dwumianowy $\mathrm{Bin}(n,p)$}
 Rozkład dwumianowy opisuje liczbę sukcesów w $n$ próbach Bernoulliego. 
 Niech $X$ będzie zmienną losową przyjmującą wartości w $\{0,1,\dots,n\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
@@ -61,7 +61,7 @@ Wartość oczekiwana i wariancja mają postać:
 \]
 Oznaczamy $X \sim \mathrm{Bin}(n,p)$.
 
-\distribution{Rozkład geometryczny}
+\distribution{Rozkład geometryczny $\mathrm{Geo}(p)$}
 Rozkład geometryczny opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu.  
 Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
@@ -78,7 +78,7 @@ Wartość oczekiwana i wariancja mają postać:
 \]
 Oznaczamy $X \sim \mathrm{Geo}(p)$.
 
-\distribution{Rozkład ujemny dwumianowy}
+\distribution{Rozkład ujemny dwumianowy $\mathrm{NegBin}(m, p)$}
 Rozkład ujemny dwumianowy opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów.  
 Niech $X$ oznacza liczbę prób, przy czym każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$, a liczba sukcesów $m \in \mathbb{N}_+$ jest ustalona.  
 Wtedy:
@@ -91,7 +91,7 @@ Wartość oczekiwana i wariancja mają postać:
 \]
 Oznaczamy $X \sim \mathrm{NegBin}(m, p)$.
 
-\distribution{Rozkład normalny}
+\distribution{Rozkład normalny $\mathcal{N}(\mu, \sigma^2)$}
 Zdefiniujmy funkcje
 \[
     \varphi(t)=\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}, \quad \mathbf{\Phi}(t)=\int_{-\infty}^{t} \varphi(x)\;\mathrm{d}x.
@@ -113,6 +113,35 @@ Oznaczamy $X \sim \mathcal{N}(\mu, \sigma^2)$.
 
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
 Zauważmy, że $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
+
+\distribution{Rozkład umierający geometryczny $\mathrm{KGeo}(p,\alpha)$}
+Rozkład umierający geometryczny jest wariantem rozkładu geometrycznego, w którym proces może zostać przerwany z prawdopodobieństwem $\alpha$ w każdym kroku.
+Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+\cup\{\infty\}$.
+Wtedy:
+\[
+    \mathbb{P}[X=k] = p((1-p)(1-\alpha))^{k-1}, \quad k \in \mathbb{N}_+.
+\]
+oraz
+\[
+    \mathbb{P}[X=\infty] = \frac{\alpha(1-p)}{1-(1-p)(1-\alpha)}.
+\]
+Dystrybuanta jest równa:
+\[
+    \mathbb{P}[X\le t] = p\frac{1-((1-p)(1-\alpha))^t}{1-(1-p)(1-\alpha)}.
+\]
+Wartość oczekiwana wynosi nieskończoność.
+Natomiast
+\[
+    \mathbb{E}[X|X<\infty] = \frac{1}{1-(1-p)(1-\alpha)}.
+\]
+Oznaczamy $X \sim \mathrm{KGeo}(p,\alpha)$.
+% \begin{equation*}
+% \begin{aligned}
+% \mathbb{E}[X| X < \infty]
+% &= \frac{1}{\mathbb{P}[X_v<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X_v=t] \\
+% &= \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p = (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
+% \end{aligned}
+% \end{equation*}
 
 \section{Fakty, sumy i nierówności}
 
@@ -158,6 +187,15 @@ Wtedy
 \]
 \end{fact}
 
+\begin{fact}\label{fact:sum_of_bin_RV_2}
+Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
+Oznaczmy $Z=X+Y$.
+Wtedy
+\[
+    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j(1-p)^{n-j}r^{k-j}(1-r)^{m-(k-j)}.
+\]
+\end{fact}
+
 \begin{summ}\label{summ:binomial_0}
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. 
 Wtedy
@@ -174,11 +212,35 @@ Wtedy
 \]
 \end{summ}
 
+\begin{summ}\label{summ:geo_0}
+Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. 
+Wtedy
+\[
+    \sum_{k=0}^{n} x^k=\frac{1-x^{n+1}}{1x}.
+\]
+\end{summ}
+
 \begin{summ}\label{summ:geo_1}
 Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. 
 Wtedy
 \[
     \sum_{k=0}^{n} k\cdot x^k=\frac{x}{{(1-x)}^2}\cdot (nx^{n+1}-(n+1)x^n+1).
+\]
+\end{summ}
+
+\begin{summ}\label{summ:geo_0_inf}
+Niech $x\in(-1;1)$.
+Wtedy
+\[
+    \sum_{k=0}^{\infty} x^k=\frac{1}{1-x}.
+\]
+\end{summ}
+
+\begin{summ}\label{summ:geo_1_inf}
+Niech $x\in(-1;1)$.
+Wtedy
+\[
+    \sum_{k=0}^{\infty} kx^k=\frac{x}{(1-x)^2}.
 \]
 \end{summ}
 
@@ -219,7 +281,7 @@ Równość zachodzi wtedy i tylko wtedy gdy $x_1=\cdots=x_n$.
 Niech $X$ będzie zmienną losową taką, że $X\ge 0$ oraz $\mathbb{E}[X]< \infty$. 
 Wtedy dla dowolnego $t>0$
 \[
-    \mathbb{P}[X\ge t] \le \frac{\mathbb{E}}{t}.
+    \mathbb{P}[X\ge t] \le \frac{\mathbb{E}[X]}{t}.
 \]
 \end{inequality}
 

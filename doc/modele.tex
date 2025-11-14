@@ -1,7 +1,7 @@
 
 Dany jest graf spójny nieskierowany $G = (V, E)$. 
-Propagacja na takim grafie jest procesem stochastycznym. Z
-zakładamy, że czas dla tego procesu jest dyskretny i mierzony w jednostkach naturalnych, zatem za zbiór chwil przyjmujemy $\mathbb{N}$.  
+Propagacja na takim grafie jest procesem stochastycznym. 
+Zakładamy, że czas dla tego procesu jest dyskretny i mierzony w jednostkach naturalnych, zatem za zbiór chwil przyjmujemy $\mathbb{N}$.  
 Niech $\mathcal{Q}$ będzie skończonym zbiorem stanów, jakie mogą przyjmować wierzchołki $G$.  
 W każdej chwili $t \in \mathbb{N}$ każdy wierzchołek $v \in V$ znajduje się w pewnym stanie $Q \in \mathcal{Q}$.  
 Definiujemy zmienną losową $\mathbf{X} : \mathbb{N}\times V \to \mathcal{Q}$, taką, że $\mathbf{X}_t(v) = Q$ wtedy i tylko wtedy, gdy wierzchołek $v$ w chwili $t$ znajduje się w stanie $Q$.  
@@ -9,66 +9,66 @@ Definiujemy zmienną losową $\mathbf{X} : \mathbb{N}\times V \to \mathcal{Q}$, 
 \section{Model SI}
 
 Model \textbf{Susceptible—Infected (SI)} opisuje propagację w sieci, w której każdy wierzchołek znajduje się w jednym z dwóch stanów: podatny ($S$) lub zainfekowany ($I$).  
-Początkowo ustalony wierzchołek $s \in V$ znajduje się w stanie $I$, natomiast pozostałe wierzchołki są w stanie $S$. 
 Mamy więc $\mathcal{Q} = \{S, I\}$.  
-W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$.  
-Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.  
-W modelu \textbf{SI} liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
-Dla uproszczenia notacji kładziemy: 
-\begin{itemize}
-    \item $q=1-p$.
-    \item $\mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}$.
-    \item $\mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}$.
-\end{itemize}
-Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
+Początkowo ustalony wierzchołek $s \in V$ znajduje się w stanie $I$, natomiast pozostałe wierzchołki są w stanie $S$. 
+A więc
 \[
 \mathbf{X}_0(v) =
 \begin{cases}
 I, & \text{jeśli } v = s,\\
-S, & \text{jeśli } v \neq s,
+S, & \text{jeśli } v \neq s.
 \end{cases}
 \]
+W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$.  
+Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.  
+W modelu \textbf{SI} liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
+Dla uproszczenia notacji kładziemy 
 \[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
+    q=1-p,\quad \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}.
 \]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = 1,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I] = 0.
-\]
+Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
+\begin{equation*}
+\begin{aligned}
+\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S]
+    &= \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S]
+    &= 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I]
+    &= 0, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I]
+    &= 1.
+\end{aligned}
+\end{equation*}
 
-Zdefiniujmy teraz zmienne losowe opisujące istotne własności.  
-Dla każdego $v \in V$ definiujemy zmienną losową
+Zdefiniujmy teraz zmienne losowe opisujące istotne dla nas własności.  
+Dla każdego $v \in V$ definiujemy zmienną $X_v$ określającą chwilę czasu zarażenia wierzchołka $v$.  
+Formalnie
 \[
-X_v = \min \{ t \in \mathbb{N} : v \in \mathcal{I}_t \},
+    X_v = \min \{ t \in \mathbb{N} : v \in \mathcal{I}_t \}.
 \]
-która określa pierwszą chwilę czasu zarażenia wierzchołka $v$.  
 Jeśli taka chwila nie istnieje (tzn.\ w danym przebiegu procesu wierzchołek $v$ nigdy się nie zarazi), to przyjmujemy $X_v = \infty$.  
-Zauważmy, że dla każdego $t \in \mathbb{N}$ zachodzi 
+Później udowodnimy (\cref{theorem:total_infection}), że w modelu \textbf{SI} mamy $\mathbb{P}[X_v=\infty]=0$. 
+Wyznaczenie rozkładu $X_v$ jak i $\mathbb{E}[X_v]$ da nam sporo informacji o propagacji na grafie w zależności od jego topologi.
+
+Następnie dla każdego $t\in\mathbb{N}$ definiujemy zmienną losową $Y_t$ oznaczającą liczbę zainfekowanych wierzchołków w chwili $t$. 
+Zatem
 \[
-    \mathbb{P}[\mathbf{X}_t(v) = I] = \mathbb{P}[X_v \le t].
+    Y_t = |\mathcal{I}_t|.
 \]
-Następnie dla każdego $t\in\mathbb{N}$ definiujemy zmienną losową 
-\[
-    Y_t = |\mathcal{I}_t|,
-\]
-oznaczającą liczbę zainfekowanych wierzchołków w chwili $t$.  
-Dodatkowo definiujemy zmienną losową opisującą czas całkowitego zarażenia grafu:
+Interesować nas będzie rozkład prawdopodobieństwa $Y_t$ oraz wartość oczekiwana $\mathbb{E}[Y_t]$.
+Pokażemy, że $\mathbb{E}[Y_t] \to |V|$ wraz z $t\to\infty$.
+Dlatego też nie będziemy badać asymptotyki $\mathbb{E}[Y_t]$ względem $t$.
+
+Dodatkowo definiujemy zmienną $Z$ opisującą czas całkowitego zarażenia grafu:
 \[
     Z = \min \{ t \in \mathbb{N} : \mathcal{I}_t = V\}.
 \]
+Jeśli ta sytuacją nigdy by nie nastąpiła to mielibyśmy $Z=\infty$.
+Jednakże dla propagacji \textbf{SI} zachodzi zainfekowanie całego grafu jest zdarzeniem pewnym, $\mathbb{P}[Z<\infty]=1$.
 Alternatywnie możemy zapisać $Z = \max_{v \in V} X_v$.  
+Wyznacznie rozkładu $Z$ oraz wartości oczekiwanej dla konkretnych rodzin grafów będzie głównym celem w tym modelu.
+Dodatkowo interesować nas będzie asymptotyczne oszacowanie $\mathbb{E}[Z]$ względem liczby wierzchołków.
 
-W modelu \textbf{SI} interesują nas następujące wielkości:
-\begin{itemize}
-    \item rozkład prawdopodobieństwa zmiennych $X_v$, $Y_t$ oraz $Z$,
-    \item wartości oczekiwane zmiennych, $\mathbb{E}[X_v]$, $\mathbb{E}[Y_t]$ oraz $\mathbb{E}[Z]$,
-    \item ograniczenia dolne, górne oraz asymptotyka powyższych wartości oczekiwanych, kiedy wyznaczenie ich dokładnej wartości nie będzie możliwe.
-\end{itemize}
 
 \section{Model SIS}
 
@@ -79,25 +79,18 @@ W modelu \textbf{SIS} liczba zainfekowanych wierzchołków może oscylować w cz
 Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.  
 Przyjmujemy, że w każdej rundzie wierzchołki najpierw przekazują infekcję, a potem dopiero mogą powrócić w stan podatności.  
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
-\[
-\mathbf{X}_0(v) =
-\begin{cases}
-I, & \text{jeśli } v = s,\\
-S, & \text{jeśli } v \neq s,
-\end{cases}
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = \beta,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I] = \alpha.
-\]
+\begin{equation*}
+\begin{aligned}
+\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S]
+    &= \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S]
+    &= 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I]
+    &= \alpha, \\[4pt]
+\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I]
+    &= \beta.
+\end{aligned}
+\end{equation*}
 
 Zmienne losowe opisujące istotne własności są tutaj podobne jak w modelu \textbf{SI}.  
 Dla każdego $v \in V$ kładziemy
@@ -112,44 +105,72 @@ Dodatkowo definiujemy zmienną losową opisującą czas wygaśnięcia infekcji:
 \[
     Z = \min \{ t \in \mathbb{N} : \mathcal{I}_t = \varnothing\}.
 \]
-Będziemy chcieli w miarę możliwości wyznaczyć rozkłady i wartości oczekiwane tych zmiennych.
+Wygaśnięcie infekcji jest zachodzi z prawdopodobieństwem $1$ (patrz \cref{theorem:infection_dies_out}).
+W kontraście dla modelu \textbf{SI} mamy $\mathbb{P}[X_v=\infty] > 0$ a więc $\mathbb{E}[X_v]=\infty$.
+Przekierujemy naszą uwagę zatem na $\mathbb{E}[X_v|X_v<\infty]$.
+Dalej wykażemy, że $\mathbb{E}[Y_t]$ dążą do $0$, a więc także nie będą nas interesować.
+Skupimy się tylko na rozkładzie $Y_t$.
+Dla zmiennej $Z$ przyjrzyjmy się zarówno rozkładowi jak i wartości oczekiwanej.
 
 \section{Model SIR}
 
 Model \textbf{Susceptible—Infected—Recovered (SIR)} rozszerza model \textbf{SI} o dodanie trzeciego stanu.  
-Stanem tym jest $R$ (Recovered). Mamy zatem $\mathcal{Q} = \{S, I, R\}$.  
+Stanem tym jest $R$ (Recovered). 
+W tym modelu mamy $\mathcal{Q} = \{S, I, R\}$.  
 Stan $R$ jest trwały — wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić.  
-Zarażony wierzchołek może przejść z $I$ do stanu $R$ z prawdopodobieństwem $\gamma \in (0;1)$.  
-Dla uproszczenia notacji kładziemy:
-\begin{itemize}
-    \item $\delta=1-\gamma$.
-    \item $\mathcal{R}_t=\{v\in V: \mathbf{X}_t(v) = R\}$.
-\end{itemize}
+Zarażony wierzchołek może przejść z $I$ do stanu $R$ z prawdopodobieństwem $\alpha \in (0;1)$.  
+Dla uproszczenia notacji kładziemy 
+\[
+    \beta=1-\alpha,\quad \mathcal{R}_t=\{v\in V: \mathbf{X}_t(v) = R\}.
+\]
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
-\[
-\mathbf{X}_0(v) =
-\begin{cases}
-I, & \text{jeśli } v = s,\\
-S, & \text{jeśli } v \neq s,
-\end{cases}
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = I] = \gamma,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = \delta,
-\]
-\[
-\mathbb{P}[\mathbf{X}_{t+1}(u) = Q \mid \mathbf{X}_t(u) = R] =
-\begin{cases}
-1, & \text{dla } Q = R,\\
-0, & \text{dla } Q \in \{S, I\}.
-\end{cases}
-\]
+\begin{equation*}
+\begin{aligned}
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S]
+        &= \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S]
+        &= 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = S]
+        &= 0, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I]
+        &= 0, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I]
+        &= \beta, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = I]
+        &= \alpha, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = R]
+        &= 0, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = R]
+        &= 0, \\[4pt]
+    \mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = R]
+        &= 1.
+\end{aligned}
+\end{equation*}
 
+Tak jak poprzednio rozważmy zmienne 
+\[
+    X_v=\min\{t\in\mathbb{N}:v\in\mathcal{I}_t\}.
+\]
+W modelu \textbf{SIR} również zachodzi $\mathbb{P}[X_v=\infty]>0$.
+A więc poza rozkładem $X_v$ możemy wyznaczyć $\mathbb{E}[X_v|X_v<\infty]$.
+Istnieje stanu $R$ narzuca pomysł rozważania podobnej zmiennej na pierwszy czas wyzdrowienia wierzchołka $v$.
+Ale transmisja ze stanu $I$ do $R$ na pojedynczym wierzchołku jest rozkładem $\mathrm{Geo}(\alpha)$, a więc zmienna ta była by po prostu sumą rozkładu geometrycznego z $X_v$.
+Z tego powodu tego nie będziemy jej rozważać. 
+Zamiast rozważać liczbe tylko zainfekowanych lub tylko wyzdrowiałych wierzchołków będziemy rozważać liczbe nie podatnych wierzchołków po $t$ krokach.
+Kładziemy więc
+\[
+    Y_t=|\mathcal{I}_t\cup\mathcal{R}_t|.
+\]
+Podobnie jak w \textbf{SIS} zdarzenie $\mathbb{P}[\mathcal{I}_t=\varnothing]\to1$ wraz z $t\to\infty$ a więc możemy zdefiniować zmienną $Z$ oznaczającą czas wygaśnięcia infekcji.
+\[
+    Z = \min\{t\in\mathbb{N}: \mathcal{I}_t=\varnothing\}.
+\]
+Dodatkowo kładziemy zmienną $W$ będącą liczba finalnie wyzdrowiałych wierzchołków.
+\[
+    W = |\{v\in V : X_v < \infty\}|.
+\]
+Rozkłady $Z,W$ jak i ich wartości oczekiwane będą głownym zainteresowaniem w tym modelu.
+Zauważmy dodatkowo, że
+\[
+    \lim_{t\to\infty} Y_t = W.
+\]

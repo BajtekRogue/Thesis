@@ -1,39 +1,34 @@
 \section{Dwa wierzchołki, jedna krawędź}
 
-W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest SIS, przeanalizujmy graf $\mathrm{K}_2$. 
+W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest \textbf{SIS}, przeanalizujmy graf $\mathrm{K}_2$. 
 Niech $V=\{u,v\}$ oraz niech $u$ będzie wierzchołkiem startowym. 
 Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
 Oczywiście $X_u=0$. 
-Pierwsza runda jest identyczna jak w modelu SI, a więc $\mathbb{P}[X_v=1]=p$. 
+Pierwsza runda jest identyczna jak w modelu \textbf{SI}, a więc $\mathbb{P}[X_v=1]=p$. 
 Jeżeli węzeł $v$ nie zostanie poinformowany w rundzie pierwszej, a propagacja nie wygaśnie, to sytuacja się powtórzy. 
 Zachodzi to z prawdopodobieństwem $q\beta$. Aby $X_v=t$, potrzebujemy, by ten cykl nastąpił $t-1$ razy. 
-A więc
+Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny, 
 \[
-    \mathbb{P}[X_v=t]={(q\beta)}^{t-1}p, \quad t\ge 1.
+    X_v\sim \mathrm{KGeo}(p,\alpha).
 \]
-Istnieje jeszcze możliwość, że wierzchołek $v$ nigdy nie zostanie zainfekowany. 
-Wtedy
+A zatem
 \[
-    \mathbb{P}[X_v < \infty ] = \sum_{t=1}^{\infty} \mathbb{P}[X_v=t] = \sum_{t=1}^{\infty} {(q\beta)}^{t-1}p = \frac{p}{1-q\beta},
+    \mathbb{P}[X_v=t]=p{(q\beta)}^{t-1}, \quad t\ge 1.
+\]
+oraz
+\[
+    \mathbb{P}[X_v < \infty ] = \frac{p}{1-q\beta}, \quad \mathbb{P}[X_v=\infty] =\frac{q\alpha}{1-q\beta}.
 \] 
-a zatem
-\[
-    \mathbb{P}[X_v=\infty] = 1 - \frac{p}{1-q\beta} = \frac{q\alpha}{1-q\beta}.
-\]
 Z założeń modelu $q,\alpha\in(0;1)$, a zatem $\mathbb{P}[X_v=\infty]\ne 0$.  
-Wynika z tego, że $\mathbb{E}[X_v] = \infty$. 
+Mamy $\mathbb{E}[X_v] = \infty$. 
 Powinniśmy się więc spodziewać, że niezależnie od wartości parametrów $p$ oraz $\alpha$ infekcja się nie rozprzestrzeni. 
 Nie jest to jednak pożądany rezultat. 
-Policzmy zatem wartość oczekiwaną warunkową:
-\begin{equation*}
-\begin{aligned}
-\mathbb{E}[X_v| X_v < \infty]
-&= \frac{1}{\mathbb{P}[X_v<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X_v=t] \\
-&= \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p = (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
-\end{aligned}
-\end{equation*}
+Wartość oczekiwaną warunkowa wynosi:
+\[
+    \mathbb{E}[X_v| X_v < \infty] = \frac{1}{1-q\beta}.
+\]
 
 Następnie spróbujmy wyznaczyć rozkład $Y_t$. 
 Zauważmy, że $Y_t\in\{0,1,2\}$. 
@@ -51,9 +46,9 @@ Prawdopodobieństwa przejść są następujące:
 \mathbb{P}[Y_{t+1} = 2 | Y_t = 2 ] &= \beta^2.
 \end{aligned}
 \end{equation*}
-Z wzoru na prawdopodobieństwo całkowite dla $\ell \in \{0,1,2\}$ mamy:
+Z wzoru na prawdopodobieństwo całkowite dla $k\in \{0,1,2\}$ mamy:
 \[
-    \mathbb{P}[Y_{t+1} = \ell] = \sum_{k=0}^{2} \mathbb{P}[Y_{t+1}=\ell | Y_t=k]\cdot \mathbb{P}[Y_t=k].
+    \mathbb{P}[Y_{t+1} = k] = \sum_{j=0}^{2} \mathbb{P}[Y_{t+1}=k | Y_t=j]\cdot \mathbb{P}[Y_t=j].
 \]
 Oznaczmy $a_t=\mathbb{P}[Y_t=0], \; b_t=\mathbb{P}[Y_t=1], \; c_t=\mathbb{P}[Y_t=2]$. 
 Oczywiście $a_0=0, \; b_0=1, \; c_0=0$. 
@@ -80,8 +75,7 @@ c_t
 \]
 Wtedy $\mathbf{y}_{t+1}=\mathbf{P}\mathbf{y}_t$, a więc $\mathbf{y}_{t}=\mathbf{P}^t\mathbf{y}_0$. 
 Jeśli chodzi o wartość oczekiwaną, to mamy $\mathbb{E}[Y_t]=0\cdot a_t + 1\cdot b_t + 2\cdot c_t = b_t+2c_t$. 
-Skoro stan bez zainfekowanych wierzchołków jest absorbujący i osiągalny z dowolnego innego stanu, to zachodzi $a_t \to  1$, natomiast $b_t, c_t \to 0$. 
-A więc
+Z \Cref{theorem:infection_dies_out} mamy
 \[
     \lim_{t\to\infty} \mathbb{E}[Y_t] = 0.
 \]
@@ -145,9 +139,9 @@ Ostatecznie otrzymujemy:
 \]
 
 
-\section{Prawie pewne wygaśnięcie}
+\section{Pewne wygaśnięcie}
 
-W powyższych obliczeniach mogliśmy zauważyć istotną różnicę pomiędzy modelem SI a SIS.
+W powyższych obliczeniach mogliśmy zauważyć istotną różnicę pomiędzy modelem \textbf{SI} a \textbf{SIS}.\@
 Mianowicie jest niezerowe prawdopodobieństwo, że wierzchołki w grafie nigdy nie zostaną zainfekowane, a oczekiwana liczba zarażonych dąży wraz z upływem czasu do zera.
 Dla tak małego grafu jakim jest $\mathrm{K}_2$ jest to dość niespodziewany rezultat. 
 Postaramy się teraz udowodnić tą obserwację dla dowolnego grafu.
@@ -156,13 +150,7 @@ Postaramy się teraz udowodnić tą obserwację dla dowolnego grafu.
 Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
 Wtedy zachodzą następujące tożsamości:
 \[
-    \mathbb{P}[X_v = \infty] > 0,
-\]
-\[
-    \lim_{t\to\infty} \mathbb{E}[Y_t] = 0,
-\]
-\[
-    \mathbb{P}[Z < \infty] = 1.
+    \mathbb{P}[X_v = \infty] > 0, \quad \lim_{t\to\infty} \mathbb{E}[Y_t] = 0, \quad \mathbb{P}[Z < \infty] = 1.
 \]
 \end{theorem}
 
@@ -183,7 +171,7 @@ Kładziemy
 \[
     r^*=\min\{r(\mathcal{I}_t):\mathcal{I}_t\subseteq V\}.
 \]
-Prawdopodobieństwo przetrwania infekcji po $k$ rundach wynosi $(1-r^*)^k$.
+Prawdopodobieństwo przetrwania infekcji po $k$ rundach wynosi ${(1-r^*)}^k$.
 Ale skoro $r^*>0$ to wartość ta dąży do $0$ wraz z $k\to \infty$.
 Mamy więc $\mathbb{P}[Z=\infty] = 0$ co jest równoważne z $\mathbb{P}[Z<\infty]=1$.
 
@@ -194,3 +182,67 @@ Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
     \lim_{t\to\infty} \mathbb{E}[Y_t] = \mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}[0]=0.
 \]
 \end{proof}
+
+
+\section{Grafy pełne}
+
+Po analizie dla $\mathrm{K}_2$ postarajmy się ją uogólnić dla $\mathrm{K}_n$.
+Ze względu na symetrie dowolny stan z taką samą liczbą zainfekowanych wierzchołków jest izomorficzny.
+Z \Cref{theorem:infection_dies_out} wiemy, że $\mathbb{E}[Y_t]\to 0$.
+Ustalmy $t\in\mathbb{N}$.
+Niech $A_t$ będzie zmienną losową oznaczająca liczbę wierzchołków, które przetrwają rundę $t$ oraz $B_t$ liczbę nowo zainfekowanych wierzchołków w tej rundzie.
+Formalnie 
+\[
+    A_t=|\{v\in V: v \in \mathcal{S}_t \cap \mathcal{S}_{t+1}\}|, \quad B_t=|\{v\in V: v\in\mathcal{S}_t\cap \mathcal{I}_{t+1}\}|.
+\]
+Oznaczmy $i=Y_t$ oraz $j=Y_{t+1}$. 
+Każdy zarażony wierzchołek może przetrwać niezależnie od siebie w formacie próby Bernoulliego.
+A więc $A_t\sim \mathrm{Bin}(i,\beta)$.
+Dalej każdy podatny wierzchołek może zostać zarażony niezależnie przez $n-i$ sąsiadów.
+Szansa, że któremuś z nich się uda wynosi $1-q^i$.
+Stąd $B_t\sim\mathrm{Bin}(n-i,1-q^i)$.
+Ponadto $Y_{t+1}=A_t+B_t$.
+Możemy policzyć warunkową liczbę oczekiwanych zarażeń w $t+1$ kroku:
+\[
+    \mathbb{E}[Y_{t+1}|Y_t=i]=\mathbb{E}[A_t+B_t]=i\beta+(n-i)(1-q^i).
+\]
+Oznaczmy $P_{i\to j}=\mathbb{P}[Y_{t+1}=j|Y_t=i]$ dla $j\in\{0,1,\dots,n\}$.
+Wtedy korzystając z \Cref{fact:sum_of_bin_RV_2} mamy
+\[
+    P_{i\to j} = \sum_{\ell=\max\{0,j-(n-i)\}}^{\min\{i,j\}} \binom{i}{\ell}\binom{n-i}{j-\ell}\beta^\ell\alpha^{i-\ell}(1-q^i)^{j-\ell}(q^i)^{n-i-(j-\ell)}.
+\]
+Jest to uogólnienie prawdopodobieństw przejść, które wyznaczyliśmy wcześniej dla $n=2$.
+Ponownie z prawdopodobieństwa całkowitego dla $j\in\{0,1,\dots,n\}$ mamy
+\[
+    \mathbb{P}[Y_{t+1}=j]=\sum_{i=0}^{n}\mathbb{P}[Y_{t+1}=j|Y_t=i]\cdot\mathbb{P}[Y_t=i].
+\]
+Zdefiniujmy wektor
+\[
+    \mathbf{y}_t= \begin{bmatrix}
+        \mathbb{P}[Y_t=0] \\
+        \mathbb{P}[Y_t=1] \\
+         \vdots \\ 
+        \mathbb{P}[Y_t=n] \\
+    \end{bmatrix}
+\]
+Wtedy $\mathbf{y}_t^{(k)}=\mathbb{P}[Y_t=k]$ dla $k\in\{0,1,\dots,n\}$.
+W uproszczonej notacji możemy zapisać
+\[
+    \mathbf{y}_{t+1}^{(j)}=\sum_{i=0}^{n} P_{i\to j} \cdot \mathbf{y}_t^{(i)}.
+\]
+Macierz przejść dla naszego łańcucha Markova dana jest
+\[
+    \mathbf{P}=\begin{bmatrix} P_{i\to j}\end{bmatrix}_{0\le i,j\le n}.
+\]
+Mamy $\mathbf{y}_{t+1}=\mathbf{P}\mathbf{y}_t$ jak i $\mathbf{y}_t=\mathbf{P}^t\mathbf{y}_0$.
+Zbudowanie tej macierzy jest możliwe w czasie $\mathcal{O}(n^3)$.
+
+Jeśli chodzi o zmienną $Z$ to mamy $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 0]$.
+Kładziemy
+\[
+    \mathbf{Q}=\begin{bmatrix}P_{i\to j}\end{bmatrix}_{1\le i,j\le n}, \quad \mathbf{z}_t=\begin{bmatrix}\mathbb{P}[Y_t]=k\end{bmatrix}_{1\le k \le n}, \quad \mathbf{1} = \begin{bmatrix} 1 \end{bmatrix}_{1\le k \le n}.
+\]
+Licząc wartość oczekiwaną dostajemy
+\[
+    \mathbb{E}[Z] = \sum_{t=0}^{\infty} \mathbb{P}[Z>t] = \sum_{t=0}^{\infty} \mathbf{1}^\top\mathbf{z}_t= \sum_{t=0}^{\infty} \mathbf{1}^\top\mathbf{Q}^t \mathbf{z}_0 = \mathbf{1}^\top{(\mathbf{I}-\mathbf{Q})}^{-1} \mathbf{z}_0.
+\]

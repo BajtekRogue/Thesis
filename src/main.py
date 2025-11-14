@@ -169,7 +169,7 @@ def theoretical_expectation_full_infection(graph_family, n, p):
         "path": lambda n, p: (n - 1) / p,
         "star": lambda n, p: np.log(n) / np.log(1 / (1 - p)),
         "tree": lambda n, p: np.zeros_like(n, dtype=float) if isinstance(n, np.ndarray) else 0,
-        "complete": lambda n, p: np.full_like(n, 5, dtype=float) if isinstance(n, np.ndarray) else 5,
+        "complete": lambda n, p: np.full_like(n, 2, dtype=float) if isinstance(n, np.ndarray) else 2,
         "cycle": lambda n, p: n / (2 * p)  - np.sqrt(n * (1 - p) / (2 * np.pi)) / p
     }
     return functions[graph_family](n, p)
@@ -180,7 +180,7 @@ def time_function(graph_family, graph, n, p):
         "path": lambda G, n, p: n - 1,
         "star": lambda G, n, p: int(np.log(n)),
         "tree": lambda G, n, p: 0,
-        "complete": lambda G, n, p: 5,
+        "complete": lambda G, n, p: 2,
         "cycle": lambda G, n, p: (n - 1) // 2  
     }
     return functions[graph_family](graph, n, p)

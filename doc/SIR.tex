@@ -1,0 +1,63 @@
+
+\section{Dwa wierzchołki, jedna krawędź}
+
+Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ oraz krawędziach $E=\{\{u,v\}\}$ oraz wierzchołku początkowym $u$.
+Rozkład $X_v$ będzie tutaj taki sam jak dla modelu \textbf{SIS} a więc
+\[
+    \mathbb{P}[X_v=t]=p(q\beta)^{t-1}, \quad t\ge 1
+\]
+oraz
+\[
+    \mathbb{P}[X_v<\infty] = \frac{p}{1-q\beta},\quad \mathbb{E}[X_v|X_v<\infty] = \frac{1}{1-q\beta}.
+\]
+Dalej zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
+\[
+    \mathbb{P}[Y_t=2] = \sum_{k=1}^{t} p(q\beta)^{k-1} = p\frac{1-q^t\beta^t}{1-q\beta}, \quad \mathbb{P}[Y_t=1]=1-p\frac{1-q^t\beta^t}{1-q\beta}.
+\]
+Stąd
+\[
+    \mathbb{E}[Y_t] = 1 + p\frac{1-q^t\beta^t}{1-q\beta}.
+\]
+Przechodząc w granicę $t\to\infty$ dostajemy
+\[
+    \mathbb{P}[W=1]=1-\frac{p}{1-q\beta}, \quad \mathbb{P}[W=2] = \frac{p}{1-q\beta}.
+\]
+Co oczywiście daje nam natychmiast
+\[
+    \mathbb{E}[W] = 1 + \frac{p}{1-q\beta}.
+\]
+Jeśli chodzi o zmienną $Z$ to sytuacja dla tego grafu jest identyczna jak w modelu \textbf{SIS}.
+\[
+    \mathbb{E}[Z] = \frac{1-\beta^2+p\beta}{\alpha^2(q+\beta)}.
+\]
+
+
+\section{Pewne wygaśnięcie}
+
+Podobnie jak w \textbf{SIS} w modelu \textbf{SIR} wygaśnięcie infekcji jest zdarzeniem pewnym. 
+Różnica polega na tym, że wszystkie kiedykolwiek zainfekowane węzły przejdą w stan wyzdrowiały.
+Sformalizujmy ten fakt prostym twierdzeniem.
+
+\begin{theorem}\label{theorem:infection_dies_out2}
+Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
+Wtedy zachodzą następujące tożsamości:
+\[
+    \mathbb{P}[X_v = \infty] > 0, \quad \mathbb{P}[Z < \infty] = 1.
+\]
+Ponadto dla $k\in\mathbb{N}$ zachodzi 
+\[
+    \mathbb{P}[W=k]=\lim_{t\to\infty}\mathbb{P}[Y_t=k], \quad \mathbb{E}[W]=\lim_{t\to\infty}\mathbb{E}[Y_t].
+\]
+\end{theorem}
+
+\begin{proof}
+Fakt $\mathbb{P}[X_v = \infty] > 0$ możemy udowodnić analogicznie jak w dowodzie \Cref{theorem:infection_dies_out}.
+Podobnie $\mathbb{P}[Z < \infty] = 1$ bo wymarcie infekcji jest stanem absorbującym.
+Zauważmy, że dla $v\in V$ mamy
+\[
+    \lim_{t\to\infty} \mathbf{1}_{v\in\mathcal{I}_t\cup\mathcal{R}_t} \xrightarrow{\text{a.s}} \mathbf{1}_{X_v<\infty}.
+\]
+Ponadto $Y_t\le Y_{t+1}$ oraz $Y_t\le |V|$.
+A więc z Twierdzenia Lebesgue dostajemy wzory na rozkład i wartość oczekiwaną zmiennej $W$.
+\end{proof}
+

@@ -10,6 +10,7 @@ oraz
 \[
     \mathbb{P}[X_v<\infty] = \frac{p}{1-q\beta},\quad \mathbb{E}[X_v|X_v<\infty] = \frac{1}{1-q\beta}.
 \]
+
 Dalej zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
 \[
     \mathbb{P}[Y_t=2] = \sum_{k=1}^{t} p(q\beta)^{k-1} = p\frac{1-q^t\beta^t}{1-q\beta}, \quad \mathbb{P}[Y_t=1]=1-p\frac{1-q^t\beta^t}{1-q\beta}.
@@ -26,9 +27,12 @@ Co oczywiście daje nam natychmiast
 \[
     \mathbb{E}[W] = 1 + \frac{p}{1-q\beta}.
 \]
-Jeśli chodzi o zmienną $Z$ to sytuacja dla tego grafu jest identyczna jak w modelu \textbf{SIS}.
+
+Jeśli chodzi o zmienną $Z$ to propagacja zakończy się gdy wierzchołek $v$ wyzdrowieje lub $u$ zostanie poinformowany.
+Dzieje się to z prawdopodobieństwem $1-q\beta$ a więc $Z\sim\mathrm{Geo}(1-q\beta)$.
+Mamy
 \[
-    \mathbb{E}[Z] = \frac{1-\beta^2+p\beta}{\alpha^2(q+\beta)}.
+    \mathbb{E}[Z]=\frac{1}{1-q\beta}.
 \]
 
 
@@ -61,3 +65,76 @@ Ponadto $Y_t\le Y_{t+1}$ oraz $Y_t\le |V|$.
 A więc z Twierdzenia Lebesgue dostajemy wzory na rozkład i wartość oczekiwaną zmiennej $W$.
 \end{proof}
 
+\section{Grafy gwiezdne}
+
+Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, gdzie źródłem jest wierzchołek $0$.
+Dla $v\in\{1,2,\dots,n\}$ mamy $X_v\sim\mathrm{KGeo}(p,\alpha)$.
+Zauważmy natomiast, że zmienne $X_1,X_2,\dots,X_n$ sa zależne, bo gdy centralny wierzchołek wyzdrowieje żaden z liści nie może już zostać zainfekowany.
+
+Przyjrzyjmy się teraz zmiennej $Y_t$. 
+Połóżmy $C=\min\{\tau\in\mathbb{N}:0\in\mathcal{R}_\tau\}$.
+Jeśli centrum zarazi się po $j$ rundach to liście gwiazdy mogą byc zarażane przez $\min\{j,t\}$ rund.
+$Y_t$ zachowuje się tak samo jak w modelu \textbf{SI} dla grafów gwiezdnych.
+Przypomnijmy, że rozkład ten wynosi $1+B_{j,t}$ gdzie $B_j\sim\mathrm{Bin}(n,1-q^{\min\{j,t\}})$.
+A więc
+\[
+    \mathbb{P}[Y_t=k+1|C=j] = \binom{n}{k}(1-q^{\min\{j,t\}})(q^{\min\{j,t\}})^{n-k}.
+\]
+Ponadto $C\sim\mathrm{Geo}(\alpha)$ a więc $\mathbb{P}[C=j]=\alpha\beta^{j-1}$.
+Z prawdopodobieństwa całkowitego dostajemy
+\begin{equation*}
+\begin{aligned}
+\mathbb{P}[Y_t=k+1] &=\sum_{j=1}^\infty \mathbb{P}[Y_t=k+1|C=j]\cdot\mathbb{P}[C=j] = \\
+&=\sum_{j=1}^\infty \binom{n}{k}(1-q^{\min\{j,t\}})^k(q^{\min\{j,t\}})^{n-k}\alpha\beta^{j-1} = \\
+&= \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty (1-q^{\min\{j,t\}})^k(q^{\min\{j,t\}})^{n-k}\beta^j.
+\end{aligned}
+\end{equation*}
+Aby obliczyć wartość oczekiwana skorzystamy z \Cref{lemma:Formula_EYt}.
+Mamy $\mathbb{P}[X_0\le t]=1$ a dla $v\ne 0$ mamy $\mathbb{P}[X_v\le t] = p\frac{1-(q\beta)^t}{1-q\beta}$.
+A więc
+\[
+    \mathbb{E}[Y_t]=\sum_{v\in V}\mathbb{P}[X_v\le t] = 1 + np\frac{1-(q\beta)^t}{1-q\beta}.
+\]
+Licząc granice tych wyrażeń dla $t\to\infty$ dostajemy
+\[
+    \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty (1-q^j)^k(q^j)^{n-k}\beta^j.
+\]
+oraz
+\[
+    \mathbb{E}[W]=1+\frac{np}{1-q\beta}.
+\]
+
+Propagacja się zakończy gdy centrum wyzdrowieje lub wszystkie liście zostaną zarażone. 
+Stąd mamy
+\begin{equation*}
+\begin{aligned}
+\mathbb{P}[Z>t] &=\mathbb{P}[C>t]\cdot\mathbb{P}[Y_t<n+1|C>t]= \\
+&=\beta^t(1-\mathbb{P}[Y_t=n+1|C>t]) = \beta^t(1-(1-q^t)^n).
+\end{aligned}
+\end{equation*}
+Bezpośrednie liczenie wartości oczekiwanej zmiennej $Z$ nie da nam zwiezłej postaci.
+Postarajmy się ją za to oszacować korzystając z \Cref{inequality:approximation_of_sum_by_an_integral}.
+Oznaczmy $a=-\log(q),\; b=-\log(\beta)$ oraz $g(x)=e^{-bx}(1-(1-e^{-ax})^n)$.
+Wtedy
+\[
+    \mathbb{E}[Z] \approx \int_{0}^{\infty} g(x) \; \mathrm{d}x.
+\]
+Dalej
+\[
+    \int_{0}^{\infty} e^{-bx}(1-(1-e^{-ax})^n)\; \mathrm{d}x = \int_{0}^{\infty} e^{-bx}\mathrm{d}x - \int_{0}^{\infty} e^{-bx}(1-e^{-ax})^n\mathrm{d}x.
+\]
+Wartość pierwszej całki wynosi $\frac{1}{b}$.
+Aby policzyć drugą podstawmy $u=1-e^{-ax}$.
+Oczywiście $u(0)=0, \; u(\infty)=1$.
+Wtedy też $x=-\frac{1}{a}\log(1-u)$ oraz $\mathrm{d}x=\frac{1}{a}e^{ax}\mathrm{d}u$.
+Mamy zatem $e^{-bx}=(1-u)^{\frac{b}{a}}, \; e^{ax}=\frac{1}{1-u}$.
+A więc całka wynosi
+\begin{align*}
+&\frac{1}{a}\int_{0}^{1} u^n (1-u)^{\frac{b}{a}-1} \;\mathrm{d}u = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
+&=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} = \frac{n!}{b} \cdot \frac{1}{(\frac{b}{a}+1)_n}.
+\end{align*}
+gdzie skorzystaliśmy z \Cref{fact:beta_gamma}.
+Ostatecznie otrzymujemy
+\[
+    \mathbb{E}[Z] \approx \frac{1}{b} \cdot \Big(1 - \frac{n!}{(\frac{b}{a}+1)_n}\Big) = \frac{1}{\log(\beta)} \cdot \frac{n!}{\big(\frac{\log(\beta)}{\log(q)}+1\big)_n} - \frac{1}{\log(\beta)}.
+\]

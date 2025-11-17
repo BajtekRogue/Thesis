@@ -162,15 +162,13 @@ Kładziemy więc
     Y_t=|\mathcal{I}_t\cup\mathcal{R}_t|.
 \]
 Podobnie jak w \textbf{SIS} zdarzenie $\mathbb{P}[\mathcal{I}_t=\varnothing]\to1$ wraz z $t\to\infty$ a więc możemy zdefiniować zmienną $Z$ oznaczającą czas wygaśnięcia infekcji.
+Dla uproszczenia będziemy rozważać moment w którym żaden nowy wierzchołek nie może byc zarażony.
+A więc 
 \[
-    Z = \min\{t\in\mathbb{N}: \mathcal{I}_t=\varnothing\}.
+    Z = \min\{t\in\mathbb{N}: \forall v\in\mathcal{I}_t \quad \mathcal{S}_t\cap\mathrm{N}(v)=\varnothing\}.
 \]
 Dodatkowo kładziemy zmienną $W$ będącą liczba finalnie wyzdrowiałych wierzchołków.
 \[
     W = |\{v\in V : X_v < \infty\}|.
 \]
 Rozkłady $Z,W$ jak i ich wartości oczekiwane będą głownym zainteresowaniem w tym modelu.
-Zauważmy dodatkowo, że
-\[
-    \lim_{t\to\infty} Y_t = W.
-\]

@@ -219,11 +219,8 @@ Następnie rozpatrzmy rodzinę grafów gwiazd $\mathrm{S}_n$. Niech źródłem b
     \mathbb{E}[X_v] = \frac{1}{p}, \quad \mathrm{Var}[X_v] = \frac{1-p}{p^2}.
 \]
 
-Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ o rozkładzie geometrycznym osiągnie sukces w czasie co najwyżej $t$. Zatem:
-\[
-    \mathbb{P}[X_v \le t] = 1 - q^t,
-\]
-a więc
+Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ o rozkładzie geometrycznym osiągnie sukces w czasie co najwyżej $t$. 
+Zatem $\mathbb{P}[X_v \le t] = 1 - q^t$ a więc
 \[
     Y_t = 1 + B_t, \quad B_t \sim \mathrm{Bin}(n, 1 - q^t).
 \]
@@ -396,7 +393,7 @@ Korzystając z \Cref{inequality:log_vs_x}, otrzymujemy:
 Faktyczna wartość oczekiwana wynosi $\frac{n - 1}{p}$, więc oszacowanie jest dość dokładne.  
 Z kolei dla rodziny grafów $\mathrm{S}_n$ mamy $h = 1$ oraz $n + 1$ wierzchołków, stąd:
 \[
-    \mathbb{E}[Z] \le 1 + \frac{\log n + 1}{\log\!\big(\tfrac{1}{1 - p}\big)}.
+    \mathbb{E}[Z] \le 1 + \frac{\log (n) + 1}{\log\!\big(\tfrac{1}{1 - p}\big)}.
 \]
 Ponownie otrzymujemy zaskakująco dobre przybliżenie — szczególnie dla grafów rzadkich.
 

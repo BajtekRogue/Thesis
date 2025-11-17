@@ -5,6 +5,7 @@ Moc zbioru $A$ oznaczamy $|A|$.
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
 Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. 
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
+Symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
 Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. 
@@ -187,6 +188,14 @@ Wtedy
 \]
 \end{fact}
 
+\begin{fact}\label{fact:beta_gamma}
+Niech $x,y>0$.
+Wtedy
+\[
+    \mathrm{B}(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
+\]
+\end{fact}
+
 \begin{fact}\label{fact:sum_of_bin_RV_2}
 Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
 Oznaczmy $Z=X+Y$.
@@ -216,7 +225,7 @@ Wtedy
 Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. 
 Wtedy
 \[
-    \sum_{k=0}^{n} x^k=\frac{1-x^{n+1}}{1x}.
+    \sum_{k=0}^{n} x^k=\frac{1-x^{n+1}}{1-x}.
 \]
 \end{summ}
 

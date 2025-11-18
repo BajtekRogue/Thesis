@@ -5,88 +5,129 @@ Moc zbioru $A$ oznaczamy $|A|$.
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
 Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. 
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
-Symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
+Dla symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
-Stopień wierzchołka $v \in V$ oznaczamy $\deg(v)$. 
 Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
-Przez $\delta(G)$ i $\Delta(G)$ oznaczamy odpowiednio minimalny i maksymalny stopień wierzchołka w grafie $G$.
 
 Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
 Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. 
-Funkcję masy prawdopodobieństwa (PMF) oznaczamy $\mathbb{P}[X=t]$ a dystrybuante (CDF) oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
+Funkcję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
 
 
 \section{Rodziny grafów}
 
+Niech $n \in \mathbb{N}_+$. 
+Poniżej znajdują się opisy rodzin grafów na których będziemy rozważać propagację oraz ich wizualizację dla $n=5$.
+
 \graphfamily{Graf ścieżkowy $\mathrm{P}_n$}
-Dla $n \in \mathbb{N}_+$ graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$. 
+Graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$. 
 Oznaczamy go przez $\mathrm{P}_n$.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \foreach \i in {1,...,5} {
+        \node[circle, draw, inner sep=2pt] (v\i) at (\i, 0) {};
+    }
+    \foreach \i in {1,...,4} {
+        \draw (v\i) -- (v\the\numexpr\i+1\relax);
+    }
+\end{tikzpicture}
+\end{center}
 
 \graphfamily{Graf gwiazda $\mathrm{S}_n$}
-Dla $n \in \mathbb{N}_+$ graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi $E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$. 
+Graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi $E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$. 
 Oznaczamy go przez $\mathrm{S}_n$.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \node[circle, draw, inner sep=2pt] (c) at (0,0) {};
+    \foreach \i in {1,...,5} {
+        \node[circle, draw, inner sep=2pt] (v\i)
+            at (72*\i:1.5cm) {};
+        \draw (c) -- (v\i);
+    }
+\end{tikzpicture}
+\end{center}
 
 \graphfamily{Graf cykliczny $\mathrm{C}_n$}
-Dla $n \in \mathbb{N}_+$ graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$. 
+Graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$. 
 Oznaczamy go przez $\mathrm{C}_n$.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \foreach \i in {1,...,5} {
+        \node[circle, draw, inner sep=2pt] (v\i)
+            at (72*\i:1.5cm) {};
+    }
+    \foreach \i in {1,...,4} {
+        \draw (v\i) -- (v\the\numexpr\i+1\relax);
+    }
+    \draw (v5) -- (v1);
+\end{tikzpicture}
+\end{center}
 
 \graphfamily{Graf pełny $\mathrm{K}_n$}
-Dla $n \in \mathbb{N}_+$ graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. 
+Graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. 
 Oznaczamy go przez $\mathrm{K}_n$.
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    \foreach \i in {1,...,5} {
+        \node[circle, draw, inner sep=2pt] (v\i)
+            at (72*\i:1.5cm) {};
+    }
+    \foreach \i in {1,...,5} {
+        \foreach \j in {1,...,5} {
+            \ifnum\i<\j
+                \draw (v\i) -- (v\j);
+            \fi
+        }
+    }
+\end{tikzpicture}
+\end{center}
 
 
 \section{Rozkłady prawdopodobieństwa}
 
 \distribution{Rozkład Bernoulliego $\mathrm{Ber}(p)$}
-Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch:
-\begin{itemize}
-    \item sukces z prawdopodobieństwem  $p \in (0;1)$,
-    \item porażka z prawdopodobieństwem  $1 - p$.
-\end{itemize}  
-Zmienna losowa $X$ przyjmująca wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki ma rozkład Bernoulliego. 
+Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch: sukces z prawdopodobieństwem $p \in (0;1)$ albo porażka z prawdopodobieństwem $1 - p$.
+Zmienna losowa $X$ ma rozkład Bernoulliego jeżeli przyjmuje wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki próby Bernoulliego.
 Oznaczamy $X \sim \mathrm{Ber}(p)$.
  
 \distribution{Rozkład dwumianowy $\mathrm{Bin}(n,p)$}
-Rozkład dwumianowy opisuje liczbę sukcesów w $n$ próbach Bernoulliego. 
-Niech $X$ będzie zmienną losową przyjmującą wartości w $\{0,1,\dots,n\}$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+Zmienna losowa $X$ ma rozkład dwumianowy, jeżeli opisuję liczbę sukcesów w $n$ próbach Bernoulliego gdzie $n\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{n}{k}p^k{(1-p)}^{n-k}, \quad k \in \{0,1,\dots,n\}.
 \]
-Wartość oczekiwana i wariancja mają postać:
+Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = np, \quad \mathrm{Var}[X] = np(1-p).
 \]
 Oznaczamy $X \sim \mathrm{Bin}(n,p)$.
 
 \distribution{Rozkład geometryczny $\mathrm{Geo}(p)$}
-Rozkład geometryczny opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu.  
-Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+Zmienna losowa $X$ ma rozkład geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu gdzie każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
     \mathbb{P}[X = k] = p{(1 - p)}^{k-1}, \quad k \in \mathbb{N}_+.
 \]
 Dystrybuanta jest równa:
 \[
-    \mathbb{P}[X\le t] = 1 = {(1-p)}^t.
+    \mathbb{P}[X\le t] = 1 - {(1-p)}^t.
 \]
-Wartość oczekiwana i wariancja mają postać:
+Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \frac{1}{p}, \quad \mathrm{Var}[X] = \frac{1 - p}{p^2}.
 \]
 Oznaczamy $X \sim \mathrm{Geo}(p)$.
 
 \distribution{Rozkład ujemny dwumianowy $\mathrm{NegBin}(m, p)$}
-Rozkład ujemny dwumianowy opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów.  
-Niech $X$ oznacza liczbę prób, przy czym każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$, a liczba sukcesów $m \in \mathbb{N}_+$ jest ustalona.  
+Zmienna losowa $X$ ma rozkład ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów gdzie $m\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{k-1}{m-1} p^m {(1 - p)}^{k - m}, \quad k \ge m.
 \]
-Wartość oczekiwana i wariancja mają postać:
+Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \frac{m}{p}, \quad \mathrm{Var}[X] = \frac{m(1 - p)}{p^2}.
 \]
@@ -98,7 +139,7 @@ Zdefiniujmy funkcje
     \varphi(t)=\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}, \quad \mathbf{\Phi}(t)=\int_{-\infty}^{t} \varphi(x)\;\mathrm{d}x.
 \]
 Niech $\mu \in \mathbb{R}$ oraz $\sigma > 0$. 
-Zmienna losowa $X$ ma rozkład normalny, jeśli jej funkcja gęstości wyraża się wzorem:
+Zmienna losowa $X$ ma rozkład normalny, jeżeli jej funkcja gęstości wyraża się wzorem:
 \[
     f_X(t) = \frac{1}{\sigma}\cdot\varphi\Big(\frac{t-\mu}{\sigma}\Big), \quad t \in \mathbb{R}.
 \]
@@ -106,43 +147,15 @@ Dystrybuanta jest równa:
 \[
     \mathbb{P}[X \le t] = \mathbf{\Phi}\Big(\frac{t-\mu}{\sigma}\Big), \quad t \in \mathbb{R}.
 \]
-Wartość oczekiwana i wariancja:
+Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \mu, \quad \mathrm{Var}[X] = \sigma^2.
 \]
 Oznaczamy $X \sim \mathcal{N}(\mu, \sigma^2)$.
 
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
-Zauważmy, że $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
+$\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
-\distribution{Rozkład umierający geometryczny $\mathrm{KGeo}(p,\alpha)$}
-Rozkład umierający geometryczny jest wariantem rozkładu geometrycznego, w którym proces może zostać przerwany z prawdopodobieństwem $\alpha$ w każdym kroku.
-Niech $X$ będzie zmienną losową przyjmującą wartości w $\mathbb{N}_+\cup\{\infty\}$.
-Wtedy:
-\[
-    \mathbb{P}[X=k] = p((1-p)(1-\alpha))^{k-1}, \quad k \in \mathbb{N}_+.
-\]
-oraz
-\[
-    \mathbb{P}[X=\infty] = \frac{\alpha(1-p)}{1-(1-p)(1-\alpha)}.
-\]
-Dystrybuanta jest równa:
-\[
-    \mathbb{P}[X\le t] = p\frac{1-((1-p)(1-\alpha))^t}{1-(1-p)(1-\alpha)}.
-\]
-Wartość oczekiwana wynosi nieskończoność.
-Natomiast
-\[
-    \mathbb{E}[X|X<\infty] = \frac{1}{1-(1-p)(1-\alpha)}.
-\]
-Oznaczamy $X \sim \mathrm{KGeo}(p,\alpha)$.
-% \begin{equation*}
-% \begin{aligned}
-% \mathbb{E}[X| X < \infty]
-% &= \frac{1}{\mathbb{P}[X_v<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X_v=t] \\
-% &= \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p = (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
-% \end{aligned}
-% \end{equation*}
 
 \section{Fakty, sumy i nierówności}
 
@@ -173,7 +186,8 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:sum_of_geo_RV}
-Niech $X_1, X_2, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID oraz $Y=X_1 +  \cdots + X_m$. 
+Niech $X_1, X_2, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.
+Zdefiniujmy zmienną losową $Y=X_1 +  \cdots + X_m$. 
 Wtedy 
 \[
     Y \sim \mathrm{NegBin}(m, p).
@@ -188,6 +202,24 @@ Wtedy
 \]
 \end{fact}
 
+\begin{fact}\label{fact:pgf_bin}
+Niech $X \sim \mathrm{Bin}(n, p)$.
+Oznaczmy $q=1-p$.
+Wtedy
+\[
+    \mathbb{E}[z^X]={(q+pz)}^n, \quad \mathbb{E}[Xz^X]=npz{(q+pz)}^{n-1}.
+\]
+\end{fact}
+
+\begin{fact}\label{fact:sum_of_bin_RV_2}
+Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
+Zdefiniujmy zmienną losową $Z=X+Y$.
+Wtedy
+\[
+    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j(1-p)^{n-j}r^{k-j}(1-r)^{m-(k-j)}.
+\]
+\end{fact}
+
 \begin{fact}\label{fact:beta_gamma}
 Niech $x,y>0$.
 Wtedy
@@ -196,13 +228,18 @@ Wtedy
 \]
 \end{fact}
 
-\begin{fact}\label{fact:sum_of_bin_RV_2}
-Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
-Oznaczmy $Z=X+Y$.
-Wtedy
+\begin{fact}\label{fact:absorbing_markov}
+Niech $\mathbf{X}=(X_t)_{t\in \mathbb{N}}$ będzie dyskretnym i jednorodnym łańcuchem Markova z skończoną liczbą stanów.
+Niech $\mathcal{A}$ oznacza zbiór stanów absorbujacych.
+Wtedy jeśli dla każdego stanu $Q\notin \mathcal{A}$ jest $k>0$, że dla dowolnego $t\in \mathbb{N}$ mamy
 \[
-    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j(1-p)^{n-j}r^{k-j}(1-r)^{m-(k-j)}.
+    \mathbb{P}[X_{t+k}\in\mathcal{A}|X_t=Q] > 0
 \]
+to zachodzi
+\[
+    \mathbb{P}[\min\{t\in\mathbb{N}:X_t\in\mathcal{A}\}<\infty] = 1.
+\]
+
 \end{fact}
 
 \begin{summ}\label{summ:binomial_0}
@@ -253,6 +290,14 @@ Wtedy
 \]
 \end{summ}
 
+\begin{summ}\label{summ:negbin_inf_1}
+Niech $m\in\mathbb{N}$ oraz $x\in(-1;1)$.
+Wtedy
+\[
+    \sum_{k=m}^{\infty} k\cdot \binom{k-1}{m-1}x^k = \frac{mx^m}{(1-x)^{m+1}}.
+\]
+
+\end{summ}
 \begin{inequality}\label{inequality:approximation_of_sum_by_an_integral}
 Niech $a,b\in\mathbb{N}$, $a<b$ oraz $f:[a;b]\to\mathbb{R}$ będzie funkcją ciągłą i malejąca. 
 Wtedy
@@ -265,7 +310,7 @@ Wtedy
 Niech $n\in\mathbb{N}_+$. 
 Wtedy
 \[
-    H_n \le 1 + \log(n)
+    H_n \le 1 + \log(n).
 \]
 \end{inequality}
 

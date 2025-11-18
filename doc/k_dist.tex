@@ -1,0 +1,38 @@
+W celu ułatwienia analizy modeli \textbf{SIR} oraz \textbf{SIS} wprowadzimy nowe rozkłady Prawdopodobieństwa uwzgledniajace możliwość przerwania propagacji.
+Te zmienne losowe będą przyjmować wartość nieskończoność w sytuacji, w której nastąpi przerwanie przed pożądanym rezultatem.
+Jako że nastepuje to z dodatnim prawdopodobieństwem, $\mathbb{P}[X=\infty]>0$, to ich wartości oczekiwane wynosić będą nieskończoność, $\mathbb{E}[X]=\infty$.
+Interesować nas więc bedzie wartość oczekiwana warunkowa przy warunku, że wartość zmiennej losowej jest skończona a więc $\mathbb{E}[X|X<\infty]$.
+
+\section{Rozkład umierający geometryczny}
+Rozkład umierający geometryczny jest wariantem rozkładu geometrycznego, w którym proces może zostać przerwany z prawdopodobieństwem $\alpha\in(0;1)$ po każdej próbie.
+Zmienna $X$ ma rozkład umierający geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu w przypadku, w którym sukces nastąpi przed przetrwaniem eksperymentu.
+Jeśli natomiast proces zostanie zabity szybciej niż pierwsza porażka to wtedy $X=\infty$.
+Dla wygody oznaczmy $q=1-p, \; \beta=1-\alpha$.
+Aby sukces nastąpił po $k$ rundach to potrzebujemy $k-1$ niepowodzeń próby jak i jej przerwania a następnie sukcesu.
+A zatem
+\[
+    \mathbb{P}[X=k] = p(q\beta)^{k-1}, \quad k \in \mathbb{N}_+.
+\]
+Dystrybuanta jest więc równa:
+\[
+    \mathbb{P}[X\le t] = \sum_{k=0}^{t} \mathbb{P}[X=k] = \sum_{k=0}^{t} p(q\beta)^{k-1} = p\frac{1-(q\beta)^t}{1-q\beta}.
+\]
+Ponadto
+\[
+    \mathbb{P}[X < \infty] = \sum_{k=0}^{\infty} \mathbb{P}[X=k] = \sum_{k=0}^{\infty} p(q\beta)^{k-1} = \frac{p}{1-q\beta}. 
+\]
+Suma wszystkich prawdopodobieństw wynosi $1$.
+A więc
+\[
+    \mathbb{P}[X=\infty] = 1 - \frac{p}{1-q\beta} = \frac{q\alpha}{1-q\beta}.
+\]
+Wartość oczekiwana wynosi nieskończoność.
+Natomiast
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}[X| X < \infty]
+&= \frac{1}{\mathbb{P}[X<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X_v=t] = \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p\\
+& = (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
+\end{aligned}
+\end{equation*}
+Oznaczamy $X \sim \mathrm{KGeo}(p,\alpha)$.

@@ -1,33 +1,39 @@
+\section{Pewne wygaśnięcie}
+
+Analizę modelu \textbf{SIS} zacznijmy od formalnego udowodnienia pewności wygaśnięcia infekcji.
+
+\begin{theorem}\label{theorem:infection_dies_out_SIS}
+Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
+Wtedy zachodzą następujące tożsamości:
+\[
+    \mathbb{P}[X_v = \infty] > 0, \quad \lim_{t\to\infty} \mathbb{E}[Y_t] = 0, \quad \mathbb{P}[Z < \infty] = 1.
+\]
+\end{theorem}
+
+\begin{proof}
+Dowód $\mathbb{P}[X_v = \infty] > 0$ oraz $\mathbb{P}[Z < \infty] = 1$ wynika z \Cref{theorem:infection_dies_out_SIR}.
+Skoro infekcja prawie na pewno wymrze to $\mathbf{1}_{Y_t} \xrightarrow{\text{a.s}} 0$ a więc i $Y_t \xrightarrow{\text{a.s}} 0$.
+Zauważmy, że $0\le Y_t \le |V|$ dla każdego $t$.
+Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
+\[
+    \lim_{t\to\infty} \mathbb{E}[Y_t] = \mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}[0]=0.
+\]
+\end{proof}
+
+
 \section{Dwa wierzchołki, jedna krawędź}
 
-W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest \textbf{SIS}, przeanalizujmy graf $\mathrm{K}_2$. 
-Niech $V=\{u,v\}$ oraz niech $u$ będzie wierzchołkiem startowym. 
+Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ oraz krawędziach $E=\{\{u,v\}\}$ oraz wierzchołku początkowym $u$.
 Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
-Oczywiście $X_u=0$. 
-Pierwsza runda jest identyczna jak w modelu \textbf{SI}, a więc $\mathbb{P}[X_v=1]=p$. 
-Jeżeli węzeł $v$ nie zostanie poinformowany w rundzie pierwszej, a propagacja nie wygaśnie, to sytuacja się powtórzy. 
-Zachodzi to z prawdopodobieństwem $q\beta$. Aby $X_v=t$, potrzebujemy, by ten cykl nastąpił $t-1$ razy. 
-Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny, 
+Rozkład $X_v$ będzie tutaj taki sam jak dla modelu \textbf{SIR} a więc
 \[
-    X_v\sim \mathrm{KGeo}(p,\alpha).
-\]
-A zatem
-\[
-    \mathbb{P}[X_v=t]=p{(q\beta)}^{t-1}, \quad t\ge 1.
+    X_v\sim \mathrm{KGeo}(p,\alpha),
 \]
 oraz
 \[
-    \mathbb{P}[X_v < \infty ] = \frac{p}{1-q\beta}, \quad \mathbb{P}[X_v=\infty] =\frac{q\alpha}{1-q\beta}.
-\] 
-Z założeń modelu $q,\alpha\in(0;1)$, a zatem $\mathbb{P}[X_v=\infty]\ne 0$.  
-Mamy $\mathbb{E}[X_v] = \infty$. 
-Powinniśmy się więc spodziewać, że niezależnie od wartości parametrów $p$ oraz $\alpha$ infekcja się nie rozprzestrzeni. 
-Nie jest to jednak pożądany rezultat. 
-Wartość oczekiwaną warunkowa wynosi:
-\[
-    \mathbb{E}[X_v| X_v < \infty] = \frac{1}{1-q\beta}.
+    \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
 \]
 
 Następnie spróbujmy wyznaczyć rozkład $Y_t$. 
@@ -75,7 +81,7 @@ c_t
 \]
 Wtedy $\mathbf{y}_{t+1}=\mathbf{P}\mathbf{y}_t$, a więc $\mathbf{y}_{t}=\mathbf{P}^t\mathbf{y}_0$. 
 Jeśli chodzi o wartość oczekiwaną, to mamy $\mathbb{E}[Y_t]=0\cdot a_t + 1\cdot b_t + 2\cdot c_t = b_t+2c_t$. 
-Z \Cref{theorem:infection_dies_out} mamy
+Z \Cref{theorem:infection_dies_out_SIS} mamy
 \[
     \lim_{t\to\infty} \mathbb{E}[Y_t] = 0.
 \]
@@ -139,56 +145,11 @@ Ostatecznie otrzymujemy:
 \]
 
 
-\section{Pewne wygaśnięcie}
-
-W powyższych obliczeniach mogliśmy zauważyć istotną różnicę pomiędzy modelem \textbf{SI} a \textbf{SIS}.\@
-Mianowicie jest niezerowe prawdopodobieństwo, że wierzchołki w grafie nigdy nie zostaną zainfekowane, a oczekiwana liczba zarażonych dąży wraz z upływem czasu do zera.
-Dla tak małego grafu jakim jest $\mathrm{K}_2$ jest to dość niespodziewany rezultat. 
-Postaramy się teraz udowodnić tą obserwację dla dowolnego grafu.
-
-\begin{theorem}\label{theorem:infection_dies_out}
-Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
-Wtedy zachodzą następujące tożsamości:
-\[
-    \mathbb{P}[X_v = \infty] > 0, \quad \lim_{t\to\infty} \mathbb{E}[Y_t] = 0, \quad \mathbb{P}[Z < \infty] = 1.
-\]
-\end{theorem}
-
-\begin{proof}
-Weźmy $v\in V\setminus\{s\}$. 
-Jeśli $\{s,v\}\notin E$ to jedną z możliwości, która sprawi, że $X_v=\infty$, to wygaśnięcie infekcji po pierwszej jednostce czasu. 
-Zatem $\mathbb{P}[X_v=\infty]\ge \alpha$.
-Gdy zaś $\{s,v\}\in E$ to $\mathbb{P}[X_v=\infty]\ge q\alpha$, bo musimy jeszcze zagwarantować, że $v$ nie zostanie zainfekowany zanim infekcja w $s$ wygaśnie.
-Skoro $q,\alpha>0$ to otrzymujemy $\mathbb{P}[X_v = \infty] > 0$.
-
-Rozważmy propagację jako łańcuch Markova, gdzie stanem w czasie $t$ jest $\mathcal{I}_t$. 
-Prawdopodobieństwo przejścia do stanu bez infekcji wynosi
-\[
-    r(\mathcal{I}_t)=\alpha^{|\mathcal{I}_t|}\prod_{u\in \mathcal{I}_t} q^{|\mathrm{N}(u)\cap\mathcal{S}_t|}.
-\]
-Istotne jest to, że jest to dodatnia liczba. 
-Kładziemy
-\[
-    r^*=\min\{r(\mathcal{I}_t):\mathcal{I}_t\subseteq V\}.
-\]
-Prawdopodobieństwo przetrwania infekcji po $k$ rundach wynosi ${(1-r^*)}^k$.
-Ale skoro $r^*>0$ to wartość ta dąży do $0$ wraz z $k\to \infty$.
-Mamy więc $\mathbb{P}[Z=\infty] = 0$ co jest równoważne z $\mathbb{P}[Z<\infty]=1$.
-
-Skoro infekcja prawie na pewno wymrze to $\mathbf{1}_{Y_t} \xrightarrow{\text{a.s}} 0$ a więc i $Y_t \xrightarrow{\text{a.s}} 0$.
-Zauważmy, że $0\le Y_t \le |V|$ dla każdego $t$.
-Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
-\[
-    \lim_{t\to\infty} \mathbb{E}[Y_t] = \mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}[0]=0.
-\]
-\end{proof}
-
-
 \section{Grafy pełne}
 
 Po analizie dla $\mathrm{K}_2$ postarajmy się ją uogólnić dla $\mathrm{K}_n$.
 Ze względu na symetrie dowolny stan z taką samą liczbą zainfekowanych wierzchołków jest izomorficzny.
-Z \Cref{theorem:infection_dies_out} wiemy, że $\mathbb{E}[Y_t]\to 0$.
+Z \Cref{theorem:infection_dies_out_SIS} wiemy, że $\mathbb{E}[Y_t]\to 0$.
 Ustalmy $t\in\mathbb{N}$.
 Niech $A_t$ będzie zmienną losową oznaczająca liczbę wierzchołków, które przetrwają rundę $t$ oraz $B_t$ liczbę nowo zainfekowanych wierzchołków w tej rundzie.
 Formalnie 

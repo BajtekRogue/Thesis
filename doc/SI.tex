@@ -2,7 +2,8 @@
 
 Na samym początku rozważmy najprostszy graf, czyli taki o dwóch wierzchołkach $u, v$ połączonych krawędzią. 
 Za wierzchołek startowy wybierzmy $u$. 
-Istnieją tylko dwa możliwe stany systemu: $\mathcal{I}_t=\{u\}$ oraz $\mathcal{I}_t=\{u,v\}$. Przejście ze stanu $\mathcal{I}_t=\{u\}$ do $\mathcal{I}_t=\{u,v\}$ następuje z prawdopodobieństwem $p$ w każdej jednostce czasu. 
+Istnieją tylko dwa możliwe stany systemu: $\mathcal{I}_t=\{u\}$ oraz $\mathcal{I}_t=\{u,v\}$. 
+Przejście ze stanu $\mathcal{I}_t=\{u\}$ do $\mathcal{I}_t=\{u,v\}$ następuje z prawdopodobieństwem $p$ w każdej jednostce czasu. 
 Zatem czas zarażenia drugiego wierzchołka $X_v$ ma rozkład geometryczny, $X_v \sim \mathrm{Geo}(p)$.
 
 Rozważmy teraz rozkład $Y_t$. 
@@ -16,7 +17,8 @@ Jeśli chodzi o zmienną $Z$, to zachodzi $Z=\max\{X_u,X_v\}=X_v$, a więc równ
 
 Przyjrzyjmy się teraz nieco większemu grafowi — trójkątowi. 
 Niech jeden z wierzchołków będzie źródłem $s$, a pozostałe $u, v$. 
-Aby poinformować $u$, musimy uzyskać sukces bezpośrednio od $s$ lub zarazić $v$, a następnie $u$. Możemy więc zapisać $X_u = \min\{A,B\}$, gdzie $A\sim \mathrm{Geo}(p)$ oraz $B\sim \mathrm{NegBin}(2,p)$. 
+Aby poinformować $u$, musimy uzyskać sukces bezpośrednio od $s$ lub zarazić $v$, a następnie $u$. 
+Zatem zachodzi $X_u = \min\{A,B\}$, gdzie $A\sim \mathrm{Geo}(p)$ oraz $B\sim \mathrm{NegBin}(2,p)$. 
 Wiemy, że $\mathbb{P}[A\le t] =1-q^t$. 
 Z kolei
 \begin{equation*}
@@ -24,19 +26,18 @@ Z kolei
 \mathbb{P}[B\le t]
 &= \sum_{k=2}^{t} (k-1)\cdot p^2q^{k-2}
 = \frac{p^2}{q}\cdot \frac{q}{{(1-q)}^2}\cdot((t-1)q^t-tq^{t-1}+1) \\
-&=1-q^t-tpq^{t-1},
+&=1-q^t-tpq^{t-1}.
 \end{aligned}
 \end{equation*}
-gdzie skorzystaliśmy z \Cref{summ:geo_1}. 
 Dalej, z \Cref{fact:min_CDF} mamy
 \[
     \mathbb{P}[X_u\le t] = 1 - (1-(1-q^t))\cdot (1-(1-q^t-tpq^{t-1})) = 1-q^{2t}-tpq^{2t-1}.
 \]
 
-Jeśli chodzi o liczbę zainfekowanych po $t$ krokach, to skoro mamy trzy wierzchołki, mamy też trzy wartości do policzenia. 
+Jeśli chodzi o liczbę zainfekowanych po $t$ krokach, to skoro mamy trzy wartości do policzenia. 
 Oczywiście $\mathbb{P}[Y_t=1]=q^{2t}$. 
 Aby po $t$ chwilach tylko dwa węzły były zainfekowane, musimy zarazić któryś z wierzchołków po $1\le k\le t$ rundach z prawdopodobieństwem $2pq\cdot q^{2\cdot(k-1)}$, a następnie uzyskać $t-k$ porażek. Na każdą z nich mamy szansę równą $q^2$. 
-Podsumowując:
+A zatem
 \[
     \mathbb{P}[Y_t=2]=\sum_{k=1}^{t} 2pq\cdot q^{2\cdot(k-1)} \cdot q^{2\cdot(t-k)} = 2tpq^{2t-1}.
 \]
@@ -45,14 +46,13 @@ Ponadto:
 \[
     \mathbb{E}[Y_t] = 1 \cdot q^{2t} + 2 \cdot 2tpq^{2t-1} + 3\cdot (1-q^{2t}-2tpq^{2t-1}) = 3-2q^{2t}-2tpq^{2t-1}.
 \]
-Widzimy, że $\mathbb{E}[Y_t] \to 3$ przy $t\to \infty$, co jest zgodne z intuicją.
 
 Propagacja może się zakończyć na dwa sposoby. 
 Pierwszy z nich to sytuacja, w której przez $t-1$ jednostek czasu żadne zakażenie nie zaszło, a w chwili $t$ zarażają się oba wierzchołki. 
 Prawdopodobieństwo tego przypadku wynosi $p^2q^{2\cdot(t-1)}$. 
 Druga możliwość to taka, w której w $k$-tym kroku (dla $1\le k\le t-1$) zaraził się jeden z wierzchołków — z prawdopodobieństwem $2pq\cdot q^{2\cdot(k-1)}$, a potem przez kolejne $t-1-k$ kroków trzeci wierzchołek nie został zainfekowany, na co mamy prawdopodobieństwo ${(q^2)}^{t-1-k}$, aż do chwili $t$. 
-To ostatnie przejście ma $1-q^2$ szans. 
-Łącznie dostajemy:
+To ostatnie przejście ma prawdopodobieństwo $1-q^2$. 
+Podsumowując:
 \begin{equation*}
 \begin{aligned}
 \mathbb{P}[Z=t]
@@ -71,9 +71,9 @@ Wartość oczekiwana wynosi więc:
 =\frac{4-3p}{p{(2-p)}^2}.
 \end{aligned}
 \end{equation*}
-(patrz \cref{summ:geo_0_inf} oraz \cref{summ:geo_1_inf}).
 Wykonaliśmy dość sporo obliczeń jak na tak mały graf. 
-Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model \textbf{SI}.\@
+Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model \textbf{SI}.
+
 
 \section{Całkowita infekcja pewna}
 
@@ -92,17 +92,17 @@ Wtedy zachodzą następujące tożsamości:
 \begin{proof}
 Weźmy $v\in V\setminus\{s\}$.
 Wybierzemy ustaloną ścieżkę od $s$ do $v$, $s = u_0u_1u_2\dots u_\ell = v$ gdzie $\ell$ to długość tej ścieżki ($\ell\ge 1$).
-Aby $v$ został zainfekowane, wystarczy, że po kolei na tej ścieżce zajdą sukcesy transmisji.
+Aby $v$ został zainfekowany, wystarczy, że po kolei na tej ścieżce zajdą sukcesy transmisji.
 Rozważmy następujące zdarzenia zainfekowania tych wierzchołków w bloku czasu indeksowanym przez $k\in\mathbb{N}$:
 \[
     A_k = \{\forall j\in\{1,\dots,\ell\}\quad X_{u_j}=k\ell+j\}.
 \]
 Próby transmisji w różnych rundach są niezależne a więc $\mathbb{P}[A_k]=p^\ell > 0$.
-Jeśli chociaż jedno ze zdarzeń $A_k$ zajdzie to wtedy $v\in\mathcal{I}_t$ dla pewnego $t$.
+Jeśli chociaż jedno ze zdarzeń $A_k$ zajdzie to wtedy $X_v<\infty$.
 Mamy zatem
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[X_v=\infty] &\le \mathbb{P}\Big[\bigcap_{k=0}^{\infty} A_k^c\Big] = \lim_{m\to \infty} \mathbb{P}\Big[\bigcup_{k=0}^m A_k^c\Big] \\
+\mathbb{P}[X_v=\infty] &\le \mathbb{P}\Big[\bigcap_{k=0}^{\infty} A_k^c\Big] = \lim_{m\to \infty} \mathbb{P}\Big[\bigcap_{k=0}^m A_k^c\Big] \\
 &=\lim_{m\to\infty} \prod_{k=0}^{m} 1-p^\ell = \lim_{m\to\infty} (1-p^\ell)^{m+1}=0.
 \end{aligned}
 \end{equation*}
@@ -110,13 +110,9 @@ Stąd oczywiscie $\mathbb{P}[X_v=\infty]=0$.
 Dalej zauważmy, że $0\le Y_t\le |V|$. 
 Z Twierdzenia Lebesgue o zbieżności ograniczonej mamy 
 \[
-    \lim_{t\to\infty} \mathbb{E}[Y_t]=\mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}[\lim_{t\to\infty} \sum_{v\in V} \mathbf{1}_{v\in\mathcal{I}_t}]=\mathbb{E}[\lim_{t\to\infty}\sum_{v\in V} 1 ] = \mathbb{E} [|V|] = |V|.
+    \lim_{t\to\infty} \mathbb{E}[Y_t]=\mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}\left[\lim_{t\to\infty} \sum_{v\in V} \mathbf{1}_{v\in\mathcal{I}_t}\right]=\mathbb{E}\left[\lim_{t\to\infty}\sum_{v\in V} 1 \right] = \mathbb{E} [|V|] = |V|.
 \]
-Wreszcie 
-\[
-    \mathbb{P}[Z = \infty] =  \mathbb{P}[\max_{v\in V} X_v = \infty] = 0.
-\]
-Stąd $\mathbb{P}[Z<\infty]=1$.
+Wreszcie $\mathbb{P}[Z = \infty] =  \mathbb{P}[\max_{v\in V} X_v = \infty] = 0$ skąd $\mathbb{P}[Z<\infty]=1$.
 \end{proof}
 
 
@@ -125,7 +121,6 @@ Stąd $\mathbb{P}[Z<\infty]=1$.
 Jako pierwszą rodzinę grafów rozważmy grafy ścieżkowe $\mathrm{P}_n$.  
 Załóżmy, że proces zaczyna się w wierzchołku $s=1$.  
 Zatem infekcja rozchodzi się po grafie „od lewej do prawej”.  
-Dla tej rodziny grafów uda nam się wyznaczyć dokładny rozkład prawdopodobieństwa.  
 Zauważmy, że czasy zarażenia kolejnych wierzchołków tworzą ciąg zmiennych losowych:
 \[
 X_1 = 0, \quad X_{v} = X_{v-1} + U_k, \quad v\in\{2,3,\dots,n\},
@@ -133,11 +128,11 @@ X_1 = 0, \quad X_{v} = X_{v-1} + U_k, \quad v\in\{2,3,\dots,n\},
 gdzie $U_2,U_3,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_2,U_3,\dots,U_n$ są niezależne.  
 Widzimy zatem, że $X_v = U_1 + U_2 + \cdots + U_{v-1}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
 \[
-X_v\sim \mathrm{NegBin}(v-1, p).
+    X_v\sim \mathrm{NegBin}(v-1, p).
 \]
-Ponadto mamy:
+oraz
 \[
-    \mathbb{E}[X_v] = \frac{v-1}{p}, \quad \mathrm{Var}[X_v] = \frac{(v-1)(1-p)}{p^2}.
+    \mathbb{E}[X_v] = \frac{v-1}{p}.
 \]
 
 Ustalmy $t\in\mathbb{N}$ i przejdźmy do obliczania rozkładu $Y_t$.  
@@ -166,7 +161,6 @@ Przejdźmy teraz do obliczania wartości oczekiwanej $Y_t$:
 &= \sum_{j=0}^{t} \min\{n, 1+j\} \cdot \binom{t}{j} p^j q^{t-j}.
 \end{aligned}
 \end{equation*}
-
 Policzmy teraz asymptotykę dla $n \to \infty$.  
 Wtedy $n > 1 + j$ dla wszystkich $0 \le j \le t$, a więc:
 \begin{equation*}
@@ -174,17 +168,16 @@ Wtedy $n > 1 + j$ dla wszystkich $0 \le j \le t$, a więc:
 \lim_{n \to \infty} \mathbb{E}[Y_t] 
     &= \sum_{j=0}^{t} (1+j)\binom{t}{j} p^j q^{t-j} = \sum_{j=0}^{t} \binom{t}{j} p^j q^{t-j} 
        + \sum_{j=0}^{t} j \binom{t}{j} p^j q^{t-j} \\
-    &= {(p+q)}^t + t p {(p+q)}^{t-1} = 1 + t p,
+    &= {(p+q)}^t + t p {(p+q)}^{t-1} = 1 + t p.
 \end{aligned}
 \end{equation*}
-gdzie sumy obliczamy korzystając z \Cref{summ:binomial_0} oraz \Cref{summ:binomial_1}.  
-Stąd:
-\[
-    \lim_{n \to \infty}\mathbb{E}[Y_t] = 1+tp.
-\]
 
-Czas całkowitego zainfekowania grafu $\mathrm{P}_n$ to $Z = \max\{X_1,X_2,\dots,X_n\} = X_n$.  
-Zatem rozkład zmiennej $Z$ jest już nam znany: $Z\sim\mathrm{NegBin}(n-1,p)$, a wartość oczekiwana wynosi:
+Czas całkowitego zainfekowania grafu to $Z = \max\{X_1,X_2,\dots,X_n\} = X_n$.  
+Zatem rozkład zmiennej $Z$ jest już nam znany,
+\[
+    Z\sim\mathrm{NegBin}(n-1,p),
+\]
+a wartość oczekiwana wynosi
 \[
     \mathbb{E}[Z]=\frac{n-1}{p}.
 \]
@@ -193,6 +186,7 @@ Sprawdźmy, czy nasze obliczenia teoretyczne zgadzają się z empirycznie wyznac
 Ustalmy $p=0.2$. 
 W celu estymacji $\mathbb{E}[Y_t]$ przeprowadźmy $2000$ symulacji propagacji na grafie $\mathrm{P}_n$. 
 Następnie dla $n\in\{1,2,\dots,1000\}$ tą samą liczbą symulacji oszacujmy $\mathbb{E}[Z]$.
+Wyniki eksperymentu niemal idealnie pokrywają się z przewidywaniami, to jest $1+tp$ dla $\mathbb{E}[Y_t]$ (zob. \cref{fig:path_Yt}) oraz $\frac{n-1}{p}$ dla $\mathbb{E}[Z]$ (zob. \cref{fig:path_Z}).
 
 \begin{figure}[ht!]
     \centering
@@ -200,7 +194,6 @@ Następnie dla $n\in\{1,2,\dots,1000\}$ tą samą liczbą symulacji oszacujmy $\
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{P_n}$ w funkcji $t$.}
     \label{fig:path_Yt}
 \end{figure}
-
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\textwidth]{../img/path/full_infection_expectation.png}
@@ -208,19 +201,25 @@ Następnie dla $n\in\{1,2,\dots,1000\}$ tą samą liczbą symulacji oszacujmy $\
     \label{fig:path_Z}
 \end{figure}
 
-Wyniki eksperymentu niemal idealnie pokrywają się z przewidywanymi kształtami, to jest $1+tp$ dla $\mathbb{E}[Y_t]$ (zob. \cref{fig:path_Yt}) oraz $\frac{n-1}{p}$ dla $\mathbb{E}[Z]$ (zob. \cref{fig:path_Z}).
 
 
 
 \section{Grafy gwiezdne}
 
-Następnie rozpatrzmy rodzinę grafów gwiazd $\mathrm{S}_n$. Niech źródłem będzie centralny wierzchołek grafu, czyli $s = 0$. Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie. Stąd mamy $X_v \sim \mathrm{Geo}(p)$ dla każdego $v \in \{1, 2, \dots, n\}$, a zmienne $X_1, X_2, \dots, X_n$ są od siebie niezależne. Otrzymujemy zatem:
+Następnie rozpatrzmy rodzinę grafów gwiazd $\mathrm{S}_n$. 
+Niech źródłem będzie centralny wierzchołek grafu, czyli $s = 0$. 
+Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie a więc zmienne $X_1,X_2,\dots,X_n$ są niezależne.
+Stąd dla każdego $v \in \{1, 2, \dots, n\}$ mamy
 \[
-    \mathbb{E}[X_v] = \frac{1}{p}, \quad \mathrm{Var}[X_v] = \frac{1-p}{p^2}.
+    X_v \sim \mathrm{Geo}(p),
+\] 
+oraz
+\[
+    \mathbb{E}[X_v] = \frac{1}{p}.
 \]
 
 Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ o rozkładzie geometrycznym osiągnie sukces w czasie co najwyżej $t$. 
-Zatem $\mathbb{P}[X_v \le t] = 1 - q^t$ a więc
+Skoro $\mathbb{P}[X_v \le t] = 1 - q^t$ to mamy
 \[
     Y_t = 1 + B_t, \quad B_t \sim \mathrm{Bin}(n, 1 - q^t).
 \]
@@ -248,11 +247,10 @@ Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 &= \sum_{j=1}^{n} \binom{n}{j} \frac{(-1)^{j+1}}{1 - q^j}.
 \end{aligned}
 \end{equation*}
-
 Nie jest to jednak szczególnie elegancka forma, więc spróbujmy wyznaczyć asymptotykę $\mathbb{E}[Z]$.  
 Zauważmy, że
 \[
-    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - (1 - q^k)^n\big.
+    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - (1 - q^k)^n.
 \]
 Z \Cref{inequality:approximation_of_sum_by_an_integral} możemy przybliżyć tę sumę całką.  
 Niech $f(x) = 1 - {(1 - e^{-\lambda x})}^n$, gdzie $\lambda = -\log(q)$.  
@@ -269,19 +267,21 @@ Zatem całka ma postać:
     = \frac{1}{\lambda} \sum_{j=0}^{n-1} \frac{1}{j+1}
     = \frac{H_n}{\lambda}.
 \]
-Zauważmy, że $-\log(q) = \log\big(\tfrac{1}{1-p}\big)$, zatem:
+Zauważmy, że $-\log(q) = \log\big(\frac{1}{1-p}\big)$, zatem:
 \[
-    \frac{H_n}{\log\big(\tfrac{1}{1-p}\big)} \le \mathbb{E}[Z] \le \frac{H_n}{\log\big(\tfrac{1}{1-p}\big)} + 1.
+    \frac{H_n}{\log\big(\frac{1}{1-p}\big)} \le \mathbb{E}[Z] \le \frac{H_n}{\log\big(\frac{1}{1-p}\big)} + 1.
 \]
-Stąd asymptotyczny czas pełnego zarażenia grafu $\mathrm{S}_n$ ma postać:
+Stąd asymptotyczny czas pełnego zarażenia grafu $\mathrm{S}_n$ wynosi:
 \[
-    \mathbb{E}[Z] \sim \frac{H_n}{\log\big(\tfrac{1}{1-p}\big)}.
+    \mathbb{E}[Z] \sim \frac{H_n}{\log\big(\frac{1}{1-p}\big)}.
 \]
 
 Przeprowadźmy teraz symulacje.  
 Ustalmy $p = 0.2$ oraz $n = 1000$.  
 Dla każdego $t \in \{1, 2, \dots, \log(n)\}$ wykonajmy $2000$ powtórzeń propagacji na $\mathrm{S}_n$, a następnie dla $n \in \{1, 2, \dots, 1000\}$ oszacujmy $\mathbb{E}[Z]$.  
 Wyniki przedstawiono na \Cref{fig:star_Yt} oraz \Cref{fig:star_Z}.
+Dla $\mathbb{E}[Y_t]$ obserwujemy niemal idealne dopasowanie do przewidywanego kształtu.  
+Natomiast dla $\mathbb{E}[Z]$ wartości empiryczne są około o $1$ mniejsze od oczekiwanych, co stanowi bardzo dobre przybliżenie.
 
 \begin{figure}[!ht]
     \centering
@@ -289,17 +289,12 @@ Wyniki przedstawiono na \Cref{fig:star_Yt} oraz \Cref{fig:star_Z}.
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{S_n}$ w funkcji $t$.}
     \label{fig:star_Yt}
 \end{figure}
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{../img/star/full_infection_expectation.png}
     \caption{$\mathbb{E}[Z]$ dla $\mathrm{S_n}$ w funkcji $n$.}
     \label{fig:star_Z}
 \end{figure}
-
-Dla $\mathbb{E}[Y_t]$ obserwujemy niemal idealne dopasowanie do przewidywanego kształtu.  
-Natomiast dla $\mathbb{E}[Z]$ wartości empiryczne są około o~$1$ mniejsze od oczekiwanych, co stanowi bardzo dobre przybliżenie.
-
 
 
 \section{Ograniczenia na czas zarażenia}
@@ -333,8 +328,8 @@ W praktyce oznacza to, że jeśli znamy średni czas pełnego zainfekowania dowo
 Spróbujmy teraz oszacować z góry wartość $\mathbb{E}[Z]$ dla dowolnego grafu.
 
 \begin{theorem}\label{theorem:upper_bound_on_EZ}
-Niech $G = (V, E)$ będzie grafem o $n$ wierzchołkach, a $s \in V$ — ustalonym źródłem.  
-Oznaczmy $\lambda = \log\!\big(\tfrac{1}{1-p}\big)$ oraz $h = \epsilon(s)$.  
+Niech $G = (V, E)$ będzie grafem o $n$ wierzchołkach oraz $s \in V$ — ustalonym źródłem.  
+Oznaczmy $\lambda = \log\!\big(\frac{1}{1-p}\big)$ oraz $h = \epsilon(s)$.  
 Wtedy zachodzi:
 \[
     \mathbb{E}[Z] \le h + \frac{h}{\lambda} \left(\log\!\Big(\frac{n - 1}{h}\Big) + 1\right).
@@ -342,9 +337,9 @@ Wtedy zachodzi:
 \end{theorem}
 
 \begin{proof}
-Dla $0 \le j \le h$ zdefiniujmy zbiory $A_j = \{v \in V : \mathrm{d}(s, v) = j\}$ oraz liczności $a_j = |A_j|$.  
+Dla $0 \le j \le h$ zdefiniujmy zbiory $A_j = \{v \in V : \mathrm{d}(s, v) = j\}$ oraz połóżmy $a_j = |A_j|$.  
 Mamy oczywiście $a_0 = 1$, a więc $a_1 + \cdots + a_h = n - 1$.  
-Zdefiniujmy dalej zmienne losowe:
+Dalej zdefiniujmy zmienne losowe:
 \[
     T_j = \min\{t \in \mathbb{N} : A_j \subseteq \mathcal{I}_t\}.
 \]
@@ -366,8 +361,8 @@ Z \Cref{theorem:montonicity_of_total_infection} wynika, że zmienna $U_j$ jest o
 Zgodnie z wcześniejszymi wynikami, jego wartość oczekiwana wynosi co najwyżej $\frac{H_{a_j}}{\lambda} + 1$, co kończy dowód.
 \end{proof}
 
-Przejdźmy do dowodu głównego twierdzenia.  
-Mamy $T_h = \sum_{j=1}^{h} U_j$, zatem:
+Wróćmy do dowodu twierdzenia.
+Mamy $T_h = \sum_{j=1}^{h} U_j$ a więc
 \begin{equation*}
 \begin{aligned}
 \mathbb{E}[Z] 
@@ -378,7 +373,7 @@ Mamy $T_h = \sum_{j=1}^{h} U_j$, zatem:
 &= h + \frac{1}{\lambda} \sum_{j=1}^{h} H_{a_j} 
   \le h + \frac{1}{\lambda} \sum_{j=1}^{h} 1 + \log(a_j) \\
 &= h + \frac{h}{\lambda} \cdot \Big(1 + \sum_{j=1}^{h} \log(a_j) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\prod_{j=1}^{h} a_j\Big)\Big)\\
-&\le h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{1}{h} \sum_{j=1}^{h} a_j\Big) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{n-1}{h}\Big) \Big) \\
+&\le h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{1}{h} \sum_{j=1}^{h} a_j\Big) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{n-1}{h}\Big) \Big), \\
 \end{aligned}
 \end{equation*}
 gdzie w linijce pierwszej wykorzystujemy \cref{lemma:helper_lemma}, w drugiej \cref{inequality:harmonic_upper_bound} a w piątej nierówność między średnimi (\ref{inequality:AM_GM}).
@@ -388,15 +383,16 @@ Porównajmy teraz powyższy wynik z wcześniejszymi obserwacjami.
 Dla rodziny grafów $\mathrm{P}_n$ mamy $h = n - 1$.  
 Korzystając z \Cref{inequality:log_vs_x}, otrzymujemy:
 \[
-    \mathbb{E}[Z] \le (n - 1) \left(1 + \frac{1}{p}\right).
+    \mathbb{E}[Z] \le (n - 1) \Big(1 + \frac{1}{p}\Big).
 \]
 Faktyczna wartość oczekiwana wynosi $\frac{n - 1}{p}$, więc oszacowanie jest dość dokładne.  
 Z kolei dla rodziny grafów $\mathrm{S}_n$ mamy $h = 1$ oraz $n + 1$ wierzchołków, stąd:
 \[
-    \mathbb{E}[Z] \le 1 + \frac{\log (n) + 1}{\log\!\big(\tfrac{1}{1 - p}\big)}.
+    \mathbb{E}[Z] \le 1 + \frac{\log (n) + 1}{\log\!\big(\frac{1}{1 - p}\big)}.
 \]
-Ponownie otrzymujemy zaskakująco dobre przybliżenie — szczególnie dla grafów rzadkich.
-
+Ponownie otrzymujemy zaskakująco dobre przybliżenie.
+Należy zwrócić uwagę, że zarówno $\mathrm{P}_n$ jak i $\mathrm{S}_n$ są grafami rzadkimi.
+Analizując grafy pełnej przekonamy się, że dla grafów gęstych oszacowanie to nie będzie skuteczne.
 
 
 \section{Grafy cykliczne}
@@ -423,13 +419,14 @@ Z \Cref{fact:min_CDF} mamy
 \]
 Nie ma co liczyć na wyznaczenie eleganckiej postaci na PMF czy CDF dla $X_v$. 
 Postaramy się więc przybliżyć wartość oczekiwaną dla dużych $n$. 
-Z centralnego twierdzenia granicznego możemy przybliżyć $N_a \approx A,\; N_b \approx B$ dla $ A\sim \mathcal{N}(\mu_a,\sigma^2_a),\; B \sim \mathcal{N}(\mu_b,\sigma^2_b)$ gdzie 
+Kładziemy $A\sim \mathcal{N}(\mu_a,\sigma^2_a),\; B \sim \mathcal{N}(\mu_b,\sigma^2_b)$ gdzie 
 \[
     \mu_a=\frac{a}{p},\quad \sigma^2_a=\frac{aq}{p^2}, \quad \mu_b=\frac{b}{p},\quad \sigma^2_b=\frac{bq}{p^2}.
 \]
-Zatem mamy
+Z centralnego twierdzenia granicznego możemy przybliżyć $N_a \approx A,\; N_b \approx B$.
+Zatem mamy $\mathbb{E}[X_v] \approx \mathbb{E}[\min\{A,B\}]$ oraz
 \[
-    \mathbb{E}[X_v] \approx \mathbb{E}[\min\{A,B\}]=\mathbb{E}\Big[\frac{A+B-|A-B|}{2}\Big]=\frac{\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|]}{2}.
+    \mathbb{E}[\min\{A,B\}]=\mathbb{E}\Big[\frac{A+B-|A-B|}{2}\Big]=\frac{\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|]}{2}.
 \]
 Połóżmy $C=A-B$. 
 Korzystając z \Cref{fact:sum_of_normal_RV} mamy $C \sim \mathcal{N}(\mu_a-\mu_b,\sigma_a^2+\sigma_b^2)$. 
@@ -477,19 +474,18 @@ Z \Cref{lemma:abs_normal_E} dostajemy $\mathbb{E}[C]=2\xi\cdot \varphi\Big(\frac
 Ostatecznie 
 \begin{align*}
 \mathbb{E}[X_v] \approx {} &
- \tfrac{1}{2}\!\Big(\mu_a+\mu_b
- -2\xi\,\varphi\!\Big(\tfrac{\eta}{\xi}\Big)
- -\eta\!\Big(2\mathbf{\Phi}\!\Big(\tfrac{\eta}{\xi}\Big)-1\Big)\!\Big) \\[0.4em]
+ \frac{1}{2}\!\Big(\mu_a+\mu_b
+ -2\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)
+ -\eta\!\Big(2\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-1\Big)\!\Big) \\[0.4em]
 ={} &
- \tfrac{\mu_a+\mu_b}{2}
- -\xi\,\varphi\!\Big(\tfrac{\eta}{\xi}\Big)
- -(\mu_a-\mu_b)\!\Big(\mathbf{\Phi}\!\Big(\tfrac{\eta}{\xi}\Big)-\tfrac{1}{2}\Big) \\[0.4em]
+ \frac{\mu_a+\mu_b}{2}
+ -\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)
+ -(\mu_a-\mu_b)\!\Big(\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-\frac{1}{2}\Big) \\[0.4em]
 ={} &
- \mu_a\!\Big(1-\mathbf{\Phi}\!\Big(\tfrac{\eta}{\xi}\Big)\Big)
- +\mu_b\,\mathbf{\Phi}\!\Big(\tfrac{\eta}{\xi}\Big)
- -\eta\,\varphi\!\Big(\tfrac{\eta}{\xi}\Big).
+ \mu_a\!\Big(1-\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)\Big)
+ +\mu_b\,\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)
+ -\eta\,\varphi\!\Big(\frac{\eta}{\xi}\Big).
 \end{align*}
-
 Przenalizujmy teraz zachowanie asymptotyczne otrzymanego wyrażenia. 
 Skoro $a+b=n$ to niech $a=rn$, $b=(1-r)n$ dla pewnego $r\in(0;1)$. 
 Dalej 
@@ -497,10 +493,8 @@ Dalej
     \frac{\eta}{\xi}=\frac{\mu_a-\mu_b}{\sqrt{\sigma_a^2+\sigma_b^2}}=\frac{\frac{a}{p}-\frac{b}{p}}{\sqrt{\frac{aq}{p^2}+\frac{bq}{p^2}}}=\frac{(2r-1)\sqrt{n}}{\sqrt{q}}.
 \]
 Musimy rozważyć dwa przypadki.
-
 Jeśli $a<b$, co za tym idzie $r<\frac{1}{2}$ to $\frac{\eta}{\xi}\to -\infty$ wraz z $n\to \infty$. 
-Wtedy też $\varphi\Big(\frac{\eta}{\xi}\Big)\to 0$ oraz $\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)\to 0$ a więc $\mathbb{E}[X_v] \to \frac{a}{p}$. 
-
+Wtedy też $\varphi(\frac{\eta}{\xi})\to 0$ oraz $\mathbf{\Phi}(\frac{\eta}{\xi})\to 0$ a więc $\mathbb{E}[X_v] \to \frac{a}{p}$. 
 Zaś gdy $a=b$ to $r=\frac{1}{2}$ jak i  $\frac{\eta}{\xi}=0$. 
 Wiemy, że $\varphi(0)=\frac{1}{\sqrt{2\pi}}$ oraz $\mathbf{\Phi}(0)=\frac{1}{2}$. 
 Wstawiając otrzymamy $\mathbb{E}[X_v] \to \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}$. 
@@ -524,9 +518,10 @@ Z wcześniejszego wyniku dla grafów ścieżek dostajemy
     \lim_{n\to\infty} \mathbb{E}[Y_t] = 1+2tp.
 \]
 
-Teraz możemy wyznaczyć $\mathbb{E}[Z]$. 
+Teraz możemy wyznaczyć rozkład i wartość oczekiwaną zmiennej $Z$. 
 Dla $n$ parzystego najdalej oddalony wierzchołek od źródła to $\frac{n}{2}$ a dla $n$ nieparzystego to $\lfloor \frac{n\pm 1}{2}\rfloor$. 
 Asymptotycznie nie ma to znaczenia, możemy przyjąć $v=\frac{n}{2}$. 
+Mamy więc $Z=\max_{v\in V} X_v = X_{\frac{n}{2}}$.
 Stąd
 \[
     \mathbb{E}[Z] \approx \mathbb{E}[X_{\frac{n}{2}}] \approx \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}.
@@ -552,10 +547,9 @@ Z wykresów (zob. \Cref{fig:cycle_Yt}, \Cref{fig:cycle_Z}) widzimy, że empirycz
 
 \section{Grafy pełne}
 
-Graf pełny $\mathrm{K}_n$ intuicyjnie powinien mieć najszybszą propagację ze względu na maksymalną liczbę krawędzi. 
+Graf pełny $\mathrm{K}_n$ intuicyjnie powinien mieć najszybszą propagację bo przecież ma maksymalną liczbę krawędzi. 
 Za źródło możemy przyjąć dowolny wierzchołek $s\in V$ ze względu na symetrie. 
 Początkowo rozkład $X_v$ pokrywa się z rozkładem gwiazdy natomiast w każdej kolejnej rundzie mocno się komplikuje. 
-Zachodzi bowiem $Y_t=a$ to $\mathbb{P}[X_v = t+1 | Y_t = a] = 1 - q^a$. 
 Nie mamy co liczyć na jakiekolwiek sensowne wyznaczenie rozkładu $X_v$. 
 Podejdźmy do problemu na razie heurystycznie. 
 Zauważmy, że jeśli $Y_1=a$ to rozkład zmiennej $Y_2$ wynosi $Y_2 = a + B$ dla $B \sim \mathrm{Bin}(n-a, 1-q^n)$. 
@@ -563,7 +557,7 @@ Zatem
 \[
     \mathbb{E}[Y_2\mid Y_1 = a] = n\cdot (1-q^a) + aq^a.
 \]
-Mamy $Y_1\sim \mathrm{Bin}(n-1,p)$ oraz $\mathbb{E}[Y_1]=1+(n-1)p$. 
+Mamy $Y_1 - 1\sim \mathrm{Bin}(n-1,p)$ oraz $\mathbb{E}[Y_1]=1+(n-1)p$. 
 Możemy również założyć, że również $a \approx \mathbb{E}[Y_1]$ a co za tym idzie 
 \[
     \mathbb{E}[Y_2\mid Y_1 = a] \approx n(1-q^{1+(n-1)p})+(1+(n-1)p)q^{1+(n-1)p} .
@@ -571,18 +565,6 @@ Możemy również założyć, że również $a \approx \mathbb{E}[Y_1]$ a co za 
 Jeśli $n\to\infty$ to wyrażenie to jest bliskie $n$. 
 Spodziewamy się zatem, że zaledwie po dwóch rundach cały graf $\mathrm{K}_n$ będzie zainfekowany. Zweryfikujmy teraz ten heurystyczny argument symulacją w Pythonie. 
 Ustalmy $p=0.2$ i dla $n\in\{2,3,\dots,1000\}$ odpalmy propagację. 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/complete/final_infection_expectations.png}
-    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{K_n}$ w funkcji $t$}
-    \label{fig:complete_Yt}
-\end{figure}
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/complete/full_infection_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
-    \label{fig:complete_Z}
-\end{figure}
 Widzimy, (zob. \Cref{fig:complete_Yt}, \Cref{fig:complete_Z}) że dla $n>200$ mamy $\mathbb{E}[Z] \approx 2$. 
 Możemy więc wysunąć hipotezę: Dla grafu $\mathrm{K}_n$ mamy:
 \[
@@ -596,24 +578,7 @@ Z prawa całkowitej wartości oczekiwanej mamy
     \mathbb{E}[Y_2] = n\cdot (1-\mathbb{E}[q^U])+\mathbb{E}[Uq^U].
 \]
 Musimy wyznaczyć $\mathbb{E}[q^U]$ jak i $\mathbb{E}[Uq^U]$. 
-\begin{lemma}\label{lemma:binomial_PGF}
-Niech $X \sim \mathrm{Bin}(m, p)$.
-Wtedy
-\[
-    \mathbb{E}[z^X]={(q+pz)}^m, \quad \mathbb{E}[Xz^X]=mpz{(q+pz)}^{m-1}.
-\]    
-\end{lemma}
-\begin{proof}
-Do obliczenia tych wartości posłuży nam \cref{summ:binomial_0} jak i \cref{summ:binomial_1}.
-\[
-    \mathbb{E}[z^X] = \sum_{k=0}^{m} z^k \cdot \binom{m}{k}p^k q^{m-k} = \sum_{k=0}^{m} \binom{m}{k}{(pz)}^k q^{m-k} = {(q+pz)}^m.
-\]    
-\[
-    \mathbb{E}[Xz^X] = \sum_{k=0}^{m} kz^k \binom{m}{k}p^k q^{m-k} = \sum_{k=0}^{m} k \binom{m}{k}{(pz)}^k q^{m-k} = mpz{(q+pz)}^{m-1} .
-\]
-\end{proof}
-
-W naszym przypadku dostajemy 
+Korzystając z \Cref{fact:pgf_bin} dostajemy 
 \[
     \mathbb{E}[q^U]=\mathbb{E}[q^{1+W}]=q\cdot \mathbb{E}[q^W]=q{(q+pq)}^{n-1}=q^n{(1+p)}^{n-1}.
 \]
@@ -649,6 +614,7 @@ Ustalmy jeden z tych podgrafów.
 Niech $Z'$ będzie zmienną losową czasu całkowitego zarażenia dla tego podgrafu. 
 Z \Cref{theorem:montonicity_of_total_infection} mamy $Z\le Z'$ a co za tym idzie $\mathbb{E}[Z^2] \le \mathbb{E}[{(Z')}^2]$. 
 Przypomnijmy, że $Z' \sim \mathrm{NegBin}(n-1,p)$ a więc $\mathbb{E}[{(Z')}^2]=\frac{{(n-1)}^2+(n-1)q}{p^2}$. 
+Wnioskujemy, że
 \begin{equation*}
 \begin{aligned}
 \mathbb{E}[Z] 
@@ -672,13 +638,27 @@ Wynosi ono
 \[
     1 + \frac{\log(n-1) + 1}{\log(\frac{1}{1-p})}.
 \]
-Ograniczenie to zdaje się nie być za dobre czego przyczyną jest fakt, że $\mathrm{K}_n$ jest grafem gęstym.
+Ograniczenie to zdaje się nie być za dobre czego przyczyną jest zapewne fakt, że $\mathrm{K}_n$ jest grafem gęstym.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{../img/complete/final_infection_expectations.png}
+    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{K_n}$ w funkcji $t$}
+    \label{fig:complete_Yt}
+\end{figure}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{../img/complete/full_infection_expectation.png}
+    \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
+    \label{fig:complete_Z}
+\end{figure}
+
 
 \section{Drzewa}
 
-Rozważmy drzewo $G = (V, E)$ oraz ustalony wierzchołek początkowy $s \in V$, 
-który traktujemy jako korzeń drzewa. 
-Dla $v\in V$ oznaczmy  $d_v=\mathrm{d}(s,v)$. Ustalmy $v\in V$. 
+Rozważmy drzewo $G = (V, E)$ oraz ustalony wierzchołek początkowy $s \in V$, który traktujemy jako korzeń drzewa. 
+Dla $v\in V$ oznaczmy $d_v=\mathrm{d}(s,v)$. 
+Ustalmy $v\in V$. 
 Skoro $G$ jest drzewem to istnieje dokładnie jedna ścieżka od $s$ do $v$, powiedzmy $s,v_1,\dots,v_k, v$. 
 Ponieważ infekcja rozprzestrzenia się od korzenia $s$ wzdłuż krawędzi drzewa, każde zakażenie wymaga sukcesu w niezależnym doświadczeniu Bernoulliego o prawdopodobieństwie $p$.
 W konsekwencji, aby infekcja dotarła z $s$ do $v$, musi wystąpić $\mathrm{d}_v$ kolejnych sukcesów. 
@@ -689,7 +669,7 @@ Stąd
 \]
 oraz
 \[
-    \mathbb{E}[X_v] = \frac{\mathrm{d}_v}{p}, \quad \mathrm{Var}[X_v] = \frac{\mathrm{d}_v\cdot(1 - p)}{p^2}.
+    \mathbb{E}[X_v] = \frac{\mathrm{d}_v}{p}.
 \]
 \begin{lemma}\label{lemma:Formula_EYt}
 Dla dowolnego $t\in\mathbb{N}$ wartość oczekiwana zmiennej $Y_t$ wyraża się wzorem
@@ -735,7 +715,6 @@ Aby ograniczyć $\mathbb{E}[Z]$ z góry skorzystamy z \Cref{theorem:upper_bound_
 \[
     \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}.
 \]
-
 Ograniczenia te są różnych rzędów wielkości. 
 Jednakże nie da się ich poprawić dla ogólnego drzewa znając tylko liczbę jego wierzchołków i wysokość. 
 Ustalmy $n\in\mathbb{N}_+$ oraz $h\in\{1,2,\dots,n-1\}$ i poszukajmy drzew o $n$ wierzchołkach i wysokości $h$ osiągających zarówno dolne jak i górne ograniczenie na $\mathbb{E}[Z]$. 

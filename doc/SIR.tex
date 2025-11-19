@@ -81,6 +81,73 @@ Ponadto $Y_t\le Y_{t+1}$ oraz $Y_t\le |V|$.
 A więc z Twierdzenia Lebesgue dostajemy wzory na rozkład i wartość oczekiwaną zmiennej $W$.
 \end{proof}
 
+
+\section{Grafy ścieżkowe}
+
+Przyjrzyjmy się teraz grafom $\mathrm{P}_n$.
+Oczywiście za źródło propagacji wybieramy wierzchołek $s=1$.
+Podobnie jak w modelu \textbf{SI} propagacja rozchodzi się miedzy kolejnymi wierzchołkami niezależnie a więc
+\[
+    X_1=0, \quad X_v=X_{v-1}+U_v, \quad v\in\{2,3,\dots,n\},
+\]
+gdzie jednak $U_2,U_3,\dots,U_n\sim\mathrm{KGeo}(p,\alpha)$ oraz są niezależne.
+Stąd $X_v=U_2+U_3+\cdots+U_v$ a zatem $X_v$ ma rozkład umierający ujemny dwumianowy:
+\[
+    X_v\sim\mathrm{KNegBin}(v-1,p,\alpha),
+\]
+oraz
+\[
+    \mathbb{E}[X_v|X_v<\infty] = \frac{v-1}{1-q\beta}.
+\]
+
+Jeśli chodzi o zmienną $Y_t$ to zauważmy, że
+\[
+    Y_t=\max\{j\in\{1,2,\dots,n\}: X_j\le t\}.
+\]
+A więc dla $k>0$ mamy
+\[
+    \mathbb{P}[Y_t\ge k+1] = \mathbb{P}[X_k\le t] = \sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k}.
+\]
+Dalej mamy
+\[
+    \mathbb{E}[Y_t] = \sum_{k=0}^{n-1} \mathbb{P}[Y_t\ge k+1] = 1+\sum_{k=1}^{n-1}\sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k}.
+\]
+Nie ma zbytniej nadziei na zwartą formę tej sumy.
+Przejdźmy teraz do zmiennej $W$.
+\[
+    \mathbb{P}[W\ge k+1] = \lim_{t\to\infty} \sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k} = \Big(\frac{p}{1-q\beta}\Big)^k.
+\]
+Oznaczmy $\tau = \frac{p}{1-q\beta}$.
+Wtedy
+\[
+    \mathbb{P}[W=k]=(1-\tau)\tau^{k-1}, \quad k\in\{1,2,\dots,n-1\}, \quad \mathbb{P}[W=n]=\tau^{n-1}.
+\]
+Ponadto
+\[
+    \mathbb{E}[W] = \sum_{k=0}^{n-1} \mathbb{P}[W\ge k+1] = \sum_{k=0}^{n-1} \tau^k = \frac{1-\tau^n}{1-\tau}.
+\]
+
+Skoncentrujmy naszą uwagę na zmiennej $Z$.
+Niech $T_j$ oznacza czas przejścia ze stanu w którym wierzchołek $j$ został dopiero co zainfekowany do kolejnego stanu, gdzie $j\in V$.
+Formalnie $T_j=\min\{t\in\mathbb{N}:i=X_j\land \neg (j\in\mathcal{I}_{t+i} \land j+1\in\mathcal{S}_{t+i})\}$.
+Wtedy $T_j\sim \mathrm{Geo}(1-q\beta)$, a ponadto $T_1,T_2,\dots$ są niezależne.
+Niech $G_j(z)=\mathbb{E}[z^{T_j}]$. 
+Mamy
+\[
+    G_j(z) = \sum_{k=1}^{\infty} (1-q\beta)(q\beta)^{k-1}z^k=\frac{(1-q\beta)z}{1-q\beta z}.
+\]
+Zauważmy, że $Z=T_1+T_2+\cdots+T_W$.
+A zatem
+\[
+    \mathbb{E}[z^Z]=\sum_{k=1}^{n-1} \mathbb{P}[W=k]\cdot G_k(z).
+\]
+Funkcja generująca prawdopodobieństwo determinuje rozkład $Z$.
+Natomiast wartość oczekiwana wynosi
+\[
+    \mathbb{E}[Z]=\mathbb{E}[W]\cdot\mathbb{E}[T_1]=\frac{1-\tau^n}{1-\tau} \cdot \frac{1}{1-q\beta} = \frac{1-\tau^n}{\frac{q\alpha}{1-q\beta}} \cdot \frac{1}{1-q\beta} = \frac{1-\tau^n}{q\alpha}.
+\]
+
+
 \section{Grafy gwiezdne}
 
 Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, gdzie źródłem jest wierzchołek $0$.

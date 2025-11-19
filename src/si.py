@@ -92,7 +92,7 @@ def plot_final_infection_distribution(graph_family, n, p, distribution, t_value)
     plt.ylabel("P[$Y_t$ = k]")
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig(f"./img/{graph_family}/final_infection_distribution.png", dpi=150)
+    plt.savefig(f"./img/SI/{graph_family}/final_infection_distribution.png", dpi=150)
     plt.close()
 
 
@@ -107,7 +107,7 @@ def plot_final_infection_expectations(graph_family, n, p, t_values, means):
     plt.legend()
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig(f"./img/{graph_family}/final_infection_expectations.png", dpi=150)
+    plt.savefig(f"./img/SI/{graph_family}/final_infection_expectations.png", dpi=150)
     plt.close()
 
 
@@ -123,7 +123,7 @@ def plot_full_infection_distribution(graph_family, n, p, samples):
     plt.ylabel("P[Z = k]")
     plt.grid(alpha=0.3, axis='y')
     plt.tight_layout()
-    plt.savefig(f"./img/{graph_family}/full_infection_distribution.png", dpi=150)
+    plt.savefig(f"./img/SI/{graph_family}/full_infection_distribution.png", dpi=150)
     plt.close()
 
 
@@ -138,7 +138,7 @@ def plot_full_infection_expectation(graph_family, p, n_values, means):
     plt.legend()
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig(f"./img/{graph_family}/full_infection_expectation.png", dpi=150)
+    plt.savefig(f"./img/SI/{graph_family}/full_infection_expectation.png", dpi=150)
     plt.close()
 
 
@@ -146,7 +146,6 @@ def graph_constructor(graph_family, n):
     builders = {
         "path": lambda k: nx.path_graph(k),
         "star": lambda k: nx.star_graph(k),
-        "tree": lambda k: nx.random_labeled_tree(k),
         "complete": lambda k: nx.complete_graph(k),
         "cycle": lambda k: nx.cycle_graph(k)
     }
@@ -157,7 +156,6 @@ def theoretical_expectation_final_infection(graph_family, n, p, t):
     functions = {
         "path": lambda n, p, t: 1 + p * t,
         "star": lambda n, p, t: 1 + n * (1 - (1 - p) ** t),
-        "tree": lambda n, p, t: 0,
         "complete": lambda n, p, t: 1 + (n - 1) * (1 - (1 - p) ** t) if t < 2 else n,
         "cycle": lambda n, p, t: 1 + 2 * p * t 
     }
@@ -168,7 +166,6 @@ def theoretical_expectation_full_infection(graph_family, n, p):
     functions = {
         "path": lambda n, p: (n - 1) / p,
         "star": lambda n, p: np.log(n) / np.log(1 / (1 - p)),
-        "tree": lambda n, p: np.zeros_like(n, dtype=float) if isinstance(n, np.ndarray) else 0,
         "complete": lambda n, p: np.full_like(n, 2, dtype=float) if isinstance(n, np.ndarray) else 2,
         "cycle": lambda n, p: n / (2 * p)  - np.sqrt(n * (1 - p) / (2 * np.pi)) / p
     }
@@ -179,7 +176,6 @@ def time_function(graph_family, graph, n, p):
     functions = {
         "path": lambda G, n, p: n - 1,
         "star": lambda G, n, p: int(np.log(n)),
-        "tree": lambda G, n, p: 0,
         "complete": lambda G, n, p: 2,
         "cycle": lambda G, n, p: (n - 1) // 2  
     }
@@ -197,7 +193,7 @@ def main():
     t_limit = theoretical_expectation_full_infection(graph_family, N, p)
     t_values = np.linspace(1, t_limit, 20, dtype=int)
 
-    os.makedirs(f"./img/{graph_family}", exist_ok=True)
+    os.makedirs(f"./img/SI/{graph_family}", exist_ok=True)
 
     t_value, distribution_final_infection = compute_final_infection_distribution(graph_family, N, p, source, trials_distribution)
     plot_final_infection_distribution(graph_family, N, p, distribution_final_infection, t_value)

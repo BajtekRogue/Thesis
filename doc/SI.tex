@@ -90,29 +90,21 @@ Wtedy zachodzą następujące tożsamości:
 \end{theorem}
 
 \begin{proof}
-Weźmy $v\in V\setminus\{s\}$.
-Wybierzemy ustaloną ścieżkę od $s$ do $v$, $s = u_0u_1u_2\dots u_\ell = v$ gdzie $\ell$ to długość tej ścieżki ($\ell\ge 1$).
-Aby $v$ został zainfekowany, wystarczy, że po kolei na tej ścieżce zajdą sukcesy transmisji.
-Rozważmy następujące zdarzenia zainfekowania tych wierzchołków w bloku czasu indeksowanym przez $k\in\mathbb{N}$:
+Rozważmy propagacje jako łańcuch Markova.
+W danej chwili stanem jest $\mathcal{I}_t$.
+Stan absorbujący wynosi $V$.
+Jeśli
 \[
-    A_k = \{\forall j\in\{1,\dots,\ell\}\quad X_{u_j}=k\ell+j\}.
+    \ell = \max_{u\in\mathcal{I}_t, \; v\in\mathcal{S}_t} \mathrm{d}(u,v)
 \]
-Próby transmisji w różnych rundach są niezależne a więc $\mathbb{P}[A_k]=p^\ell > 0$.
-Jeśli chociaż jedno ze zdarzeń $A_k$ zajdzie to wtedy $X_v<\infty$.
-Mamy zatem
-\begin{equation*}
-\begin{aligned}
-\mathbb{P}[X_v=\infty] &\le \mathbb{P}\Big[\bigcap_{k=0}^{\infty} A_k^c\Big] = \lim_{m\to \infty} \mathbb{P}\Big[\bigcap_{k=0}^m A_k^c\Big] \\
-&=\lim_{m\to\infty} \prod_{k=0}^{m} 1-p^\ell = \lim_{m\to\infty} (1-p^\ell)^{m+1}=0.
-\end{aligned}
-\end{equation*}
-Stąd oczywiscie $\mathbb{P}[X_v=\infty]=0$.
+to po $\ell$ rundach możemy przejść do stanu całkowitej infekcji grafu z dodatnim prawdopodobieństwem.
+A zatem z \Cref{fact:absorbing_markov} mamy $\mathbb{P}[Z<\infty]=1$.
+Ponadto $\mathbb{P}[\max_{v\in V} X_v = \infty] = \mathbb{P}[Z = \infty] = 0$ a więc dla dowolnego $v\in V$ mamy $\mathbb{P}[X_v=\infty]=0$.
 Dalej zauważmy, że $0\le Y_t\le |V|$. 
 Z Twierdzenia Lebesgue o zbieżności ograniczonej mamy 
 \[
-    \lim_{t\to\infty} \mathbb{E}[Y_t]=\mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}\left[\lim_{t\to\infty} \sum_{v\in V} \mathbf{1}_{v\in\mathcal{I}_t}\right]=\mathbb{E}\left[\lim_{t\to\infty}\sum_{v\in V} 1 \right] = \mathbb{E} [|V|] = |V|.
+    \lim_{t\to\infty} \mathbb{E}[Y_t]=\mathbb{E}[\lim_{t\to\infty} Y_t] = \mathbb{E}\left[\lim_{t\to\infty} \sum_{v\in V} \mathbf{1}_{v\in\mathcal{I}_t}\right]=\mathbb{E}\left[\sum_{v\in V} 1 \right] = \mathbb{E} [|V|] = |V|.
 \]
-Wreszcie $\mathbb{P}[Z = \infty] =  \mathbb{P}[\max_{v\in V} X_v = \infty] = 0$ skąd $\mathbb{P}[Z<\infty]=1$.
 \end{proof}
 
 
@@ -123,12 +115,12 @@ Załóżmy, że proces zaczyna się w wierzchołku $s=1$.
 Zatem infekcja rozchodzi się po grafie „od lewej do prawej”.  
 Zauważmy, że czasy zarażenia kolejnych wierzchołków tworzą ciąg zmiennych losowych:
 \[
-X_1 = 0, \quad X_{v} = X_{v-1} + U_k, \quad v\in\{2,3,\dots,n\},
+X_1 = 0, \quad X_{v} = X_{v-1} + U_v, \quad v\in\{2,3,\dots,n\},
 \]
 gdzie $U_2,U_3,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_2,U_3,\dots,U_n$ są niezależne.  
-Widzimy zatem, że $X_v = U_1 + U_2 + \cdots + U_{v-1}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
+Widzimy zatem, że $X_v = U_2 + U_3 + \cdots + U_{v}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
 \[
-    X_v\sim \mathrm{NegBin}(v-1, p).
+    X_v\sim \mathrm{NegBin}(v-1, p),
 \]
 oraz
 \[
@@ -190,13 +182,13 @@ Wyniki eksperymentu niemal idealnie pokrywają się z przewidywaniami, to jest $
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\textwidth]{../img/path/final_infection_expectations.png}
+    \includegraphics[width=1\textwidth]{../img/SI/path/final_infection_expectations.png}
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{P_n}$ w funkcji $t$.}
     \label{fig:path_Yt}
 \end{figure}
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\textwidth]{../img/path/full_infection_expectation.png}
+    \includegraphics[width=1\textwidth]{../img/SI/path/full_infection_expectation.png}
     \caption{$\mathbb{E}[Z]$ dla $\mathrm{P_n}$ w funkcji $n$.}
     \label{fig:path_Z}
 \end{figure}
@@ -285,13 +277,13 @@ Natomiast dla $\mathbb{E}[Z]$ wartości empiryczne są około o $1$ mniejsze od 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/star/final_infection_expectations.png}
+    \includegraphics[width=1\textwidth]{../img/SI/star/final_infection_expectations.png}
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{S_n}$ w funkcji $t$.}
     \label{fig:star_Yt}
 \end{figure}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/star/full_infection_expectation.png}
+    \includegraphics[width=1\textwidth]{../img/SI/star/full_infection_expectation.png}
     \caption{$\mathbb{E}[Z]$ dla $\mathrm{S_n}$ w funkcji $n$.}
     \label{fig:star_Z}
 \end{figure}
@@ -533,13 +525,13 @@ Dla $p=0.2$, $n\in\{3,4,\dots, 1000\}$ policzmy wartość oczekiwaną całkowite
 Z wykresów (zob. \Cref{fig:cycle_Yt}, \Cref{fig:cycle_Z}) widzimy, że empiryczny wynik pokrywa się asymptotycznie z teoretycznym.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/cycle/final_infection_expectations.png}
+    \includegraphics[width=1\textwidth]{../img/SI/cycle/final_infection_expectations.png}
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{C_n}$ w funkcji $t$}
     \label{fig:cycle_Yt}
 \end{figure}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/cycle/full_infection_expectation.png}
+    \includegraphics[width=1\textwidth]{../img/SI/cycle/full_infection_expectation.png}
     \caption{$\mathbb{E}[Z]$ dla $\mathrm{C_n}$ w funkcji $n$}
     \label{fig:cycle_Z}
 \end{figure}
@@ -642,13 +634,13 @@ Ograniczenie to zdaje się nie być za dobre czego przyczyną jest zapewne fakt,
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/complete/final_infection_expectations.png}
+    \includegraphics[width=1\textwidth]{../img/SI/complete/final_infection_expectations.png}
     \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{K_n}$ w funkcji $t$}
     \label{fig:complete_Yt}
 \end{figure}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{../img/complete/full_infection_expectation.png}
+    \includegraphics[width=1\textwidth]{../img/SI/complete/full_infection_expectation.png}
     \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
     \label{fig:complete_Z}
 \end{figure}

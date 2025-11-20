@@ -5,12 +5,15 @@ Moc zbioru $A$ oznaczamy $|A|$.
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
 Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. 
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
-Dla symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
+Funkcje Gamma oznaczamy $\Gamma(x)=\int_{0}^{\infty} t^{x-1}e^{-t}\;\mathrm{d}t$ dla $x>0$.
+Funkcje Beta oznaczamy $\mathrm{B}(x,y)=\int_{0}^1 t^{x-1}(1-t)^{y-1}\;\mathrm{d}t$ dla $x,y>0$.
+Symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
 Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
+Średnicę grafu $G$ oznaczamy $\mathrm{diam}(G)=\max_{v \in V } \epsilon(v)$.
 
 Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
 Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. 
@@ -20,7 +23,7 @@ Funkcję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante ozn
 \section{Rodziny grafów}
 
 Niech $n \in \mathbb{N}_+$. 
-Poniżej znajdują się opisy rodzin grafów na których będziemy rozważać propagację oraz ich wizualizację dla $n=5$.
+Poniżej znajdują się opisy rodzin grafów na których będziemy rozważać propagację oraz ich wizualizacja dla $n=5$.
 
 \graphfamily{Graf ścieżkowy $\mathrm{P}_n$}
 Graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$. 
@@ -156,12 +159,43 @@ Oznaczamy $X \sim \mathcal{N}(\mu, \sigma^2)$.
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
 $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
+\distribution{Rozkład jednostajny $\mathcal{U}[a;b]$}
+Niech $a,b \in \mathbb{R}$ przy czym $a<b$. 
+Zmienna losowa $X$ ma rozkład jednostajny, jeżeli jej funkcja gęstości wyraża się wzorem:
+\[
+    f_X(t) = \frac{1}{b-a}, \quad t \in [a;b].
+\]
+Dystrybuanta jest równa:
+\[
+    \mathbb{P}[X \le t] = \frac{t-a}{b-a}, \quad t \in [a;b].
+\]
+Wartość oczekiwana i wariancja wynoszą:
+\[
+    \mathbb{E}[X] = \frac{a+b}{2}, \quad \mathrm{Var}[X] = \frac{(a-b)^2}{12}.
+\]
+Oznaczamy $X \sim \mathcal{U}[a;b]$.
+
+\distribution{Rozkład wykładniczy $\mathrm{Exp}(\lambda)$}
+Niech $\lambda > 0$. 
+Zmienna losowa $X$ ma rozkład wykładniczy, jeżeli jej funkcja gęstości wyraża się wzorem:
+\[
+    f_X(t) = \lambda e^{-\lambda t}, \quad t > 0.
+\]
+Dystrybuanta jest równa:
+\[
+    \mathbb{P}[X \le t] = 1 - e^{-\lambda t}, \quad t > 0.
+\]
+Wartość oczekiwana i wariancja wynoszą:
+\[
+    \mathbb{E}[X] = \frac{1}{\lambda}, \quad \mathrm{Var}[X] = \frac{1}{\lambda^2}.
+\]
+Oznaczamy $X \sim \mathrm{Exp}(\lambda)$.
 
 \section{Fakty, sumy i nierówności}
 
 \begin{fact}\label{fact:max_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową $Y = \max\{X_1,X_2,\dots, X_n\}$. 
+Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
+Zdefiniujmy zmienną losową $Y = \max\{X_1,\dots, X_n\}$. 
 Wtedy 
 \[
     F_Y(t)=F_X^n(t).
@@ -169,8 +203,8 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:min_CDF}
-Niech $X_1,X_2,\dots, X_n:\Omega\to\mathbb{R}$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową $Y = \min\{X_1,X_2,\dots, X_n\}$. 
+Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
+Zdefiniujmy zmienną losową $Y = \min\{X_1,\dots, X_n\}$. 
 Wtedy 
 \[
     F_Y(t)=1-{(1-F_X(t))}^n.
@@ -186,7 +220,7 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:sum_of_geo_RV}
-Niech $X_1, X_2, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.
+Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.
 Zdefiniujmy zmienną losową $Y=X_1 +  \cdots + X_m$. 
 Wtedy 
 \[
@@ -218,6 +252,32 @@ Wtedy
 \[
     \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j(1-p)^{n-j}r^{k-j}(1-r)^{m-(k-j)}.
 \]
+\end{fact}
+
+\begin{fact}\label{fact:min_of_uniforms}
+Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID. 
+Zdefiniujmy zmienną losową $Y=\min\{X_1,\dots,X_n\}$. 
+Wtedy
+\[
+    \mathbb{E}[Y]=\frac{1}{1+n}.
+\]
+\end{fact}
+
+\begin{fact}\label{facf:min_of_exponentials}
+Niech $X_1\sim\mathrm{Exp}(\lambda_1),  \dots, X_n\sim\mathrm{Exp}(\lambda_n)$ będą niezależne.
+Zdefiniujmy zmienną losową $Y=\min\{X_1,\dots,X_n\}$. 
+Wtedy
+\[
+    Y\sim\mathrm{Exp}(\lambda_1+\cdots+\lambda_n).
+\]
+\end{fact}
+
+\begin{fact}\label{fact:stars_and_bars}
+Niech $m,k\in\mathbb{N}_+$, gdzie $k\ge n$ oraz $A=\{(x_1,\dots,x_m)\in\mathbb{N}_+^m:x_1+\cdots+x_m=k\}$. 
+Wtedy
+\[
+    |A|=\binom{k-1}{m-1}.
+\]    
 \end{fact}
 
 \begin{fact}\label{fact:beta_gamma}
@@ -270,7 +330,7 @@ Wtedy
 Niech $n\in\mathbb{N}$ oraz $x\in\mathbb{R}\setminus\{1\}$. 
 Wtedy
 \[
-    \sum_{k=0}^{n} k\cdot x^k=\frac{x}{{(1-x)}^2}\cdot (nx^{n+1}-(n+1)x^n+1).
+    \sum_{k=0}^{n} kx^k=\frac{x}{{(1-x)}^2}\cdot (nx^{n+1}-(n+1)x^n+1).
 \]
 \end{summ}
 
@@ -356,7 +416,7 @@ Wtedy
 \end{inequality}
 
 \begin{inequality}[Nierówność Jensena dla wartości oczekiwanej]\label{inequality:Jensen} 
-Niech $n\in\mathbb{N}_+$ oraz $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą zaś $X_1,X_2,\dots, X_n:\Omega\to\mathbb{N}$ będą zmiennymi losowymi (niekoniecznie niezależnymi). 
+Niech $n\in\mathbb{N}_+$ oraz $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą zaś $X_1,\dots, X_n$ będą zmiennymi losowymi (niekoniecznie niezależnymi). 
 Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)].

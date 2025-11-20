@@ -1,37 +1,29 @@
 \documentclass[a4paper,12pt]{report}
 
-% Kodowanie i język
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
-
-
-% Matematyka
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{csquotes}
+\usepackage{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{../bibliography.bib}
 
-% Twierdzenia itp.
 \newtheorem{definition}{Definicja}
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
 \newtheorem{summ}{Suma}
 \newtheorem{inequality}{Nierówność}
-
-
-% Grafika i reszta
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{tikz}
-\usepackage{csquotes}
-
-% Hiperłącza i sprytne referencje
-\usepackage{hyperref}
-
-% Spolszczenie nazw dla cleveref
-\usepackage[nameinlink,capitalise]{cleveref}
 
 \crefname{theorem}{Twierdzenie}{Twierdzenia}
 \Crefname{theorem}{Twierdzenia}{Twierdzenia}
@@ -65,11 +57,6 @@
 \@addtoreset{figure}{chapter} 
 \makeatother
 
-% Bibliografia
-% \usepackage[backend=biber,style=numeric]{biblatex}
-% \addbibresource{bibliography.bib}
-
-% Strona tytułowa
 \title{Probabilistyczne modele propagacji w grafach.}
 \author{Bartosz Łabuz}
 \date{\today}
@@ -101,7 +88,11 @@
 \chapter{Analiza modelu SIS}
 \input{SIS.tex}
 
-% \newpage
-% \printbibliography
+\chapter{Zastosowania praktyczne}
+\input{application.tex}
+
+\nocite{*}
+\printbibliography[heading=bibintoc,title={Bibliografia}]
+
 
 \end{document}

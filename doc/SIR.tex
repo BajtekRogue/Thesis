@@ -223,7 +223,8 @@ A więc całka wynosi
 &\frac{1}{a}\int_{0}^{1} u^n (1-u)^{\frac{b}{a}-1} \;\mathrm{d}u = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
 &=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} = \frac{n!}{b} \cdot \frac{1}{(\frac{b}{a}+1)_n}.
 \end{align*}
-gdzie skorzystaliśmy z \Cref{fact:beta_gamma}.
+gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz $(x)_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammer'a.
+Dodatkowo skorzystaliśmy z \Cref{fact:beta_gamma}.
 Ostatecznie otrzymujemy
 \[
     \mathbb{E}[Z] \approx \frac{1}{b} \cdot \Big(1 - \frac{n!}{(\frac{b}{a}+1)_n}\Big) = \frac{1}{\log(\beta)} \cdot \frac{n!}{\big(\frac{\log(\beta)}{\log(q)}+1\big)_n} - \frac{1}{\log(\beta)}.

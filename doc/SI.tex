@@ -174,27 +174,6 @@ a wartość oczekiwana wynosi
     \mathbb{E}[Z]=\frac{n-1}{p}.
 \]
 
-Sprawdźmy, czy nasze obliczenia teoretyczne zgadzają się z empirycznie wyznaczonymi wartościami. 
-Ustalmy $p=0.2$. 
-W celu estymacji $\mathbb{E}[Y_t]$ przeprowadźmy $2000$ symulacji propagacji na grafie $\mathrm{P}_n$. 
-Następnie dla $n\in\{1,2,\dots,1000\}$ tą samą liczbą symulacji oszacujmy $\mathbb{E}[Z]$.
-Wyniki eksperymentu niemal idealnie pokrywają się z przewidywaniami, to jest $1+tp$ dla $\mathbb{E}[Y_t]$ (zob. \cref{fig:path_Yt}) oraz $\frac{n-1}{p}$ dla $\mathbb{E}[Z]$ (zob. \cref{fig:path_Z}).
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/path/final_infection_expectations.png}
-    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{P_n}$ w funkcji $t$.}
-    \label{fig:path_Yt}
-\end{figure}
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/path/full_infection_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{P_n}$ w funkcji $n$.}
-    \label{fig:path_Z}
-\end{figure}
-
-
-
 
 \section{Grafy gwiezdne}
 
@@ -267,26 +246,6 @@ Stąd asymptotyczny czas pełnego zarażenia grafu $\mathrm{S}_n$ wynosi:
 \[
     \mathbb{E}[Z] \sim \frac{H_n}{\log\big(\frac{1}{1-p}\big)}.
 \]
-
-Przeprowadźmy teraz symulacje.  
-Ustalmy $p = 0.2$ oraz $n = 1000$.  
-Dla każdego $t \in \{1, 2, \dots, \log(n)\}$ wykonajmy $2000$ powtórzeń propagacji na $\mathrm{S}_n$, a następnie dla $n \in \{1, 2, \dots, 1000\}$ oszacujmy $\mathbb{E}[Z]$.  
-Wyniki przedstawiono na \Cref{fig:star_Yt} oraz \Cref{fig:star_Z}.
-Dla $\mathbb{E}[Y_t]$ obserwujemy niemal idealne dopasowanie do przewidywanego kształtu.  
-Natomiast dla $\mathbb{E}[Z]$ wartości empiryczne są około o $1$ mniejsze od oczekiwanych, co stanowi bardzo dobre przybliżenie.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/star/final_infection_expectations.png}
-    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{S_n}$ w funkcji $t$.}
-    \label{fig:star_Yt}
-\end{figure}
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/star/full_infection_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{S_n}$ w funkcji $n$.}
-    \label{fig:star_Z}
-\end{figure}
 
 
 \section{Ograniczenia na czas zarażenia}
@@ -514,27 +473,10 @@ Teraz możemy wyznaczyć rozkład i wartość oczekiwaną zmiennej $Z$.
 Dla $n$ parzystego najdalej oddalony wierzchołek od źródła to $\frac{n}{2}$ a dla $n$ nieparzystego to $\lfloor \frac{n\pm 1}{2}\rfloor$. 
 Asymptotycznie nie ma to znaczenia, możemy przyjąć $v=\frac{n}{2}$. 
 Mamy więc $Z=\max_{v\in V} X_v = X_{\frac{n}{2}}$.
-Stąd
+Stąd intuicyjny wynik
 \[
     \mathbb{E}[Z] \approx \mathbb{E}[X_{\frac{n}{2}}] \approx \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}.
 \]
-
-Również intuicyjny wynik. 
-Aby się upewnić czy nie przesadziliśmy z szacowanie zwróćmy się ku symulacji. 
-Dla $p=0.2$, $n\in\{3,4,\dots, 1000\}$ policzmy wartość oczekiwaną całkowitego zarażenia po razy $2000$ razy. 
-Z wykresów (zob. \Cref{fig:cycle_Yt}, \Cref{fig:cycle_Z}) widzimy, że empiryczny wynik pokrywa się asymptotycznie z teoretycznym.
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/cycle/final_infection_expectations.png}
-    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{C_n}$ w funkcji $t$}
-    \label{fig:cycle_Yt}
-\end{figure}
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/cycle/full_infection_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{C_n}$ w funkcji $n$}
-    \label{fig:cycle_Z}
-\end{figure}
 
 
 \section{Grafy pełne}
@@ -555,9 +497,7 @@ Możemy również założyć, że również $a \approx \mathbb{E}[Y_1]$ a co za 
     \mathbb{E}[Y_2\mid Y_1 = a] \approx n(1-q^{1+(n-1)p})+(1+(n-1)p)q^{1+(n-1)p} .
 \]
 Jeśli $n\to\infty$ to wyrażenie to jest bliskie $n$. 
-Spodziewamy się zatem, że zaledwie po dwóch rundach cały graf $\mathrm{K}_n$ będzie zainfekowany. Zweryfikujmy teraz ten heurystyczny argument symulacją w Pythonie. 
-Ustalmy $p=0.2$ i dla $n\in\{2,3,\dots,1000\}$ odpalmy propagację. 
-Widzimy, (zob. \Cref{fig:complete_Yt}, \Cref{fig:complete_Z}) że dla $n>200$ mamy $\mathbb{E}[Z] \approx 2$. 
+Spodziewamy się zatem, że zaledwie po dwóch rundach cały graf $\mathrm{K}_n$ będzie zainfekowany.  
 Możemy więc wysunąć hipotezę: Dla grafu $\mathrm{K}_n$ mamy:
 \[
     \lim_{n\to\infty} \mathbb{E}[Z] = 2.
@@ -631,19 +571,6 @@ Wynosi ono
     1 + \frac{\log(n-1) + 1}{\log(\frac{1}{1-p})}.
 \]
 Ograniczenie to zdaje się nie być za dobre czego przyczyną jest zapewne fakt, że $\mathrm{K}_n$ jest grafem gęstym.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/complete/final_infection_expectations.png}
-    \caption{$\mathbb{E}[Y_t]$ dla $\mathrm{K_n}$ w funkcji $t$}
-    \label{fig:complete_Yt}
-\end{figure}
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{../img/SI/complete/full_infection_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
-    \label{fig:complete_Z}
-\end{figure}
 
 
 \section{Drzewa}
@@ -731,3 +658,139 @@ Podsumowując możemy następująco szacować przewidywany czas całkowitego poi
 \[
     \frac{h}{p} \le \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}.
 \]
+
+
+\section{Eksperymenty}
+
+Przeprowadzimy teraz serie symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
+Dla wszystkich symulacji ustalmy $p=0.2$.
+W celu wyznaczenia rozkładu zmiennej $Y_t$ dla danej rodziny ustalamy $n=1000$ oraz wybieramy $t$ zależne od konkretnej rodziny.
+Natomiast dla wartości oczekiwanej $Y_t$ przy tym samym $n$ będziemy zwiększać wartość $t$ od $1$ do wartości około $\mathbb{E}[Z]$, czyli przewidywanego czasu całkowitej infekcji.
+Dla zmiennej $Z$ jej rozkład również wyznaczymy na grafie wielkości $n=1000$, a wartość oczekiwaną dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
+Na jednym wykresie naniesiemy również teoretyczne rozkłady tych zmiennych oraz wartości oczekiwanych.
+
+
+Na początku oczywiście analizujemy grafy ścieżkowe.
+Wybierzmy $t=np$ dla analizy rozkładu $Y_t$.
+Jak widzimy na \Cref{fig}
+Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
+
+Następnie rozważmy grafy cykliczne.
+
+Jeśli chodzi o rodzinę $\mathrm{K}_n$ to wystarczy nam empiryczna wartość $\mathbb{E}[Z]$.
+Wyznaczmy ją dla każdego $n\in\{1,2,\ldots,1000\}$.
+Jak widzimy na \cref{fig:complete_Z} wartości te zbiegają do liczby $2$, tak jak przewiduje teoria.
+
+
+% \begin{figure}[ht!]
+%     \centering
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Yt_distribution.png}
+%         % \caption{Rozkład zmiennej $Y_t$.}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Yt_expectation.png}
+%         % \caption{Wartość oczekiwana $Y_t$.}
+%     \end{subfigure}
+%     \label{fig:path_Yt}
+%     \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{P}_n$.}
+% \end{figure}
+
+% \begin{figure}[ht!]
+%     \centering
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Z_distribution.png}
+%         % \caption{Rozkład zmiennej $Z$.}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
+%         % \caption{Wartość oczekiwana $Z$.}
+%     \end{subfigure}
+%     \label{fig:path_Z}
+%     \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}
+% \end{figure}
+
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/star/Yt_distribution.png}
+        % \caption{Rozkład zmiennej $Y_t$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/star/Yt_expectation.png}
+        % \caption{Wartość oczekiwana $Y_t$.}
+    \end{subfigure}
+    \label{fig:star_Yt}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{S}_n$.}
+\end{figure}
+
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/star/Z_distribution.png}
+        % \caption{Rozkład zmiennej $Z$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/star/Z_expectation.png}
+        % \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \label{fig:star_Z}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}
+\end{figure}
+
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/cycle/Yt_distribution.png}
+        % \caption{Rozkład zmiennej $Y_t$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/cycle/Yt_expectation.png}
+        % \caption{Wartość oczekiwana $Y_t$.}
+    \end{subfigure}
+    \label{fig:cycle_Yt}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{C}_n$.}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/cycle/Z_distribution.png}
+        % \caption{Rozkład zmiennej $Z$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/cycle/Z_expectation.png}
+        % \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \label{fig:cycle_Z}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{C}_n$.}
+\end{figure}
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{../img/SI/complete/Z_expectation.png}
+    \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
+    \label{fig:complete_Z}
+\end{figure}

@@ -1,0 +1,232 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{5963654}{article}{}
+      \name{author}{4}{}{%
+        {{hash=0bb140bbbc1d3ac7ec6a28bd9d506581}{%
+           family={Baquero},
+           familyi={B\bibinitperiod},
+           given={Carlos},
+           giveni={C\bibinitperiod}}}%
+        {{hash=8c54751ed4991a603ee6b186f0cf00ff}{%
+           family={Almeida},
+           familyi={A\bibinitperiod},
+           given={Paulo\bibnamedelima Sergio},
+           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=1153ae4bffd8b3977b65de3a83369b2e}{%
+           family={Menezes},
+           familyi={M\bibinitperiod},
+           given={Raquel},
+           giveni={R\bibinitperiod}}}%
+        {{hash=06da185cff4d8b1de6f9a35bfc40171f}{%
+           family={Jesus},
+           familyi={J\bibinitperiod},
+           given={Paulo},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{27323540735b1724fe670632a736ece0}
+      \strng{fullhash}{661c04da9c812977c9f335f5f48b5932}
+      \strng{bibnamehash}{27323540735b1724fe670632a736ece0}
+      \strng{authorbibnamehash}{27323540735b1724fe670632a736ece0}
+      \strng{authornamehash}{27323540735b1724fe670632a736ece0}
+      \strng{authorfullhash}{661c04da9c812977c9f335f5f48b5932}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Parallel and Distributed Systems}
+      \field{number}{4}
+      \field{title}{Extrema Propagation: Fast Distributed Estimation of Sums and Network Sizes}
+      \field{volume}{23}
+      \field{year}{2012}
+      \true{nocite}
+      \field{pages}{668\bibrangedash 675}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/TPDS.2011.209
+      \endverb
+      \keyw{Estimation;Encoding;Exponential distribution;Measurement;Reactive power;Protocols;Convergence;Aggregation;network size estimation;distributed sums;probabilistic estimation;self-configuration.}
+    \endentry
+    \entry{OnMessageComplexityOfExtremaPropagationTechniques}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=5f963ff8cd696df7623840873b7118b3}{%
+           family={Cichoń},
+           familyi={C\bibinitperiod},
+           given={Jacek},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a97d759642cb93fc007b7dff8ec5a4e6}{%
+           family={Dworzański},
+           familyi={D\bibinitperiod},
+           given={Dawid},
+           giveni={D\bibinitperiod}}}%
+        {{hash=21151a55dd92fe69625026f034ad0d27}{%
+           family={Gotfryd},
+           familyi={G\bibinitperiod},
+           given={Karol},
+           giveni={K\bibinitperiod}}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=d3765c6f54cc1008a7fed265a945c34c}{%
+           family={Bonomi},
+           familyi={B\bibinitperiod},
+           given={Silvia},
+           giveni={S\bibinitperiod}}}%
+        {{hash=48b060af675c1de88bdc2a5792a8bec5}{%
+           family={Galletta},
+           familyi={G\bibinitperiod},
+           given={Letterio},
+           giveni={L\bibinitperiod}}}%
+        {{hash=25d0ca7b5c8e12746e39ccbde8af79a3}{%
+           family={Rivière},
+           familyi={R\bibinitperiod},
+           given={Etienne},
+           giveni={E\bibinitperiod}}}%
+        {{hash=d8da81f4aefb309c1dca6a501d0b310d}{%
+           family={Schiavoni},
+           familyi={S\bibinitperiod},
+           given={Valerio},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Dagstuhl, Germany}%
+      }
+      \list{publisher}{1}{%
+        {Schloss Dagstuhl -- Leibniz-Zentrum für Informatik}%
+      }
+      \strng{namehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{fullhash}{82e41645854eb210d59cd76696ce5916}
+      \strng{bibnamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authorbibnamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authornamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authorfullhash}{82e41645854eb210d59cd76696ce5916}
+      \strng{editorbibnamehash}{3229b941bd4d637743887b40bc81a8b8}
+      \strng{editornamehash}{3229b941bd4d637743887b40bc81a8b8}
+      \strng{editorfullhash}{cd1c0fda56f6b47803229acda8aeb42c}
+      \field{extraname}{1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{annotation}{Keywords: wireless ad-hoc networks, extrema propagation, distributed data aggregation, fault tolerant aggregation, randomly evolving networks}
+      \field{booktitle}{28th International Conference on Principles of Distributed Systems (OPODIS 2024)}
+      \field{isbn}{978-3-95977-360-7}
+      \field{issn}{1868-8969}
+      \field{series}{Leibniz International Proceedings in Informatics (LIPIcs)}
+      \field{title}{{On Reliability of the Extrema Propagation Technique in Random Environment}}
+      \field{volume}{324}
+      \field{year}{2025}
+      \field{pages}{29:1\bibrangedash 29:16}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+      \verb{urlraw}
+      \verb https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+      \verb{url}
+      \verb https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+    \endentry
+    \entry{OnReliabilityOfTheExtremaPropagationTechniqueInRandomEnvironment}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=5f963ff8cd696df7623840873b7118b3}{%
+           family={Cichoń},
+           familyi={C\bibinitperiod},
+           given={Jacek},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a97d759642cb93fc007b7dff8ec5a4e6}{%
+           family={Dworzański},
+           familyi={D\bibinitperiod},
+           given={Dawid},
+           giveni={D\bibinitperiod}}}%
+        {{hash=21151a55dd92fe69625026f034ad0d27}{%
+           family={Gotfryd},
+           familyi={G\bibinitperiod},
+           given={Karol},
+           giveni={K\bibinitperiod}}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=d3765c6f54cc1008a7fed265a945c34c}{%
+           family={Bonomi},
+           familyi={B\bibinitperiod},
+           given={Silvia},
+           giveni={S\bibinitperiod}}}%
+        {{hash=48b060af675c1de88bdc2a5792a8bec5}{%
+           family={Galletta},
+           familyi={G\bibinitperiod},
+           given={Letterio},
+           giveni={L\bibinitperiod}}}%
+        {{hash=25d0ca7b5c8e12746e39ccbde8af79a3}{%
+           family={Rivière},
+           familyi={R\bibinitperiod},
+           given={Etienne},
+           giveni={E\bibinitperiod}}}%
+        {{hash=d8da81f4aefb309c1dca6a501d0b310d}{%
+           family={Schiavoni},
+           familyi={S\bibinitperiod},
+           given={Valerio},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Dagstuhl, Germany}%
+      }
+      \list{publisher}{1}{%
+        {Schloss Dagstuhl -- Leibniz-Zentrum für Informatik}%
+      }
+      \strng{namehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{fullhash}{82e41645854eb210d59cd76696ce5916}
+      \strng{bibnamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authorbibnamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authornamehash}{82e41645854eb210d59cd76696ce5916}
+      \strng{authorfullhash}{82e41645854eb210d59cd76696ce5916}
+      \strng{editorbibnamehash}{3229b941bd4d637743887b40bc81a8b8}
+      \strng{editornamehash}{3229b941bd4d637743887b40bc81a8b8}
+      \strng{editorfullhash}{cd1c0fda56f6b47803229acda8aeb42c}
+      \field{extraname}{2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{annotation}{Keywords: wireless ad-hoc networks, extrema propagation, distributed data aggregation, fault tolerant aggregation, randomly evolving networks}
+      \field{booktitle}{28th International Conference on Principles of Distributed Systems (OPODIS 2024)}
+      \field{isbn}{978-3-95977-360-7}
+      \field{issn}{1868-8969}
+      \field{series}{Leibniz International Proceedings in Informatics (LIPIcs)}
+      \field{title}{{On Reliability of the Extrema Propagation Technique in Random Environment}}
+      \field{volume}{324}
+      \field{year}{2025}
+      \true{nocite}
+      \field{pages}{29:1\bibrangedash 29:16}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+      \verb{urlraw}
+      \verb https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+      \verb{url}
+      \verb https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.OPODIS.2024.29
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,5 +1,6 @@
 \documentclass[a4paper,12pt]{report}
 
+% ------------------------ Packages ------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
@@ -16,8 +17,13 @@
 \usepackage{hyperref}
 \usepackage[nameinlink,capitalise]{cleveref}
 \usepackage[backend=biber,style=numeric]{biblatex}
+
+% ------------------------ Margins ------------------------
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
+
 \addbibresource{../bibliography.bib}
 
+% ------------------------ Theorems ------------------------
 \newtheorem{definition}{Definicja}
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
@@ -25,24 +31,21 @@
 \newtheorem{summ}{Suma}
 \newtheorem{inequality}{Nierówność}
 
+% Cleveref names
 \crefname{theorem}{Twierdzenie}{Twierdzenia}
 \Crefname{theorem}{Twierdzenia}{Twierdzenia}
-
 \crefname{fact}{Fakt}{Faktu}
 \Crefname{fact}{Faktu}{Faktu}
-
 \crefname{lemma}{Lemat}{Lematu}
 \Crefname{lemma}{Lematu}{Lematu}
-
 \crefname{inequality}{Nierówność}{Nierówności}
 \Crefname{inequality}{Nierówności}{Nierówności}
-
 \crefname{summ}{Suma}{Sumy}
 \Crefname{summ}{Sumy}{Sumy}
-
 \crefname{figure}{Wykres}{Wykresie}
 \Crefname{figure}{Wykresie}{Wykresie}
 
+% ------------------------ Figures ------------------------
 \newcommand{\graphfamily}[1]{%
   \vspace{0.8em}
   \noindent\textbf{#1}\\[0.3em]
@@ -52,11 +55,25 @@
   \vspace{0.8em}
   \noindent\textbf{#1}\\[0.3em]
 }
+
 \renewcommand{\thefigure}{\arabic{figure}} 
 \makeatletter
 \@addtoreset{figure}{chapter} 
 \makeatother
 
+% ------------------------ Chapters without page break ------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{1em} % no page break and less spacing
+\makeatletter
+\renewcommand{\chapter}{%
+  \thispagestyle{plain}%
+  \global\@topnum\z@
+  \secdef\@chapter\@schapter
+}
+\makeatother
+
+% ------------------------ Document ------------------------
 \title{Probabilistyczne modele propagacji w grafach.}
 \author{Bartosz Łabuz}
 \date{\today}
@@ -93,6 +110,5 @@
 
 \nocite{*}
 \printbibliography[heading=bibintoc,title={Bibliografia}]
-
 
 \end{document}

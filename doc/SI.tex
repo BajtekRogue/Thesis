@@ -98,7 +98,8 @@ Jeśli
     \ell = \max_{u\in\mathcal{I}_t, \; v\in\mathcal{S}_t} \mathrm{d}(u,v)
 \]
 to po $\ell$ rundach możemy przejść do stanu całkowitej infekcji grafu z dodatnim prawdopodobieństwem.
-A zatem z \Cref{fact:absorbing_markov} mamy $\mathbb{P}[Z<\infty]=1$.
+Zmienna $Z$ to dokładnie czas, w którym propagacja osiągnie ten stan absorbujący.
+A zatem z własności łańcuchów Markova mamy $\mathbb{P}[Z<\infty]=1$.
 Ponadto $\mathbb{P}[\max_{v\in V} X_v = \infty] = \mathbb{P}[Z = \infty] = 0$ a więc dla dowolnego $v\in V$ mamy $\mathbb{P}[X_v=\infty]=0$.
 Dalej zauważmy, że $0\le Y_t\le |V|$. 
 Z Twierdzenia Lebesgue o zbieżności ograniczonej mamy 
@@ -153,18 +154,15 @@ Przejdźmy teraz do obliczania wartości oczekiwanej $Y_t$:
 &= \sum_{j=0}^{t} \min\{n, 1+j\} \cdot \binom{t}{j} p^j q^{t-j}.
 \end{aligned}
 \end{equation*}
-Policzmy teraz asymptotykę dla $n \to \infty$.  
-Wtedy $n > 1 + j$ dla wszystkich $0 \le j \le t$, a więc:
+Jeśli $n\ge 1+t$ to wówczas 
 \begin{equation*}
 \begin{aligned}
-\lim_{n \to \infty} \mathbb{E}[Y_t] 
-    &= \sum_{j=0}^{t} (1+j)\binom{t}{j} p^j q^{t-j} = \sum_{j=0}^{t} \binom{t}{j} p^j q^{t-j} 
-       + \sum_{j=0}^{t} j \binom{t}{j} p^j q^{t-j} \\
+\mathbb{E}[Y_t] &= \sum_{j=0}^{t} (1+j)\binom{t}{j} p^j q^{t-j} = \sum_{j=0}^{t} \binom{t}{j} p^j q^{t-j} + \sum_{j=0}^{t} j \binom{t}{j} p^j q^{t-j} \\
     &= {(p+q)}^t + t p {(p+q)}^{t-1} = 1 + t p.
 \end{aligned}
 \end{equation*}
 
-Czas całkowitego zainfekowania grafu to $Z = \max\{X_1,X_2,\dots,X_n\} = X_n$.  
+Czas całkowitego zainfekowania grafu to $Z = \max\{X_1,\dots,X_n\} = X_n$.  
 Zatem rozkład zmiennej $Z$ jest już nam znany,
 \[
     Z\sim\mathrm{NegBin}(n-1,p),
@@ -199,7 +197,7 @@ W konsekwencji:
     \mathbb{E}[Y_t] = 1 + n \cdot (1 - q^t).
 \]
 
-Przejdźmy teraz do zmiennej $Z$. Mamy $Z = \max\{X_1, X_2, \dots, X_n\}$.  
+Przejdźmy teraz do zmiennej $Z$. Mamy $Z = \max\{X_1, \dots, X_n\}$.  
 Ponieważ zmienne te są IID, z \Cref{fact:max_CDF} otrzymujemy:
 \[
     \mathbb{P}[Z \le t] = {(1 - q^t)}^n.
@@ -208,13 +206,9 @@ Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 \begin{equation*}
 \begin{aligned}
 \mathbb{E}[Z]
-&= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] 
-= \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1]
-= \sum_{k=1}^{\infty} 1 - (1 - q^{k-1})^n \\[2mm]
-&= \sum_{k=0}^{\infty} 1 - (1 - q^k)^n
-= \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} (-1)^j q^{kj} \Big) \\[2mm]
-&= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} (-1)^{j+1} q^{kj}
-= \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} (-1)^{j+1} (q^j)^k \\[2mm]
+&= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] = \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1] = \sum_{k=1}^{\infty} 1 - (1 - q^{k-1})^n \\[2mm]
+&= \sum_{k=0}^{\infty} 1 - (1 - q^k)^n = \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} (-1)^j q^{kj} \Big) \\[2mm]
+&= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} (-1)^{j+1} q^{kj} = \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} (-1)^{j+1} (q^j)^k \\[2mm]
 &= \sum_{j=1}^{n} \binom{n}{j} \frac{(-1)^{j+1}}{1 - q^j}.
 \end{aligned}
 \end{equation*}
@@ -464,9 +458,9 @@ Możemy zapisać zatem
 \] 
 Z \Cref{fact:sum_of_bin_RV} mamy $L_t+R_t\sim\mathrm{Bin}(2t,p)$. 
 Widzimy zatem, że rozkład $Y_t$ dla grafu $\mathrm{C}_n$ pokrywa się ze zmienną $Y_{2t}$ dla grafów typu $\mathrm{P}_n$.
-Z wcześniejszego wyniku dla grafów ścieżek dostajemy
+Z wcześniejszego wyniku dla grafów ścieżek dla $n\ge 1 + 2t$ dostajemy
 \[
-    \lim_{n\to\infty} \mathbb{E}[Y_t] = 1+2tp.
+    \mathbb{E}[Y_t] = 1+2tp.
 \]
 
 Teraz możemy wyznaczyć rozkład i wartość oczekiwaną zmiennej $Z$. 
@@ -664,133 +658,172 @@ Podsumowując możemy następująco szacować przewidywany czas całkowitego poi
 
 Przeprowadzimy teraz serie symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
 Dla wszystkich symulacji ustalmy $p=0.2$.
-W celu wyznaczenia rozkładu zmiennej $Y_t$ dla danej rodziny ustalamy $n=1000$ oraz wybieramy $t$ zależne od konkretnej rodziny.
-Natomiast dla wartości oczekiwanej $Y_t$ przy tym samym $n$ będziemy zwiększać wartość $t$ od $1$ do wartości około $\mathbb{E}[Z]$, czyli przewidywanego czasu całkowitej infekcji.
-Dla zmiennej $Z$ jej rozkład również wyznaczymy na grafie wielkości $n=1000$, a wartość oczekiwaną dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
-Na jednym wykresie naniesiemy również teoretyczne rozkłady tych zmiennych oraz wartości oczekiwanych.
-
+Rozkłady zmiennej $Y_t$ oraz $Z$ będziemy ustalać dla grafów mających $100$ wierzchołków.
+Dla $Y_t$ będziemy wybierać $t$ zależne od konkretnej rodziny.
+Wartość oczekiwaną $Z$ będziemy wyznaczać dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
+Korzystamy z \cref{algo:SI}
 
 Na początku oczywiście analizujemy grafy ścieżkowe.
-Wybierzmy $t=np$ dla analizy rozkładu $Y_t$.
-Jak widzimy na \Cref{fig}
+Dla tej rodziny zmienna $Y_t$ zachowuje się inaczej jeśli $t<n$ a inaczej gdy $t\ge n$.
+Przewidywany czas całkowitej infekcji to $\frac{n}{p}$.
+Wyznaczmy zatem rozkład dla wartości $t=r\cdot\frac{n}{p}$ dla $r\in\{0.1, 0.5, 0.8, 0.9\}$.
+Widzimy, że rozkłady są sa coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:path_Yt}).
+Nie będziemy już wyznaczać wartości oczekiwanej $Y_t$.
+Dla $Z$ sprawa jest prosta. 
+Rozkład i wartość oczekiwana przedstawiono na \Cref{fig:path_Z}.
+
 Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
+Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
+Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych. (patrz \cref{fig:star_Yt}).
+Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki, to jest $\frac{H_n}{\lambda}, \; \lambda=\log(\frac{1}{1-p})$ (\cref{fig:star_Z}).
 
-Następnie rozważmy grafy cykliczne.
+Następnie popatrzmy na grafy cykliczne.
+Skoro zachowują się one podobnie do grafów ścieżkowych to zasymulujemy jedynie wartości oczekiwane zmiennej $Y_t$ dla $t=0.4\frac{n}{p}$ oraz $Z$.
+Wyniki te przedstawiono na \Cref{fig:cycle_Z}.
 
-Jeśli chodzi o rodzinę $\mathrm{K}_n$ to wystarczy nam empiryczna wartość $\mathbb{E}[Z]$.
-Wyznaczmy ją dla każdego $n\in\{1,2,\ldots,1000\}$.
-Jak widzimy na \cref{fig:complete_Z} wartości te zbiegają do liczby $2$, tak jak przewiduje teoria.
+Na sam koniec popatrzmy na grafy pełnie.
+Wartość $\mathbb{E}[Z]$ powinna wraz z rozmiarem grafu zbiegać do liczby $2$.
+Aby się upewnić, że na pewno tak jest sprawdźmy to dla $p\in\{0.2, 0.1\}$.
+Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
 
+\begin{algorithm}
+\caption{SI Propagation}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} Graph $G=(V,E)$, infection probability $p$, source $s\in V$
+    \State \textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and final time $Z$
+    \State $\mathcal{I}_0 \gets \{s\}$
+    \State $t \gets 0$
 
-% \begin{figure}[ht!]
-%     \centering
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{../img/SI/path/Yt_distribution.png}
-%         % \caption{Rozkład zmiennej $Y_t$.}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{../img/SI/path/Yt_expectation.png}
-%         % \caption{Wartość oczekiwana $Y_t$.}
-%     \end{subfigure}
-%     \label{fig:path_Yt}
-%     \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{P}_n$.}
-% \end{figure}
+    \While{$|\mathcal{I}_t| < |V|$}
+        \State $\mathcal{I}_{\text{new}} \gets \varnothing$
+        \For{each $u \in \mathcal{I}_t$}
+            \For{each $v \in N(u)$}
+                \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
+                    \State $\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                \EndIf
+            \EndFor
+        \EndFor
+        \State $\mathcal{I}_{t+1} \gets \mathcal{I}_t \cup \mathcal{I}_{\text{new}}$
+        \State $t \gets t + 1$
+    \EndWhile
 
-% \begin{figure}[ht!]
-%     \centering
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{../img/SI/path/Z_distribution.png}
-%         % \caption{Rozkład zmiennej $Z$.}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
-%         % \caption{Wartość oczekiwana $Z$.}
-%     \end{subfigure}
-%     \label{fig:path_Z}
-%     \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}
-% \end{figure}
-
+    \State $Z \gets t$
+    \State \Return $(\mathcal{I}_t),\, Z$
+\end{algorithmic}
+\label{algo:SI}
+\end{algorithm}
 
 \begin{figure}[ht!]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../img/SI/star/Yt_distribution.png}
-        % \caption{Rozkład zmiennej $Y_t$.}
+        \includegraphics[width=\textwidth]{../img/SI/path/Yt_dist_t0.png}
+        \caption{$t=0.1\frac{n}{p}$.}
+    \end{subfigure}
+    \hfill
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/path/Yt_dist_t1.png}
+        \caption{$t=0.5\frac{n}{p}$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/path/Yt_dist_t2.png}
+        \caption{$t=0.8\frac{n}{p}$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/path/Yt_dist_t3.png}
+        \caption{$t=0.9\frac{n}{p}$.}
+    \end{subfigure}
+    \hfill
+    \caption{Rozkład zmiennej $Y_t$ dla $\mathrm{P}_n$.}
+    \label{fig:path_Yt}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/path/Z_dist.png}
+        \caption{Rozkład zmiennej $Z$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}
+    \label{fig:path_Z}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/star/Yt_dist.png}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../img/SI/star/Yt_expectation.png}
-        % \caption{Wartość oczekiwana $Y_t$.}
     \end{subfigure}
-    \label{fig:star_Yt}
     \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{S}_n$.}
+    \label{fig:star_Yt}
 \end{figure}
-
 
 \begin{figure}[ht!]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../img/SI/star/Z_distribution.png}
-        % \caption{Rozkład zmiennej $Z$.}
+        \includegraphics[width=\textwidth]{../img/SI/star/Z_dist.png}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../img/SI/star/Z_expectation.png}
-        % \caption{Wartość oczekiwana $Z$.}
     \end{subfigure}
-    \label{fig:star_Z}
     \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}
+    \label{fig:star_Z}
 \end{figure}
-
 
 \begin{figure}[ht!]
     \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../img/SI/cycle/Yt_distribution.png}
-        % \caption{Rozkład zmiennej $Y_t$.}
-    \end{subfigure}
-    \hfill
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../img/SI/cycle/Yt_expectation.png}
-        % \caption{Wartość oczekiwana $Y_t$.}
-    \end{subfigure}
-    \label{fig:cycle_Yt}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{C}_n$.}
-\end{figure}
-
-\begin{figure}[ht!]
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../img/SI/cycle/Z_distribution.png}
-        % \caption{Rozkład zmiennej $Z$.}
+         \caption{$\mathbb{E}[Y_t]$.}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../img/SI/cycle/Z_expectation.png}
-        % \caption{Wartość oczekiwana $Z$.}
+        \caption{$\mathbb{E}[Z]$.}
     \end{subfigure}
+    \caption{Wartości oczekiwane zmiennych $Y_t$ oraz $Z$ dla $\mathrm{C}_n$.}
     \label{fig:cycle_Z}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{C}_n$.}
 \end{figure}
 
-
-\begin{figure}[!ht]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width=1\textwidth]{../img/SI/complete/Z_expectation.png}
-    \caption{$\mathbb{E}[Z]$ dla $\mathrm{K_n}$ w funkcji $n$}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/complete/Z_expectation_p0.2.png}
+        \caption{$p=0.2$.}
+    \end{subfigure}
+    \hfill
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SI/complete/Z_expectation_p0.1.png}
+        \caption{$p=0.1$.}
+    \end{subfigure}
+    \caption{Wartości oczekiwane $Z$ dla $\mathrm{K_n}$.}
     \label{fig:complete_Z}
 \end{figure}

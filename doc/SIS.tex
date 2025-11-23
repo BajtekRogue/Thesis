@@ -197,6 +197,28 @@ Macierz przejść dla naszego łańcucha Markova dana jest
 \]
 Mamy $\mathbf{y}_{t+1}=\mathbf{P}\mathbf{y}_t$ jak i $\mathbf{y}_t=\mathbf{P}^t\mathbf{y}_0$.
 Zbudowanie tej macierzy jest możliwe w czasie $\mathcal{O}(n^3)$.
+Wartość oczekiwaną zmiennej $Y_t$ możemy obliczyć ze wzoru
+\[
+    \mathbb{E}[Y_t] = \sum_{k=0}^{n} k\cdot \mathbf{y}_t^{(k)}.
+\]
+Macierz $\mathbf{P}$ jest kolumnowo stochastyczna a więc
+\[
+    \lim_{t\to\infty} \mathbf{P}^t = 
+    \begin{bmatrix}
+        1 & 1 & 1 & \cdots & 1 \\
+        0 & 0 & 0 & \cdots & 0 \\
+        0 & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & & \vdots \\
+        0 & 0 & 0 & \cdots & 0
+    \end{bmatrix},
+\]
+a co za tym idzie
+\[
+    \lim_{t\to\infty} \mathbf{y}_t =
+    \begin{bmatrix}
+        1 & 0 & 0 & \cdots & 0
+    \end{bmatrix}^\top.
+\]
 
 Jeśli chodzi o zmienną $Z$ to mamy $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 0]$.
 Kładziemy
@@ -207,3 +229,231 @@ Licząc wartość oczekiwaną dostajemy
 \[
     \mathbb{E}[Z] = \sum_{t=0}^{\infty} \mathbb{P}[Z>t] = \sum_{t=0}^{\infty} \mathbf{1}^\top\mathbf{z}_t= \sum_{t=0}^{\infty} \mathbf{1}^\top\mathbf{Q}^t \mathbf{z}_0 = \mathbf{1}^\top{(\mathbf{I}-\mathbf{Q})}^{-1} \mathbf{z}_0.
 \]
+
+
+\section{Eksperymenty}
+
+Dla modelu \textbf{SIS} przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
+Na nasze potrzeby wystarczy nam $n=10$.
+Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\Cref{fig:p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\Cref{fig:p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\Cref{fig:p0.5_a0.9}).
+Połóżmy $\tau=\max\{20, \mathbb{E}[Z]\}$.
+Dalej wyznaczymy rozkład $Y_t$ dla $t\in\{0.2\tau, 0.4\tau, 0.6\tau, 0.8\tau\}$.
+Wartość oczekiwaną obliczmy dla $t\in\{1,2,\dots,\tau\}$ oraz $t\in\{1,2,\dots,10\tau\}$.
+Przeprowadzimy teraz serie symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
+Dla wszystkich symulacji ustalmy $p=0.2$.
+Rozkłady zmiennej $Y_t$ oraz $Z$ będziemy ustalać dla grafów mających $100$ wierzchołków.
+Dla $Y_t$ będziemy wybierać $t$ zależne od konkretnej rodziny.
+Wartość oczekiwaną $Z$ będziemy wyznaczać dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
+Wreszcie zasymulujemy rozkład $Z$ a potem $\mathbb{E}[Z]$ dla $n\in\{1,2,\dots,10\}$.
+Symulacje dokonujemy korzystając z \Cref{algo:SIS}.
+
+Dla parametrów $p=0.1,\;\alpha=0.9$ widzimy, że infekcja dość szybko wymiera, większość masy prawdopodobieństwa $Y_t$ jest w $0$.
+Podobnie zachowuje się rozkład $Z$.
+Dalej dla $p=0.2,\;\alpha=0.8$ nadal spora część rozkładu jest w $0$ ale spora cześć zbiera się w kształt rozkładu normalnego dla dodatnich wartości.
+Podobnie ma się sytuacja dla $p=0.5,\;\alpha=0.9$.
+Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantycznie duża, rzędu kilkudziesięciu tysięcy.
+
+
+\begin{algorithm}
+\caption{SIS Propagation}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
+    \State \textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and extinction time $Z$
+    \State $\mathcal{I}_0 \gets \{s\}$
+    \State $t \gets 0$
+
+    \While{$|\mathcal{I}_t| > 0$}
+        \State $\mathcal{I}_{\text{new}} \gets \varnothing$
+        \For{each $u \in \mathcal{I}_t$}
+            \For{each $v \in \mathrm{N}(u)$}
+                \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
+                    \State $\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                \EndIf
+            \EndFor
+        \EndFor
+        \State $R \gets \varnothing$
+        \For{each $u \in \mathcal{I}_t$}
+            \If{$\text{random}() < \alpha$}
+                \State $R \gets R \cup \{u\}$
+            \EndIf
+        \EndFor
+        \State $\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus R$
+        \State $t \gets t + 1$
+    \EndWhile
+
+    \State $Z \gets t$
+    \State \Return $(\mathcal{I}_t),\, Z$
+\end{algorithmic}
+\label{algo:SIS}
+\end{algorithm}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_dist_t0.png}
+        \caption{$t=0.2\tau$.}
+    \end{subfigure}
+    \hfill
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_dist_t1.png}
+        \caption{$t=0.4\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_dist_t2.png}
+        \caption{$t=0.6\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_dist_t3.png}
+        \caption{$t=0.8\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_expectation0.png}
+        \caption{$t\le\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Yt_expectation1.png}
+        \caption{$t\le10\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Z_dist.png}
+        \caption{Rozkład $Z$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.1_a0.9/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \hfill
+    \caption{Rozkłady dla $p=0.1,\;\alpha=0.9$.}
+    \label{fig:p0.1_a0.9}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_dist_t0.png}
+        \caption{$t=0.2\tau$.}
+    \end{subfigure}
+    \hfill
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_dist_t1.png}
+        \caption{$t=0.4\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_dist_t2.png}
+        \caption{$t=0.6\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_dist_t3.png}
+        \caption{$t=0.8\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_expectation0.png}
+        \caption{$t\le\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Yt_expectation1.png}
+        \caption{$t\le10\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Z_dist.png}
+        \caption{Rozkład $Z$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.2_a0.8/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \hfill
+    \caption{Rozkłady dla $p=0.2,\;\alpha=0.8$.}
+    \label{fig:p0.2_a0.8}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_dist_t0.png}
+        \caption{$t=0.2\tau$.}
+    \end{subfigure}
+    \hfill
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_dist_t1.png}
+        \caption{$t=0.4\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_dist_t2.png}
+        \caption{$t=0.6\tau$.}
+    \end{subfigure}
+    \hfill
+        \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_dist_t3.png}
+        \caption{$t=0.8\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_expectation0.png}
+        \caption{$t\le\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Yt_expectation1.png}
+        \caption{$t\le10\tau$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Z_dist.png}
+        \caption{Rozkład $Z$.}
+    \end{subfigure}
+    \hfill
+        \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIS/p0.5_a0.9/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \hfill
+    \caption{Rozkłady dla $p=0.5,\;\alpha=0.9$.}
+    \label{fig:p0.5_a0.9}
+\end{figure}

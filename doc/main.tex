@@ -44,6 +44,10 @@
 \Crefname{summ}{Sumy}{Sumy}
 \crefname{figure}{Wykres}{Wykresie}
 \Crefname{figure}{Wykresie}{Wykresie}
+\crefname{algorithm}{Algorytm}{Algorytmu}
+\Crefname{algorithm}{Algorytmu}{Algorytmu}
+
+
 
 % ------------------------ Figures ------------------------
 \newcommand{\graphfamily}[1]{%
@@ -62,16 +66,16 @@
 \makeatother
 
 % ------------------------ Chapters without page break ------------------------
-\usepackage{titlesec}
-\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
-\titlespacing*{\chapter}{0pt}{0pt}{1em} % no page break and less spacing
-\makeatletter
-\renewcommand{\chapter}{%
-  \thispagestyle{plain}%
-  \global\@topnum\z@
-  \secdef\@chapter\@schapter
-}
-\makeatother
+% \usepackage{titlesec}
+% \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
+% \titlespacing*{\chapter}{0pt}{0pt}{1em} % no page break and less spacing
+% \makeatletter
+% \renewcommand{\chapter}{%
+%   \thispagestyle{plain}%
+%   \global\@topnum\z@
+%   \secdef\@chapter\@schapter
+% }
+% \makeatother
 
 % ------------------------ Document ------------------------
 \title{Probabilistyczne modele propagacji w grafach.}

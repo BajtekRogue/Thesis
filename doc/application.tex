@@ -2,7 +2,7 @@
 \section{Basic Extrema Propagation}
 
 Wyniki i ustalenia modelu \textbf{SI} możemy wykorzystać dla analizy teoretycznej różnych metod propagacji.
-Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation (\textbf{BEP}).
+Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation, \textbf{BEP} (\ref{algo:BEP}).
 
 \begin{algorithm}
 \caption{Basic Extrema Propagation}
@@ -28,6 +28,7 @@ Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation (\textbf{BEP
 \EndWhile
 \State \textbf{return} $(\mathcal{X}_v)_{v\in V}$
 \end{algorithmic}
+\label{algo:BEP}
 \end{algorithm}
 
 Jest to algorytm rozproszony zaprojektowany do obliczania wartości ekstremalnych (np. minimalnych lub maksymalnych) w sieciach przy użyciu wyłącznie lokalnych interakcji wierzchołków.

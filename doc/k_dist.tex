@@ -1,4 +1,4 @@
-W celu ułatwienia analizy modeli \textbf{SIR} oraz \textbf{SIS} wprowadzimy nowe rozkłady Prawdopodobieństwa uwzgledniajace możliwość przerwania propagacji.
+W celu ułatwienia analizy modeli \textbf{SIR} oraz \textbf{SIS} wprowadzimy nowe rozkłady prawdopodobieństwa uwzgledniajace możliwość przerwania propagacji.
 Te zmienne losowe będą przyjmować wartość nieskończoność w sytuacji, w której nastąpi przerwanie przed pożądanym rezultatem.
 Jako że nastepuje to z dodatnim prawdopodobieństwem, $\mathbb{P}[X=\infty]>0$, to ich wartości oczekiwane wynosić będą nieskończoność, $\mathbb{E}[X]=\infty$.
 Interesować nas więc bedzie wartość oczekiwana warunkowa przy warunku, że wartość zmiennej losowej jest skończona a więc $\mathbb{E}[X|X<\infty]$.
@@ -83,7 +83,7 @@ Wtedy
     &=\sum_{\mathbf{y}\in K}p^m(q\beta)^{k-m} = |K|\cdot p^m(q\beta)^{k-m}.
 \end{aligned}    
 \end{equation*}
-Z \Cref{fact:stars_and_bars} mamy $|K|=\binom{k-1}{m-1}$.
+Łatwym kombinatorycznym argumentem można pokazać, że $|K|=\binom{k-1}{m-1}$.
 Zatem
 \[
     \mathbb{P}[X=k] = \binom{k-1}{m-1} p^m (q\beta)^{k-m}, \quad k\ge m.

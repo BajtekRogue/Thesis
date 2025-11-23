@@ -5,9 +5,6 @@ Moc zbioru $A$ oznaczamy $|A|$.
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
 Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. 
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
-Funkcje Gamma oznaczamy $\Gamma(x)=\int_{0}^{\infty} t^{x-1}e^{-t}\;\mathrm{d}t$ dla $x>0$.
-Funkcje Beta oznaczamy $\mathrm{B}(x,y)=\int_{0}^1 t^{x-1}(1-t)^{y-1}\;\mathrm{d}t$ dla $x,y>0$.
-Symbol Pochhammer'a oznaczamy $(x)_n=x(x+1)\dots(x+n-1)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
 Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. 
@@ -272,35 +269,6 @@ Wtedy
 \]
 \end{fact}
 
-\begin{fact}\label{fact:stars_and_bars}
-Niech $m,k\in\mathbb{N}_+$, gdzie $k\ge n$ oraz $A=\{(x_1,\dots,x_m)\in\mathbb{N}_+^m:x_1+\cdots+x_m=k\}$. 
-Wtedy
-\[
-    |A|=\binom{k-1}{m-1}.
-\]    
-\end{fact}
-
-\begin{fact}\label{fact:beta_gamma}
-Niech $x,y>0$.
-Wtedy
-\[
-    \mathrm{B}(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
-\]
-\end{fact}
-
-\begin{fact}\label{fact:absorbing_markov}
-Niech $\mathbf{X}=(X_t)_{t\in \mathbb{N}}$ będzie dyskretnym i jednorodnym łańcuchem Markova z skończoną liczbą stanów.
-Niech $\mathcal{A}$ oznacza zbiór stanów absorbujacych.
-Wtedy jeśli dla każdego stanu $Q\notin \mathcal{A}$ jest $k>0$, że dla dowolnego $t\in \mathbb{N}$ mamy
-\[
-    \mathbb{P}[X_{t+k}\in\mathcal{A}|X_t=Q] > 0
-\]
-to zachodzi
-\[
-    \mathbb{P}[\min\{t\in\mathbb{N}:X_t\in\mathcal{A}\}<\infty] = 1.
-\]
-
-\end{fact}
 
 \begin{summ}\label{summ:binomial_0}
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. 

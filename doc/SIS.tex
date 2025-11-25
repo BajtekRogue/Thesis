@@ -170,7 +170,7 @@ Możemy policzyć warunkową liczbę oczekiwanych zarażeń w $t+1$ kroku:
 Oznaczmy $P_{i\to j}=\mathbb{P}[Y_{t+1}=j|Y_t=i]$ dla $j\in\{0,1,\dots,n\}$.
 Wtedy korzystając z \Cref{fact:sum_of_bin_RV_2} mamy
 \[
-    P_{i\to j} = \sum_{\ell=\max\{0,j-(n-i)\}}^{\min\{i,j\}} \binom{i}{\ell}\binom{n-i}{j-\ell}\beta^\ell\alpha^{i-\ell}(1-q^i)^{j-\ell}(q^i)^{n-i-(j-\ell)}.
+    P_{i\to j} = \sum_{\ell=\max\{0,j-(n-i)\}}^{\min\{i,j\}} \binom{i}{\ell}\binom{n-i}{j-\ell}\beta^\ell\alpha^{i-\ell}{(1-q^i)}^{j-\ell}{(q^i)}^{n-i-(j-\ell)}.
 \]
 Jest to uogólnienie prawdopodobieństw przejść, które wyznaczyliśmy wcześniej dla $n=2$.
 Ponownie z prawdopodobieństwa całkowitego dla $j\in\{0,1,\dots,n\}$ mamy
@@ -235,7 +235,7 @@ Licząc wartość oczekiwaną dostajemy
 
 Dla modelu \textbf{SIS} przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
 Na nasze potrzeby wystarczy nam $n=10$.
-Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\Cref{fig:p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\Cref{fig:p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\Cref{fig:p0.5_a0.9}).
+Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\Cref{fig:SIS_p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\Cref{fig:SIS_p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\Cref{fig:SIS_p0.5_a0.9}).
 Połóżmy $\tau=\max\{20, \mathbb{E}[Z]\}$.
 Dalej wyznaczymy rozkład $Y_t$ dla $t\in\{0.2\tau, 0.4\tau, 0.6\tau, 0.8\tau\}$.
 Wartość oczekiwaną obliczmy dla $t\in\{1,2,\dots,\tau\}$ oraz $t\in\{1,2,\dots,10\tau\}$.
@@ -257,33 +257,33 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
 \begin{algorithm}
 \caption{SIS Propagation}
 \begin{algorithmic}[1]
-    \State \textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
-    \State \textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and extinction time $Z$
-    \State $\mathcal{I}_0 \gets \{s\}$
-    \State $t \gets 0$
+    \State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
+    \State\textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and extinction time $Z$
+    \State$\mathcal{I}_0 \gets \{s\}$
+    \State$t \gets 0$
 
-    \While{$|\mathcal{I}_t| > 0$}
-        \State $\mathcal{I}_{\text{new}} \gets \varnothing$
+    \While{$\mathcal{I}_t \ne \varnothing$}
+        \State$\mathcal{I}_{\text{new}} \gets \varnothing$
         \For{each $u \in \mathcal{I}_t$}
             \For{each $v \in \mathrm{N}(u)$}
                 \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
-                    \State $\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
-                \EndIf
-            \EndFor
-        \EndFor
-        \State $R \gets \varnothing$
+                    \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                \EndIf%
+            \EndFor%
+        \EndFor%
+        \State$R \gets \varnothing$
         \For{each $u \in \mathcal{I}_t$}
             \If{$\text{random}() < \alpha$}
-                \State $R \gets R \cup \{u\}$
-            \EndIf
-        \EndFor
-        \State $\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus R$
-        \State $t \gets t + 1$
-    \EndWhile
+                \State$R \gets R \cup \{u\}$
+            \EndIf%
+        \EndFor%
+        \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus R$
+        \State$t \gets t + 1$
+    \EndWhile%
 
-    \State $Z \gets t$
-    \State \Return $(\mathcal{I}_t),\, Z$
-\end{algorithmic}
+    \State$Z \gets t$
+    \State\Return$(\mathcal{I}_t),\, Z$
+\end{algorithmic}%
 \label{algo:SIS}
 \end{algorithm}
 
@@ -340,8 +340,8 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
         \caption{Wartość oczekiwana $Z$.}
     \end{subfigure}
     \hfill
-    \caption{Rozkłady dla $p=0.1,\;\alpha=0.9$.}
-    \label{fig:p0.1_a0.9}
+    \caption{Rozkłady dla $p=0.1,\;\alpha=0.9$.}%
+    \label{fig:SIS_p0.1_a0.9}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -397,8 +397,8 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
         \caption{Wartość oczekiwana $Z$.}
     \end{subfigure}
     \hfill
-    \caption{Rozkłady dla $p=0.2,\;\alpha=0.8$.}
-    \label{fig:p0.2_a0.8}
+    \caption{Rozkłady dla $p=0.2,\;\alpha=0.8$.}%
+    \label{fig:SIS_p0.2_a0.8}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -454,6 +454,6 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
         \caption{Wartość oczekiwana $Z$.}
     \end{subfigure}
     \hfill
-    \caption{Rozkłady dla $p=0.5,\;\alpha=0.9$.}
-    \label{fig:p0.5_a0.9}
+    \caption{Rozkłady dla $p=0.5,\;\alpha=0.9$.}%
+    \label{fig:SIS_p0.5_a0.9}
 \end{figure}

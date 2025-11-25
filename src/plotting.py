@@ -63,6 +63,67 @@ def plot_Z_expectation_SI(graph_family, n_values, means, theoretical, title):
     plt.close()
 
 
+def plot_W_distribution_SIR(graph_family, distribution, n, p, a, title):
+    values, counts = np.unique(distribution, return_counts=True)
+    empirical_probs = counts / np.sum(counts)
+    theoretical_probs = np.array([theoretical_probs_W_SIR(graph_family, k, n, p, a) for k in values])
+
+    plt.figure(figsize=(8, 5))
+    plt.bar(values, empirical_probs, color="blue", alpha=0.7, label="Symulacja")
+    plt.plot(values, theoretical_probs, '-', color="indigo", linewidth=2.2, label="Teoria")
+    plt.legend()
+    plt.xlabel("k")
+    plt.ylabel("pmf $W$")
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(f"./img/SIR/{graph_family}/{title}.png", dpi=150)
+    plt.close()
+
+
+def plot_W_expectation_SIR(graph_family, n_values, means, theoretical, title):
+    plt.figure(figsize=(8, 5))
+    plt.plot(n_values, means, 'o-', color="darkcyan",  linewidth=2, label='Symulacja', markersize=6)
+    plt.plot(n_values, theoretical, '--', color="orange", linewidth=2, alpha=0.8, label='Teoria')
+    plt.xlabel("n")
+    plt.ylabel("E[W]")
+    plt.legend()
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(f"./img/SIR/{graph_family}/{title}.png", dpi=150)
+    plt.close()
+
+
+def plot_Z_distribution_SIR(graph_family, samples, n, p, a, title):
+    values, counts = np.unique(samples, return_counts=True)
+    empirical_probs = counts / np.sum(counts)
+    theoretical_probs = np.array([theoretical_probs_Z_SIR(graph_family, k, n, p, a) for k in values])
+
+    plt.figure(figsize=(8, 5))
+    plt.bar(values, empirical_probs, color="darkgreen", alpha=0.7, label="Symulacja")
+    plt.plot(values, theoretical_probs, '-', color="darkred", linewidth=2.2, label="Teoria")
+    plt.legend()
+    plt.xlabel('k')
+    plt.ylabel("pmf Z")
+    plt.grid(alpha=0.3, axis='y')
+    plt.tight_layout()
+    plt.savefig(f"./img/SIR/{graph_family}/{title}.png", dpi=150)
+    plt.close()
+
+
+def plot_Z_expectation_SIR(graph_family, n_values, means, theoretical, title):
+    plt.figure(figsize=(8, 5))
+    plt.plot(n_values, means, 'o-', color='deeppink', linewidth=2, markersize=6, label='Symulacja')
+    plt.plot(n_values, theoretical, '--', color="forestgreen", linewidth=2, alpha=0.7, label='Teoria')
+    plt.xlabel('n')
+    plt.ylabel("E[Z]")
+    plt.legend()
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(f"./img/SIR/{graph_family}/{title}.png", dpi=150)
+    plt.close()
+
+
+
 def plot_Yt_distribution_SIS(distribution, n, t, p, a, folder, title):
     values, counts = np.unique(distribution, return_counts=True)
     empirical_probs = counts / np.sum(counts)

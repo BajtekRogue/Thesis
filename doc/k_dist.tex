@@ -11,15 +11,15 @@ Dla wygody oznaczmy $q=1-p, \; \beta=1-\alpha$.
 Aby sukces nastąpił po $k$ rundach to potrzebujemy $k-1$ niepowodzeń próby jak i jej przerwania a następnie sukcesu.
 A zatem
 \[
-    \mathbb{P}[X=k] = p(q\beta)^{k-1}, \quad k \in \mathbb{N}_+.
+    \mathbb{P}[X=k] = p{(q\beta)}^{k-1}, \quad k \in \mathbb{N}_+.
 \]
 Dystrybuanta jest więc równa:
 \[
-    \mathbb{P}[X\le t] = \sum_{k=0}^{t} \mathbb{P}[X=k] = \sum_{k=0}^{t} p(q\beta)^{k-1} = p\frac{1-(q\beta)^t}{1-q\beta}.
+    \mathbb{P}[X\le t] = \sum_{k=0}^{t} \mathbb{P}[X=k] = \sum_{k=0}^{t} p{(q\beta)}^{k-1} = p\frac{1-{(q\beta)}^t}{1-q\beta}.
 \]
 Ponadto
 \[
-    \mathbb{P}[X < \infty] = \sum_{k=0}^{\infty} \mathbb{P}[X=k] = \sum_{k=0}^{\infty} p(q\beta)^{k-1} = \frac{p}{1-q\beta}. 
+    \mathbb{P}[X < \infty] = \sum_{k=0}^{\infty} \mathbb{P}[X=k] = \sum_{k=0}^{\infty} p{(q\beta)}^{k-1} = \frac{p}{1-q\beta}. 
 \]
 Suma wszystkich prawdopodobieństw wynosi $1$.
 A więc
@@ -56,14 +56,14 @@ Dalej mamy $\mathbb{E}[X|F=j]=jp$ oraz
 \begin{equation*}
 \begin{aligned}
     \mathbb{E}[F]&=\sum_{j=1}^{n}j\cdot\mathbb{P}[F=j]=n\beta^{n-1}+\sum_{j=1}^{n-1} j\alpha\beta^{j-1}=\\
-    &=n\beta^{n-1}+\alpha\frac{1-n\beta^{n-1}+(n-1)\beta^n}{(1-\beta)^2}  =\\
+    &=n\beta^{n-1}+\alpha\frac{1-n\beta^{n-1}+(n-1)\beta^n}{{(1-\beta)}^2}  =\\
     &=\frac{1}{\alpha}(n\alpha\beta^{n-1}+1-n\beta^{n-1}+n\beta^n-\beta^n)=\\
     &=\frac{1}{\alpha}(1-\beta^n+n\beta^{n-1}(\alpha+\beta-1))=\frac{1-\beta^n}{\alpha}.
 \end{aligned}    
 \end{equation*}
 Z prawa całkowitej wartości oczekiwanej mamy
 \[
-    \mathbb{E}[X]=\mathbb{E}[\mathbb{E}[X|F]]=p\mathbb{E}[F]=\frac{p}{\alpha}(1-\beta^n).
+    \mathbb{E}[X]=\mathbb{E}[\mathbb{E}[X|F]]=p\mathbb{E}[F]=\frac{p}{\alpha}(1-\beta^n). % chktex 44
 \]
 Oznaczamy $X\sim\mathrm{KBin}(n,p,\alpha)$.
 
@@ -79,34 +79,34 @@ Wtedy
 \begin{equation*}
 \begin{aligned}
     \mathbb{P}[X=k] &=\sum_{\mathbf{y}\in K} \mathbb{P}[Y_1=y_1,\dots,Y_m=y_m]=\sum_{\mathbf{y}\in K} \prod_{j=1}^{m}\mathbb{P}[Y_j=y_j] \\
-    &= \sum_{\mathbf{y}\in K} \prod_{j=1}^{m} p(q\beta)^{y_j-1}=\sum_{\mathbf{y}\in K} p^m(q\beta)^{y_1+\cdots +y_m-m}  \\
-    &=\sum_{\mathbf{y}\in K}p^m(q\beta)^{k-m} = |K|\cdot p^m(q\beta)^{k-m}.
+    &= \sum_{\mathbf{y}\in K} \prod_{j=1}^{m} p{(q\beta)}^{y_j-1}=\sum_{\mathbf{y}\in K} p^m{(q\beta)}^{y_1+\cdots +y_m-m}  \\
+    &=\sum_{\mathbf{y}\in K}p^m{(q\beta)}^{k-m} = |K|\cdot p^m{(q\beta)}^{k-m}.
 \end{aligned}    
 \end{equation*}
 Łatwym kombinatorycznym argumentem można pokazać, że $|K|=\binom{k-1}{m-1}$.
 Zatem
 \[
-    \mathbb{P}[X=k] = \binom{k-1}{m-1} p^m (q\beta)^{k-m}, \quad k\ge m.
+    \mathbb{P}[X=k] = \binom{k-1}{m-1} p^m {(q\beta)}^{k-m}, \quad k\ge m.
 \]
 Dalej mamy
 \begin{equation*}
 \begin{aligned}
-    \mathbb{P}[X<\infty] &=\sum_{k=m}^{\infty} \mathbb{P}[X=k] = \sum_{k=m}^{\infty} \binom{k-1}{m-1} p^m (q\beta)^{k-m} =\\
-    &= p^m(q\beta)^{-m} \sum_{k=m}^{\infty} \binom{k-1}{m-1} (q\beta)^k =p^m (q\beta)^{-m} \frac{(q\beta)^m}{(1-q\beta)^m} \\
-    &= \frac{p^m}{(1-q\beta)^m}.
+    \mathbb{P}[X<\infty] &=\sum_{k=m}^{\infty} \mathbb{P}[X=k] = \sum_{k=m}^{\infty} \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} =\\
+    &= p^m{(q\beta)}^{-m} \sum_{k=m}^{\infty} \binom{k-1}{m-1} {(q\beta)}^k =p^m {(q\beta)}^{-m} \frac{{(q\beta)}^m}{{(1-q\beta)}^m} \\
+    &= \frac{p^m}{{(1-q\beta)}^m}.
 \end{aligned}    
 \end{equation*}
 co daje nam
 \[
-    \mathbb{P}[X=\infty]=1-\frac{p^m}{(1-q\beta)^m}.
+    \mathbb{P}[X=\infty]=1-\frac{p^m}{{(1-q\beta)}^m}.
 \]
 Jeśli chodzi o wartość oczekiwaną to
 \begin{equation*}
 \begin{aligned}
     &\mathbb{E}[X|X<\infty]=\frac{1}{\mathbb{P}[X<\infty]}\sum_{k=m}^{\infty} k\cdot \mathbb{P}[X=k]\\
-    &=\frac{(1-q\beta)^m}{p^m}\sum_{k=m}^{\infty} k \binom{k-1}{m-1} p^m (q\beta)^{k-m} = \\
-    &=\frac{(1-q\beta)^m}{(q\beta)^m} \sum_{k=m}^{\infty} k \binom{k-1}{m-1} (q\beta)^k = \\
-    &=\frac{(1-q\beta)^m}{(q\beta)^m} \cdot \frac{m(q\beta)^m}{(1-q\beta)^{m+1}}=\frac{m}{1-q\beta}. 
+    &=\frac{{(1-q\beta)}^m}{p^m}\sum_{k=m}^{\infty} k \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} = \\
+    &=\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \sum_{k=m}^{\infty} k \binom{k-1}{m-1} {(q\beta)}^k = \\
+    &=\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \cdot \frac{m{(q\beta)}^m}{{(1-q\beta)}^{m+1}}=\frac{m}{1-q\beta}. 
 \end{aligned}    
 \end{equation*}
 Oznaczamy $X\sim\mathrm{KNegBin}(m,p,\alpha)$.

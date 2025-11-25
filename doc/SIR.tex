@@ -20,7 +20,7 @@ Jest cecha kontrastująca \textbf{SIR} względem \textbf{SI}.
 Przyjrzyjmy się teraz zmiennej $Y_t$.
 Zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
 \[
-    \mathbb{P}[Y_t=2] = \sum_{k=1}^{t} p(q\beta)^{k-1} = p\frac{1-q^t\beta^t}{1-q\beta}, \quad \mathbb{P}[Y_t=1]=1-p\frac{1-q^t\beta^t}{1-q\beta}.
+    \mathbb{P}[Y_t=2] = p\frac{1-q^t\beta^t}{1-q\beta}, \quad \mathbb{P}[Y_t=1]=1-p\frac{1-q^t\beta^t}{1-q\beta}.
 \]
 Stąd
 \[
@@ -72,7 +72,7 @@ Jeśli rozważamy propagacje jako łańcuch Markova to prawdopodobieństwo przej
     \alpha^{|\mathcal{I}_t|}\prod_{u\in \mathcal{I}_t} q^{|\mathrm{N}(u)\cap\mathcal{S}_t|}.
 \]
 Istotne jest to, że jest to dodatnia liczba. 
-A więc z \Cref{fact:absorbing_markov} mamy $\mathbb{P}[Z<\infty]=1$.
+A więc mamy $\mathbb{P}[Z<\infty]=1$.
 Zauważmy, że 
 \[
     \lim_{t\to\infty} \mathbf{1}_{v\in\mathcal{I}_t\cup\mathcal{R}_t} \xrightarrow{\text{a.s}} \mathbf{1}_{X_v<\infty}.
@@ -104,53 +104,56 @@ Jeśli chodzi o zmienną $Y_t$ to zauważmy, że
 \[
     Y_t=\max\{j\in\{1,2,\dots,n\}: X_j\le t\}.
 \]
-A więc dla $k>0$ mamy
+A więc dla $k\in\{1,2,\dots,n\}$ mamy
 \[
-    \mathbb{P}[Y_t\ge k+1] = \mathbb{P}[X_k\le t] = \sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k}.
+    \mathbb{P}[Y_t\ge k+1] = \mathbb{P}[X_{k+1}\le t] = \sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k}.
 \]
 Dalej mamy
 \[
-    \mathbb{E}[Y_t] = \sum_{k=0}^{n-1} \mathbb{P}[Y_t\ge k+1] = 1+\sum_{k=1}^{n-1}\sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k}.
+    \mathbb{E}[Y_t] = \sum_{k=0}^{n-1} \mathbb{P}[Y_t\ge k+1] = 1+\sum_{k=1}^{n-1}\sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k}.
 \]
 Nie ma zbytniej nadziei na zwartą formę tej sumy.
 Przejdźmy teraz do zmiennej $W$.
 \[
-    \mathbb{P}[W\ge k+1] = \lim_{t\to\infty} \sum_{j=k}^{t} \binom{j-1}{k-1}p^k (q\beta)^{j-k} = \Big(\frac{p}{1-q\beta}\Big)^k.
+    \mathbb{P}[W\ge k+1] = \lim_{t\to\infty} \sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k} = \Big{(\frac{p}{1-q\beta}\Big)}^k.
 \]
-Oznaczmy $\tau = \frac{p}{1-q\beta}$.
+Oznaczmy $\theta = \frac{p}{1-q\beta}$.
 Wtedy
 \[
-    \mathbb{P}[W=k]=(1-\tau)\tau^{k-1}, \quad k\in\{1,2,\dots,n-1\}, \quad \mathbb{P}[W=n]=\tau^{n-1}.
+    \mathbb{P}[W=k]=(1-\theta)\theta^{k-1}, \quad k\in\{1,2,\dots,n-1\}, \quad \mathbb{P}[W=n]=\theta^{n-1}.
 \]
 Ponadto
 \[
-    \mathbb{E}[W] = \sum_{k=0}^{n-1} \mathbb{P}[W\ge k+1] = \sum_{k=0}^{n-1} \tau^k = \frac{1-\tau^n}{1-\tau}.
+    \mathbb{E}[W] = \sum_{k=0}^{n-1} \mathbb{P}[W\ge k+1] = \sum_{k=0}^{n-1} \theta^k = \frac{1-\theta^n}{1-\theta}.
 \]
 
 Skoncentrujmy naszą uwagę na zmiennej $Z$.
 Niech $T_j$ oznacza czas przejścia ze stanu w którym wierzchołek $j$ został dopiero co zainfekowany do kolejnego stanu, gdzie $j\in V$.
 Formalnie $T_j=\min\{t\in\mathbb{N}:i=X_j\land \neg (j\in\mathcal{I}_{t+i} \land j+1\in\mathcal{S}_{t+i})\}$.
 Wtedy $T_j\sim \mathrm{Geo}(1-q\beta)$, a ponadto $T_1,T_2,\dots$ są niezależne.
-Niech $G_j(z)=\mathbb{E}[z^{T_j}]$. 
-Mamy
+Zauważmy, że jeśli $W<n$ to $Z=T_1+\cdots+T_W$ a gdy zaś $W=n$ to $Z=T_1+\cdots+T_{n-1}$.
+Zatem $Z=T_1+T_2+\cdots+T_{Q}$ gdzie $Q=\min\{W,n-1\}$.
+Będziemy potrzebować rozkładu i wartości oczekiwanej zmiennej $Q$.
+Możemy zapisać $Q=W-\mathbf{1}_{W=n}$ a wtedy
 \[
-    G_j(z) = \sum_{k=1}^{\infty} (1-q\beta)(q\beta)^{k-1}z^k=\frac{(1-q\beta)z}{1-q\beta z}.
+    \mathbb{E}[Q]=\mathbb{E}[W]-\mathbb{P}[W=n]=\frac{1-\theta^n}{1-\theta}-\theta^{n-1}=\frac{1-\theta^{n-1}}{1-\theta}.
 \]
-Zauważmy, że $Z=T_1+T_2+\cdots+T_W$.
-A zatem
+Dalej $\mathbb{P}[Q=k]=\mathbb{P}[W=k]=(1-\theta)\theta^{k-1}$ dla $k\in\{1,2,\dots,n-2\}$ oraz $\mathbb{P}[Q=n-1]=\mathbb{P}[W\ge n-1] = \theta^{n-2}$.
+Zachodzi zatem $\mathbb{P}[Z=t|Q=m]=\mathbb{P}[T_1+\cdots+T_m=t]$ ale $T_1+\cdots+T_m\sim\mathrm{NegBin}(m,1-q\beta)$ (\cref{fact:sum_of_geo_RV}).
+Daje nam to $\mathbb{P}[Z=t|Q=m]=\binom{t-1}{m-1} {(1-q\beta)}^m {(q\beta)}^{t-m}$.
+Z prawdopodobieństwa całkowitego dostajemy
 \[
-    \mathbb{E}[z^Z]=\sum_{k=1}^{n-1} \mathbb{P}[W=k]\cdot G_k(z).
+    \mathbb{P}[Z=t]=\sum_{m=1}^{n-1} \binom{t-1}{m-1}{(1-q\beta)}^m {(q\beta)}^{t-m} \cdot \mathbb{P}[Q=m].
 \]
-Funkcja generująca prawdopodobieństwo determinuje rozkład $Z$.
-Natomiast wartość oczekiwana wynosi
+Natomiast wartość oczekiwana zmiennej $Z$ wynosi
 \[
-    \mathbb{E}[Z]=\mathbb{E}[W]\cdot\mathbb{E}[T_1]=\frac{1-\tau^n}{1-\tau} \cdot \frac{1}{1-q\beta} = \frac{1-\tau^n}{\frac{q\alpha}{1-q\beta}} \cdot \frac{1}{1-q\beta} = \frac{1-\tau^n}{q\alpha}.
+    \mathbb{E}[Z]=\mathbb{E}[Q]\cdot\mathbb{E}[T_1]=\frac{1-\theta^{n-1}}{1-\theta} \cdot \frac{1}{1-q\beta} = \frac{1-\theta^{n-1}}{\frac{q\alpha}{1-q\beta}} \cdot \frac{1}{1-q\beta} = \frac{1-\theta^{n-1}}{q\alpha}.
 \]
 
 
 \section{Grafy gwiezdne}
 
-Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, gdzie źródłem jest wierzchołek $0$.
+Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, z źródłem $0$.
 Dla $v\in\{1,2,\dots,n\}$ mamy 
 \[
     X_v\sim\mathrm{KGeo}(p,\alpha),
@@ -168,26 +171,26 @@ $Y_t$ zachowuje się tak samo jak w modelu \textbf{SI} dla grafów gwiezdnych.
 Przypomnijmy, że rozkład ten wynosi $1+B_{j,t}$ gdzie $B_{j,t}\sim\mathrm{Bin}(n,1-q^{\min\{j,t\}})$.
 A więc
 \[
-    \mathbb{P}[Y_t=k+1|C=j] = \binom{n}{k}(1-q^{\min\{j,t\}})(q^{\min\{j,t\}})^{n-k}.
+    \mathbb{P}[Y_t=k+1|C=j] = \binom{n}{k}{(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}.
 \]
 Ponadto $C\sim\mathrm{Geo}(\alpha)$ a więc $\mathbb{P}[C=j]=\alpha\beta^{j-1}$.
 Z prawdopodobieństwa całkowitego dostajemy
 \begin{equation*}
 \begin{aligned}
 \mathbb{P}[Y_t=k+1] &=\sum_{j=1}^\infty \mathbb{P}[Y_t=k+1|C=j]\cdot\mathbb{P}[C=j] = \\
-&=\sum_{j=1}^\infty \binom{n}{k}(1-q^{\min\{j,t\}})^k(q^{\min\{j,t\}})^{n-k}\alpha\beta^{j-1} = \\
-&= \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty (1-q^{\min\{j,t\}})^k(q^{\min\{j,t\}})^{n-k}\beta^j.
+&=\sum_{j=1}^\infty \binom{n}{k}{(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\alpha\beta^{j-1} = \\
+&= \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\beta^j.
 \end{aligned}
 \end{equation*}
 Aby obliczyć wartość oczekiwana skorzystamy z \Cref{lemma:Formula_EYt}.
-Mamy $\mathbb{P}[X_0\le t]=1$ a dla $v\ne 0$ mamy $\mathbb{P}[X_v\le t] = p\frac{1-(q\beta)^t}{1-q\beta}$.
+Mamy $\mathbb{P}[X_0\le t]=1$ a dla $v\ne 0$ mamy $\mathbb{P}[X_v\le t] = p\frac{1-{(q\beta)}^t}{1-q\beta}$.
 A więc
 \[
-    \mathbb{E}[Y_t]=\sum_{v\in V}\mathbb{P}[X_v\le t] = 1 + np\frac{1-(q\beta)^t}{1-q\beta}.
+    \mathbb{E}[Y_t]=\sum_{v\in V}\mathbb{P}[X_v\le t] = 1 + np\frac{1-{(q\beta)}^t}{1-q\beta}.
 \]
 Licząc granice tych wyrażeń dla $t\to\infty$ dostajemy
 \[
-    \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty (1-q^j)^k(q^j)^{n-k}\beta^j.
+    \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^j)}^k{(q^j)}^{n-k}\beta^j.
 \]
 oraz
 \[
@@ -199,32 +202,154 @@ Stąd mamy
 \begin{equation*}
 \begin{aligned}
 \mathbb{P}[Z>t] &=\mathbb{P}[C>t]\cdot\mathbb{P}[Y_t<n+1|C>t]= \\
-&=\beta^t(1-\mathbb{P}[Y_t=n+1|C>t]) = \beta^t(1-(1-q^t)^n).
+&=\beta^t(1-\mathbb{P}[Y_t=n+1|C>t]) = \beta^t(1-{(1-q^t)}^n).
 \end{aligned}
 \end{equation*}
 Bezpośrednie liczenie wartości oczekiwanej zmiennej $Z$ nie da nam zwiezłej postaci.
 Postarajmy się ją za to oszacować korzystając z \Cref{inequality:approximation_of_sum_by_an_integral}.
-Oznaczmy $a=-\log(q),\; b=-\log(\beta)$ oraz $g(x)=e^{-bx}(1-(1-e^{-ax})^n)$.
+Oznaczmy $a=-\log(q),\; b=-\log(\beta)$ oraz $g(x)=e^{-bx}(1-{(1-e^{-ax})}^n)$.
 Wtedy
 \[
     \mathbb{E}[Z] \approx \int_{0}^{\infty} g(x) \; \mathrm{d}x.
 \]
 Dalej
 \[
-    \int_{0}^{\infty} e^{-bx}(1-(1-e^{-ax})^n)\; \mathrm{d}x = \int_{0}^{\infty} e^{-bx}\mathrm{d}x - \int_{0}^{\infty} e^{-bx}(1-e^{-ax})^n\mathrm{d}x.
+    \int_{0}^{\infty} e^{-bx}(1-{(1-e^{-ax})}^n)\; \mathrm{d}x = \int_{0}^{\infty} e^{-bx}\mathrm{d}x - \int_{0}^{\infty} e^{-bx}{(1-e^{-ax})}^n\mathrm{d}x.
 \]
 Wartość pierwszej całki wynosi $\frac{1}{b}$.
 Aby policzyć drugą podstawmy $u=1-e^{-ax}$.
 Oczywiście $u(0)=0, \; u(\infty)=1$.
 Wtedy też $x=-\frac{1}{a}\log(1-u)$ oraz $\mathrm{d}x=\frac{1}{a}e^{ax}\mathrm{d}u$.
-Mamy zatem $e^{-bx}=(1-u)^{\frac{b}{a}}, \; e^{ax}=\frac{1}{1-u}$.
+Mamy zatem $e^{-bx}={(1-u)}^{\frac{b}{a}}, \; e^{ax}=\frac{1}{1-u}$.
 A więc całka wynosi
 \begin{align*}
-&\frac{1}{a}\int_{0}^{1} u^n (1-u)^{\frac{b}{a}-1} \;\mathrm{d}u = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
-&=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} = \frac{n!}{b} \cdot \frac{1}{(\frac{b}{a}+1)_n}.
+&\frac{1}{a}\int_{0}^{1} u^n {(1-u)}^{\frac{b}{a}-1} \;\mathrm{d}u = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
+&=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} = \frac{n!}{b} \cdot \frac{1}{{(\frac{b}{a}+1)}_n}.
 \end{align*}
-gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz $(x)_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammer'a.
+gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz ${(x)}_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammer'a.
 Ostatecznie otrzymujemy
 \[
-    \mathbb{E}[Z] \approx \frac{1}{b} \cdot \Big(1 - \frac{n!}{(\frac{b}{a}+1)_n}\Big) = \frac{1}{\log(\beta)} \cdot \frac{n!}{\big(\frac{\log(\beta)}{\log(q)}+1\big)_n} - \frac{1}{\log(\beta)}.
+    \mathbb{E}[Z] \approx \frac{1}{b} \cdot \Big(1 - \frac{n!}{{(\frac{b}{a}+1)}_n}\Big) = \frac{1}{\log(\beta)} \cdot \frac{n!}{{\big(\frac{\log(\beta)}{\log(q)}+1\big)}_n} - \frac{1}{\log(\beta)}.
 \]
+
+
+\section{Eksperymenty}
+
+W modelu \textbf{SIR} symulować będziemy rozkłady zmiennych $W,Z$ oraz ich wartości oczekiwane.
+Ustalmy $p=0.2$ oraz $\alpha=0.05$.
+Do przeprowadzenia eksperymentu używamy \cref{algo:SIR}.
+Rozkłady wyznaczymy na na grafach o $n=100$ wierzchołkach natomiast wartości oczekiwane dla $n\in\{1,2,\dots,300\}$.
+
+Jeśli chodzi o rodzinę $\mathrm{P}_n$ to rozkład $W$ pokrywa się idealnie z przewidywaniami.
+Widzimy nawet kumulację masy w ogonie.
+Wartości oczekiwane również zbiegają zgodnie z wyznaczonym wzorem.
+Podobnie mamy dla zmiennej losowej $Z$.
+
+Dla grafów gwiazd rozkłady zarówno $W$ jak i $Z$ są dobrze przybliżone.
+Wartości oczekiwane $W$ są niemal idealnie dopasowane.
+Możemy zauważyć dobre przybliżenie na $\mathbb{E}[W]$.
+
+
+\begin{algorithm}
+\caption{SIR Propagation}
+\begin{algorithmic}[1]
+\State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
+\State\textbf{Output:} Sets of recovered vertices $(\mathcal{R}_t)$ and extinction time $Z$
+\State$\mathcal{S}_0 \gets V\setminus\{s\}$
+\State$\mathcal{I}_0 \gets \{s\}$
+\State$\mathcal{R}_0 \gets \varnothing$
+\State$t \gets 0$
+\While{$\mathcal{I}_t \ne \varnothing$ \textbf{and} $\exists v\in\mathcal{I}_t: \mathcal{S}_t\cap\mathrm{N}(v)\neq\varnothing$}
+    \State$\mathcal{I}_{\text{new}} \gets \varnothing$
+    \For{each $u \in \mathcal{I}_t$}
+        \For{each $v \in \mathrm{N}(u)$}
+            \If{$v \in \mathcal{S}_t$ \textbf{and} $\text{random}() < p$}
+                \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+            \EndIf%
+        \EndFor%
+    \EndFor%
+    \State$\mathcal{R}_{\text{new}} \gets \varnothing$
+    \For{each $u \in \mathcal{I}_t$}
+        \If{$\text{random}() < \alpha$}
+            \State$\mathcal{R}_{\text{new}} \gets \mathcal{R}_{\text{new}} \cup \{u\}$
+        \EndIf%
+    \EndFor%
+    \State$\mathcal{S}_{t+1} \gets \mathcal{S}_t \setminus \mathcal{I}_{\text{new}}$
+    \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus \mathcal{R}_{\text{new}}$
+    \State$\mathcal{R}_{t+1} \gets \mathcal{R}_t \cup \mathcal{R}_{\text{new}}$
+    \State$t \gets t + 1$
+\EndWhile%
+\State$\mathcal{R}_t \gets \mathcal{R}_t \cup \mathcal{I}_t$
+\State$Z \gets t$
+\State\Return$(\mathcal{R}_t),\, Z$
+\end{algorithmic}%
+\label{algo:SIR}
+\end{algorithm}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/path/W_dist.png}
+        \caption{Rozkład zmiennej $W$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/path/W_expectation.png}
+        \caption{Wartość oczekiwana $W$.}
+    \end{subfigure}
+    \caption{Rozkład i wartość oczekiwana zmiennej $W$ dla $\mathrm{P}_n$.}%
+    \label{fig:SIR_path_W}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/path/Z_dist.png}
+        \caption{Rozkład zmiennej $Z$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/path/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}%
+    \label{fig:SIR_path_Z}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/star/W_dist.png}
+        \caption{Rozkład zmiennej $W$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/star/W_expectation.png}
+        \caption{Wartość oczekiwana $W$.}
+    \end{subfigure}
+    \caption{Rozkład i wartość oczekiwana zmiennej $W$ dla $\mathrm{S}_n$.}%
+    \label{fig:SIR_star_W}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/star/Z_dist.png}
+        \caption{Rozkład zmiennej $Z$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../img/SIR/star/Z_expectation.png}
+        \caption{Wartość oczekiwana $Z$.}
+    \end{subfigure}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}%
+    \label{fig:SIR_star_Z}
+\end{figure}

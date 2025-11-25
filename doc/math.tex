@@ -168,7 +168,7 @@ Dystrybuanta jest równa:
 \]
 Wartość oczekiwana i wariancja wynoszą:
 \[
-    \mathbb{E}[X] = \frac{a+b}{2}, \quad \mathrm{Var}[X] = \frac{(a-b)^2}{12}.
+    \mathbb{E}[X] = \frac{a+b}{2}, \quad \mathrm{Var}[X] = \frac{{(a-b)}^2}{12}.
 \]
 Oznaczamy $X \sim \mathcal{U}[a;b]$.
 
@@ -217,7 +217,7 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:sum_of_geo_RV}
-Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.
+Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.\@
 Zdefiniujmy zmienną losową $Y=X_1 +  \cdots + X_m$. 
 Wtedy 
 \[
@@ -247,12 +247,12 @@ Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezale�
 Zdefiniujmy zmienną losową $Z=X+Y$.
 Wtedy
 \[
-    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j(1-p)^{n-j}r^{k-j}(1-r)^{m-(k-j)}.
+    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
 \]
 \end{fact}
 
 \begin{fact}\label{fact:min_of_uniforms}
-Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID. 
+Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID.\@ 
 Zdefiniujmy zmienną losową $Y=\min\{X_1,\dots,X_n\}$. 
 Wtedy
 \[
@@ -314,7 +314,7 @@ Wtedy
 Niech $x\in(-1;1)$.
 Wtedy
 \[
-    \sum_{k=0}^{\infty} kx^k=\frac{x}{(1-x)^2}.
+    \sum_{k=0}^{\infty} kx^k=\frac{x}{{(1-x)}^2}.
 \]
 \end{summ}
 
@@ -322,7 +322,7 @@ Wtedy
 Niech $m\in\mathbb{N}$ oraz $x\in(-1;1)$.
 Wtedy
 \[
-    \sum_{k=m}^{\infty} \binom{k-1}{m-1}x^k = \frac{x^m}{(1-x)^{m}}.
+    \sum_{k=m}^{\infty} \binom{k-1}{m-1}x^k = \frac{x^m}{{(1-x)}^{m}}.
 \]
 \end{summ}
 
@@ -330,7 +330,7 @@ Wtedy
 Niech $m\in\mathbb{N}$ oraz $x\in(-1;1)$.
 Wtedy
 \[
-    \sum_{k=m}^{\infty} k\cdot \binom{k-1}{m-1}x^k = \frac{mx^m}{(1-x)^{m+1}}.
+    \sum_{k=m}^{\infty} k\cdot \binom{k-1}{m-1}x^k = \frac{mx^m}{{(1-x)}^{m+1}}.
 \]
 \end{summ}
 

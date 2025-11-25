@@ -17,6 +17,8 @@
 \usepackage{hyperref}
 \usepackage[nameinlink,capitalise]{cleveref}
 \usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
 
 % ------------------------ Margins ------------------------
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
@@ -61,9 +63,6 @@
 }
 
 \renewcommand{\thefigure}{\arabic{figure}} 
-\makeatletter
-\@addtoreset{figure}{chapter} 
-\makeatother
 
 % ------------------------ Chapters without page break ------------------------
 % \usepackage{titlesec}

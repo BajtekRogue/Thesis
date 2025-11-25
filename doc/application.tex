@@ -7,39 +7,39 @@ Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation, \textbf{BEP
 \begin{algorithm}
 \caption{Basic Extrema Propagation}
 \begin{algorithmic}[1]  
-\State \textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$
-\State \textbf{Output:} Values $(\mathcal{X}_v)_{v\in V}$
+\State\textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$
+\State\textbf{Output:} Values ${(\mathcal{X}_v)}_{v\in V}$
 \For{$v \in V$}
-    \State $\mathcal{X}_v \gets \text{Rand}()$ 
-\EndFor
-\State $\text{changed} \gets \text{true}$
+    \State$\mathcal{X}_v \gets \text{Rand}()$ 
+\EndFor%
+\State$\text{changed} \gets \text{true}$
 \While{$\text{changed}$}
-    \State $\text{changed} \gets \text{false}$
+    \State$\text{changed} \gets \text{false}$
     \For{$v \in V$}
-        \State $\mathcal{X}_{\text{new}} \gets \mathcal{X}_v$
-        \State \text{send} $\mathcal{X}_v$ \text{to every} $u\in\text{N}(v)$
-        \State \text{receive} $\mathcal{X}_u$ \text{from every} $u\in\text{N}(v)$
-        \State $\mathcal{X}_{\text{new}} \gets \min\{x_{\text{new}}, \{\mathcal{X}_u : u \in \text{N}(v)\}\}$
+        \State$\mathcal{X}_{\text{new}} \gets \mathcal{X}_v$
+        \State\text{send} $\mathcal{X}_v$ \text{to every} $u\in\text{N}(v)$
+        \State\text{receive} $\mathcal{X}_u$ \text{from every} $u\in\text{N}(v)$
+        \State$\mathcal{X}_{\text{new}} \gets \min\{x_{\text{new}}, \{\mathcal{X}_u : u \in \text{N}(v)\}\}$
         \If{$\mathcal{X}_{\text{new}} < \mathcal{X}_v$}
-            \State $\mathcal{X}_v \gets \mathcal{X}_{\text{new}}$
-            \State $\text{changed} \gets \text{true}$
-        \EndIf
-    \EndFor
-\EndWhile
-\State \textbf{return} $(\mathcal{X}_v)_{v\in V}$
-\end{algorithmic}
+            \State$\mathcal{X}_v \gets \mathcal{X}_{\text{new}}$
+            \State$\text{changed} \gets \text{true}$
+        \EndIf%
+    \EndFor%
+\EndWhile%
+\State\textbf{return} ${(\mathcal{X}_v)}_{v\in V}$
+\end{algorithmic}%
 \label{algo:BEP}
 \end{algorithm}
 
-Jest to algorytm rozproszony zaprojektowany do obliczania wartości ekstremalnych (np. minimalnych lub maksymalnych) w sieciach przy użyciu wyłącznie lokalnych interakcji wierzchołków.
+Jest to algorytm rozproszony zaprojektowany do obliczania wartości ekstremalnych (np.\ minimalnych lub maksymalnych) w sieciach przy użyciu wyłącznie lokalnych interakcji wierzchołków.
 Algorytm ten działa następująco:
 Każdy wierzchołek ustala wartość początkową losowo, korzystając z funkcji $\mathrm{Rand}$.
 Następnie w synchronicznych rundach węzły przesyłają aktualnie przechowywaną wartość do swoich sąsiadów.
 Potem odbierają wszystkie wysłane im wartości i obliczają minimum z nich oraz już posiadanej wartości.
 Proces ten po pewnym czasie stabilizuje się, to jest każdy wierzchołek posiada tą samą wartość i dalsza propagacja nie ma sensu.
 Wtedy algorytm kończy działanie. 
-Jeśli wierzchołki mają początkowo wartości $(\mathcal{X}_v)_{v\in V}$ to zwrócona wartość wynosi $\mathcal{X}=\min_{v\in V} \mathcal{X}_v$.
-Możemy założyć, że $(\mathcal{X}_v)_{v\in V}$ są niezależne i mają taki sam rozkład.
+Jeśli wierzchołki mają początkowo wartości ${(\mathcal{X}_v)}_{v\in V}$ to zwrócona wartość wynosi $\mathcal{X}=\min_{v\in V} \mathcal{X}_v$.
+Możemy założyć, że ${(\mathcal{X}_v)}_{v\in V}$ są niezależne i mają taki sam rozkład.
 Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
 Przykładowo dla $\mathcal{X}_v\sim\mathcal{U}[0;1]$ mamy $\mathbb{E}[\mathcal{X}]=\frac{1}{1+|V|}$ (\cref{fact:min_of_uniforms}).
 Daje nam to możliwość łatwego oszacowania na wielkości sieci.
@@ -47,7 +47,7 @@ Gdy zaś $\mathcal{X}_v\sim\mathrm{Exp}(\lambda_v)$ to wtedy $\mathcal{X}\sim\ma
 Ponadto $\mathbb{E}[\mathcal{X}]=\frac{1}{\Lambda}$.
 Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę pewnych parametrów przechowywanych w węzłach sieci.
 Interesuje nas też oczywiście czas działania algorytmu \textbf{BEP}.
-Można pokazać \cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(|V|))$.
+Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(|V|))$.
 W teorii każde poinformowanie zawsze sie powiedzie.
 Stabilizacja wartości przechowywanej w  $u\in V$ nastąpi, kiedy $u$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(u)$ rundach.
 Oczywiście cały proces zakończy się po najdłuższym z tych czasów.

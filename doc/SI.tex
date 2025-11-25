@@ -206,16 +206,16 @@ Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 \begin{equation*}
 \begin{aligned}
 \mathbb{E}[Z]
-&= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] = \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1] = \sum_{k=1}^{\infty} 1 - (1 - q^{k-1})^n \\[2mm]
-&= \sum_{k=0}^{\infty} 1 - (1 - q^k)^n = \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} (-1)^j q^{kj} \Big) \\[2mm]
-&= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} (-1)^{j+1} q^{kj} = \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} (-1)^{j+1} (q^j)^k \\[2mm]
-&= \sum_{j=1}^{n} \binom{n}{j} \frac{(-1)^{j+1}}{1 - q^j}.
+&= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] = \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1] = \sum_{k=1}^{\infty} 1 - {(1 - q^{k-1})}^n \\[2mm]
+&= \sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n = \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} {(-1)}^j q^{kj} \Big) \\[2mm]
+&= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} {(-1)}^{j+1} q^{kj} = \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} {(-1)}^{j+1} {(q^j)}^k \\[2mm]
+&= \sum_{j=1}^{n} \binom{n}{j} \frac{{(-1)}^{j+1}}{1 - q^j}.
 \end{aligned}
 \end{equation*}
 Nie jest to jednak szczególnie elegancka forma, więc spróbujmy wyznaczyć asymptotykę $\mathbb{E}[Z]$.  
 Zauważmy, że
 \[
-    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - (1 - q^k)^n.
+    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n.
 \]
 Z \Cref{inequality:approximation_of_sum_by_an_integral} możemy przybliżyć tę sumę całką.  
 Niech $f(x) = 1 - {(1 - e^{-\lambda x})}^n$, gdzie $\lambda = -\log(q)$.  
@@ -667,49 +667,49 @@ Na początku oczywiście analizujemy grafy ścieżkowe.
 Dla tej rodziny zmienna $Y_t$ zachowuje się inaczej jeśli $t<n$ a inaczej gdy $t\ge n$.
 Przewidywany czas całkowitej infekcji to $\frac{n}{p}$.
 Wyznaczmy zatem rozkład dla wartości $t=r\cdot\frac{n}{p}$ dla $r\in\{0.1, 0.5, 0.8, 0.9\}$.
-Widzimy, że rozkłady są sa coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:path_Yt}).
+Widzimy, że rozkłady są sa coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:SI_path_Yt}).
 Nie będziemy już wyznaczać wartości oczekiwanej $Y_t$.
 Dla $Z$ sprawa jest prosta. 
-Rozkład i wartość oczekiwana przedstawiono na \Cref{fig:path_Z}.
+Rozkład i wartość oczekiwana przedstawiono na \Cref{fig:SI_path_Z}.
 
 Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
 Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
-Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych. (patrz \cref{fig:star_Yt}).
-Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki, to jest $\frac{H_n}{\lambda}, \; \lambda=\log(\frac{1}{1-p})$ (\cref{fig:star_Z}).
+Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych.\ (patrz \cref{fig:SI_star_Yt}).
+Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki, to jest $\frac{H_n}{\lambda}, \; \lambda=\log(\frac{1}{1-p})$ (\cref{fig:SI_star_Z}).
 
 Następnie popatrzmy na grafy cykliczne.
 Skoro zachowują się one podobnie do grafów ścieżkowych to zasymulujemy jedynie wartości oczekiwane zmiennej $Y_t$ dla $t=0.4\frac{n}{p}$ oraz $Z$.
-Wyniki te przedstawiono na \Cref{fig:cycle_Z}.
+Wyniki te przedstawiono na \Cref{fig:SI_cycle_Z}.
 
 Na sam koniec popatrzmy na grafy pełnie.
 Wartość $\mathbb{E}[Z]$ powinna wraz z rozmiarem grafu zbiegać do liczby $2$.
 Aby się upewnić, że na pewno tak jest sprawdźmy to dla $p\in\{0.2, 0.1\}$.
-Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
+Jak widać na \Cref{fig:SI_complete_Z} rzeczywiście dla wiekszych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
 
 \begin{algorithm}
 \caption{SI Propagation}
 \begin{algorithmic}[1]
-    \State \textbf{Input:} Graph $G=(V,E)$, infection probability $p$, source $s\in V$
-    \State \textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and final time $Z$
-    \State $\mathcal{I}_0 \gets \{s\}$
-    \State $t \gets 0$
+    \State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, source $s\in V$
+    \State\textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and final time $Z$
+    \State$\mathcal{I}_0 \gets \{s\}$
+    \State$t \gets 0$
 
-    \While{$|\mathcal{I}_t| < |V|$}
-        \State $\mathcal{I}_{\text{new}} \gets \varnothing$
+    \While{$\mathcal{I}_t \ne V$}
+        \State$\mathcal{I}_{\text{new}} \gets \varnothing$
         \For{each $u \in \mathcal{I}_t$}
             \For{each $v \in N(u)$}
                 \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
-                    \State $\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
-                \EndIf
-            \EndFor
-        \EndFor
-        \State $\mathcal{I}_{t+1} \gets \mathcal{I}_t \cup \mathcal{I}_{\text{new}}$
-        \State $t \gets t + 1$
-    \EndWhile
+                    \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                \EndIf%
+            \EndFor%
+        \EndFor%
+        \State$\mathcal{I}_{t+1} \gets \mathcal{I}_t \cup \mathcal{I}_{\text{new}}$
+        \State$t \gets t + 1$
+    \EndWhile%
 
-    \State $Z \gets t$
-    \State \Return $(\mathcal{I}_t),\, Z$
-\end{algorithmic}
+    \State$Z \gets t$
+    \State\Return$(\mathcal{I}_t),\, Z$
+\end{algorithmic}%
 \label{algo:SI}
 \end{algorithm}
 
@@ -742,8 +742,8 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \caption{$t=0.9\frac{n}{p}$.}
     \end{subfigure}
     \hfill
-    \caption{Rozkład zmiennej $Y_t$ dla $\mathrm{P}_n$.}
-    \label{fig:path_Yt}
+    \caption{Rozkład zmiennej $Y_t$ dla $\mathrm{P}_n$.}%
+    \label{fig:SI_path_Yt}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -759,8 +759,8 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
         \caption{Wartość oczekiwana $Z$.}
     \end{subfigure}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}
-    \label{fig:path_Z}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}%
+    \label{fig:SI_path_Z}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -774,8 +774,8 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \centering
         \includegraphics[width=\textwidth]{../img/SI/star/Yt_expectation.png}
     \end{subfigure}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{S}_n$.}
-    \label{fig:star_Yt}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Y_t$ dla $\mathrm{S}_n$.}%
+    \label{fig:SI_star_Yt}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -789,8 +789,8 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \centering
         \includegraphics[width=\textwidth]{../img/SI/star/Z_expectation.png}
     \end{subfigure}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}
-    \label{fig:star_Z}
+    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}%
+    \label{fig:SI_star_Z}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -806,8 +806,8 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \includegraphics[width=\textwidth]{../img/SI/cycle/Z_expectation.png}
         \caption{$\mathbb{E}[Z]$.}
     \end{subfigure}
-    \caption{Wartości oczekiwane zmiennych $Y_t$ oraz $Z$ dla $\mathrm{C}_n$.}
-    \label{fig:cycle_Z}
+    \caption{Wartości oczekiwane zmiennych $Y_t$ oraz $Z$ dla $\mathrm{C}_n$.}%
+    \label{fig:SI_cycle_Z}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -824,6 +824,6 @@ Jak widać na \Cref{fig:complete_Z} rzeczywiście dla wiekszych $n$ czas całkow
         \includegraphics[width=\textwidth]{../img/SI/complete/Z_expectation_p0.1.png}
         \caption{$p=0.1$.}
     \end{subfigure}
-    \caption{Wartości oczekiwane $Z$ dla $\mathrm{K_n}$.}
-    \label{fig:complete_Z}
+    \caption{Wartości oczekiwane $Z$ dla $\mathrm{K_n}$.}%
+    \label{fig:SI_complete_Z}
 \end{figure}

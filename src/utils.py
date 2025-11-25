@@ -56,7 +56,7 @@ def theoretical_expectation_Z_SI(graph_family, n, p):
     functions = {
         "path": lambda n, p: (n - 1) / p,
         "star": lambda n, p: sympy.harmonic(n) / np.log(1 / (1 - p)),
-        "cycle": lambda n, p: n / (2 * p)  - np.sqrt(n * (1 - p) / (2 * np.pi)) / p,
+        "cycle": lambda n, p: (n - 1) / (2 * p) + 1 / 4  - 1 /4 * (-p / (2 -p)) ** (n - 1),
         "complete": lambda n, p: 2
     }
     return functions[graph_family](n, p)

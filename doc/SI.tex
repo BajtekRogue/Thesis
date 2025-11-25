@@ -458,19 +458,40 @@ Możemy zapisać zatem
 \] 
 Z \Cref{fact:sum_of_bin_RV} mamy $L_t+R_t\sim\mathrm{Bin}(2t,p)$. 
 Widzimy zatem, że rozkład $Y_t$ dla grafu $\mathrm{C}_n$ pokrywa się ze zmienną $Y_{2t}$ dla grafów typu $\mathrm{P}_n$.
-Z wcześniejszego wyniku dla grafów ścieżek dla $n\ge 1 + 2t$ dostajemy
+Z wcześniejszego wyniku dla grafów ścieżek dostajemy
+\[
+    \mathbb{E}[Y_t]=\sum_{j=0}^{2t} \min\{n,1+j\}\cdot\binom{2t}{j}p^j q^{2t-j},
+\]
+a dla $n\ge 1 + 2t$ mamy
 \[
     \mathbb{E}[Y_t] = 1+2tp.
 \]
 
 Teraz możemy wyznaczyć rozkład i wartość oczekiwaną zmiennej $Z$. 
-Dla $n$ parzystego najdalej oddalony wierzchołek od źródła to $\frac{n}{2}$ a dla $n$ nieparzystego to $\lfloor \frac{n\pm 1}{2}\rfloor$. 
-Asymptotycznie nie ma to znaczenia, możemy przyjąć $v=\frac{n}{2}$. 
-Mamy więc $Z=\max_{v\in V} X_v = X_{\frac{n}{2}}$.
-Stąd intuicyjny wynik
+Zauważmy, że 
 \[
-    \mathbb{E}[Z] \approx \mathbb{E}[X_{\frac{n}{2}}] \approx \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}.
+    \mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne n] = \mathbb{P}[L_t+R_t \le n-2] = \sum_{j=0}^{n-2} \binom{2t}{j}p^j q^{2t-j}.
 \]
+W takim razie wartość oczekiwana wynosić będzie
+\[
+    \mathbb{E}[Z]=\sum_{t=0}^{\infty} \mathbb{P}[Z>t] = \sum_{t=0}^{\infty}\sum_{j=0}^{n-2} \binom{2t}{j}p^j q^{2t-j} = \sum_{j=0}^{n-2} p^j q^{-j} \sum_{t=0}^{\infty}\binom{2t}{j} q^{2t}.
+\]
+Mamy
+\begin{equation*}
+\begin{aligned}
+& \sum_{t=0}^{\infty}\binom{2t}{j} q^{2t} = \frac{1}{2} \Big(\sum_{t=0}^{\infty} \binom{t}{j} q^t+ \sum_{t=0}^{\infty}\binom{t}{j} {(-q)}^t \Big) = \\
+&= \frac{1}{2} \Big( \frac{q^j}{{(1-q)}^{j+1}} + \frac{{(-q)}^j}{{(1+q)}^{j+1}} \Big) = \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big).
+\end{aligned}
+\end{equation*}
+Dalej
+\begin{equation*}
+\begin{aligned}
+\mathbb{E}[Z] &= \sum_{j=0}^{n-2} p^j q^{-j} \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big) = \frac{1}{2}\sum_{j=0}^{n-2} \frac{1}{p} + \frac{{(-p)}^j}{{(2-p)}^{j+1}} = \\
+=& \frac{n-1}{2p} + \frac{1}{2(2-p)} \sum_{j=0}^{n-2} {\Big(\frac{-p}{2-p}\Big)}^j = \frac{n-1}{2p} + \frac{1}{2(2-p)} \cdot \frac{1 - {(\frac{-p}{2-p})}^{n-1}}{1 - \frac{-p}{2-p}} = \\
+&= \frac{n-1}{2p}+\frac{1}{4} \cdot \Big(1 +{(-1)}^n \cdot{\Big(\frac{p}{2-p}\Big)}^{n-1}\Big).
+\end{aligned}
+\end{equation*}
+Zauważmy, że $|\frac{p}{2-p}|<1$ a więc $\mathbb{E}[Z] \sim \frac{n-1}{2p}$, również podobnie jak dla grafów ścieżkowych.
 
 
 \section{Grafy pełne}

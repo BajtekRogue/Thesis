@@ -3,28 +3,32 @@
 Przez $\mathbb{N}$ oznaczamy zbiór $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \{1,2,3,\dots\}$. 
 Moc zbioru $A$ oznaczamy $|A|$. 
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
-Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$'tą liczbę harmoniczną. 
-Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim_{x\to\pm\infty} f(x)$.
+Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$-tą liczbę harmoniczną. 
+Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim\limits_{x\to\pm\infty} f(x)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
-Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)$. 
+Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
 Średnicę grafu $G$ oznaczamy $\mathrm{diam}(G)=\max_{v \in V } \epsilon(v)$.
 
 Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
 Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. 
-Funkcję masy prawdopodobieństwa oznaczamy $\mathbb{P}[X=t]$ a dystrybuante oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
+Funkcję masy prawdopodobieństwa (w skrócie PMF) oznaczamy $\mathbb{P}[X=t]$ a dystrybuante (w skrócie CDF) oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
+Mówimy, że zmienne losowe $X_1,\dots,X_n$ są IDD (independent and identically distributed) jeżeli są one niezależne oraz $F_{X_1}=\cdots=F_{X_n}$.
 
 
 \section{Rodziny grafów}
 
-Niech $n \in \mathbb{N}_+$. 
-Poniżej znajdują się opisy rodzin grafów na których będziemy rozważać propagację oraz ich wizualizacja dla $n=5$.
+W tej pracy ograniczymy rozważanie propagacji do konkretnych rodzin grafów.
+Są to grafy ścieżkowe, gwiezdne, cykliczne oraz pełne.
+Poniżej znajdują się szczegółowe definicje tych rodzin dla $n \in \mathbb{N}_+$.
+Dodatkowo opisy te zawierają wizualizacje reprezentanta rodzin dla $n=5$.
 
 \graphfamily{Graf ścieżkowy $\mathrm{P}_n$}
-Graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$. 
+Graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$}. 
 Oznaczamy go przez $\mathrm{P}_n$.
+\begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
     \foreach \i in {1,...,5} {
@@ -34,11 +38,14 @@ Oznaczamy go przez $\mathrm{P}_n$.
         \draw (v\i) -- (v\the\numexpr\i+1\relax);
     }
 \end{tikzpicture}
+\caption{Graf $\mathrm{P}_5$}
 \end{center}
+\end{figure}
 
 \graphfamily{Graf gwiazda $\mathrm{S}_n$}
-Graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi $E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$. 
+Graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$}. 
 Oznaczamy go przez $\mathrm{S}_n$.
+\begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
     \node[circle, draw, inner sep=2pt] (c) at (0,0) {};
@@ -48,11 +55,14 @@ Oznaczamy go przez $\mathrm{S}_n$.
         \draw (c) -- (v\i);
     }
 \end{tikzpicture}
+\caption{Graf $\mathrm{S}_5$}
 \end{center}
+\end{figure}
 
 \graphfamily{Graf cykliczny $\mathrm{C}_n$}
-Graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$. 
+Graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$}. 
 Oznaczamy go przez $\mathrm{C}_n$.
+\begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
     \foreach \i in {1,...,5} {
@@ -64,11 +74,14 @@ Oznaczamy go przez $\mathrm{C}_n$.
     }
     \draw (v5) -- (v1);
 \end{tikzpicture}
+\caption{Graf $\mathrm{C}_5$}
 \end{center}
+\end{figure}
 
 \graphfamily{Graf pełny $\mathrm{K}_n$}
-Graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi $E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$. 
+Graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$}. 
 Oznaczamy go przez $\mathrm{K}_n$.
+\begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
     \foreach \i in {1,...,5} {
@@ -83,7 +96,9 @@ Oznaczamy go przez $\mathrm{K}_n$.
         }
     }
 \end{tikzpicture}
+\caption{Graf $\mathrm{K}_5$}
 \end{center}
+\end{figure}
 
 
 \section{Rozkłady prawdopodobieństwa}
@@ -192,7 +207,7 @@ Oznaczamy $X \sim \mathrm{Exp}(\lambda)$.
 
 \begin{fact}\label{fact:max_CDF}
 Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową $Y = \max\{X_1,\dots, X_n\}$. 
+Zdefiniujmy zmienną losową \mbox{$Y = \max\{X_1,\dots, X_n\}$}. 
 Wtedy 
 \[
     F_Y(t)=F_X^n(t).
@@ -201,7 +216,7 @@ Wtedy
 
 \begin{fact}\label{fact:min_CDF}
 Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową $Y = \min\{X_1,\dots, X_n\}$. 
+Zdefiniujmy zmienną losową \mbox{$Y = \min\{X_1,\dots, X_n\}$}. 
 Wtedy 
 \[
     F_Y(t)=1-{(1-F_X(t))}^n.
@@ -216,9 +231,27 @@ Wtedy
 \]
 \end{fact}
 
+\begin{fact}\label{fact:sum_of_bin_RV_2}
+Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
+Zdefiniujmy zmienną losową $Z=X+Y$.
+Wtedy
+\[
+    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
+\]
+\end{fact}
+
+\begin{fact}\label{fact:pgf_bin}
+Niech $X \sim \mathrm{Bin}(n, p)$.
+Oznaczmy $q=1-p$.
+Wtedy
+\[
+    \mathbb{E}[z^X]={(q+pz)}^n, \quad \mathbb{E}[Xz^X]=npz{(q+pz)}^{n-1}.
+\]
+\end{fact}
+
 \begin{fact}\label{fact:sum_of_geo_RV}
 Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.\@
-Zdefiniujmy zmienną losową $Y=X_1 +  \cdots + X_m$. 
+Zdefiniujmy zmienną losową \\ \mbox{$Y=X_1 +  \cdots + X_m$}. 
 Wtedy 
 \[
     Y \sim \mathrm{NegBin}(m, p).
@@ -233,27 +266,9 @@ Wtedy
 \]
 \end{fact}
 
-\begin{fact}\label{fact:pgf_bin}
-Niech $X \sim \mathrm{Bin}(n, p)$.
-Oznaczmy $q=1-p$.
-Wtedy
-\[
-    \mathbb{E}[z^X]={(q+pz)}^n, \quad \mathbb{E}[Xz^X]=npz{(q+pz)}^{n-1}.
-\]
-\end{fact}
-
-\begin{fact}\label{fact:sum_of_bin_RV_2}
-Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
-Zdefiniujmy zmienną losową $Z=X+Y$.
-Wtedy
-\[
-    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
-\]
-\end{fact}
-
 \begin{fact}\label{fact:min_of_uniforms}
-Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID.\@ 
-Zdefiniujmy zmienną losową $Y=\min\{X_1,\dots,X_n\}$. 
+Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID.
+Zdefiniujmy zmienną losową \\ \mbox{$Y=\min\{X_1,\dots,X_n\}$}. 
 Wtedy
 \[
     \mathbb{E}[Y]=\frac{1}{1+n}.
@@ -384,7 +399,7 @@ Wtedy
 \end{inequality}
 
 \begin{inequality}[Nierówność Jensena dla wartości oczekiwanej]\label{inequality:Jensen} 
-Niech $n\in\mathbb{N}_+$ oraz $g:\mathbb{R}^n\to\mathbb{R}$ będzie funkcją wypukłą zaś $X_1,\dots, X_n$ będą zmiennymi losowymi (niekoniecznie niezależnymi). 
+Niech $n\in\mathbb{N}_+$ oraz \mbox{$g:\mathbb{R}^n\to\mathbb{R}$} będzie funkcją wypukłą, zaś $X_1,\dots, X_n$ będą zmiennymi losowymi (niekoniecznie niezależnymi). 
 Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)].

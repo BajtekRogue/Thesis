@@ -7,26 +7,19 @@ Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation, \textbf{BEP
 \begin{algorithm}
 \caption{Basic Extrema Propagation}
 \begin{algorithmic}[1]  
-\State\textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$
-\State\textbf{Output:} Values ${(\mathcal{X}_v)}_{v\in V}$
+\State\textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$, number of steps $T$
+\State\textbf{Output:} Values ${(M_v)}_{v\in V}$
 \For{$v \in V$}
-    \State$\mathcal{X}_v \gets \text{Rand}()$ 
+    \State$M_v \gets \text{Rand}()$ 
 \EndFor%
-\State$\text{changed} \gets \text{true}$
-\While{$\text{changed}$}
-    \State$\text{changed} \gets \text{false}$
+\For{$i=1,2,\ldots,T$}
     \For{$v \in V$}
-        \State$\mathcal{X}_{\text{new}} \gets \mathcal{X}_v$
-        \State\text{send} $\mathcal{X}_v$ \text{to every} $u\in\text{N}(v)$
-        \State\text{receive} $\mathcal{X}_u$ \text{from every} $u\in\text{N}(v)$
-        \State$\mathcal{X}_{\text{new}} \gets \min\{x_{\text{new}}, \{\mathcal{X}_u : u \in \text{N}(v)\}\}$
-        \If{$\mathcal{X}_{\text{new}} < \mathcal{X}_v$}
-            \State$\mathcal{X}_v \gets \mathcal{X}_{\text{new}}$
-            \State$\text{changed} \gets \text{true}$
-        \EndIf%
+        \State\text{send} $M_v$ \text{to every} $u\in\text{N}(v)$
+        \State\text{receive} $M_u$ \text{from every} $u\in\text{N}(v)$
+        \State$M_{v} \gets \min\{M_{v}, \{M_u : u \in \text{N}(v)\}\}$
     \EndFor%
-\EndWhile%
-\State\textbf{return} ${(\mathcal{X}_v)}_{v\in V}$
+\EndFor%
+\State\textbf{return} ${(M_v)}_{v\in V}$
 \end{algorithmic}%
 \label{algo:BEP}
 \end{algorithm}
@@ -38,22 +31,28 @@ Następnie w synchronicznych rundach węzły przesyłają aktualnie przechowywan
 Potem odbierają wszystkie wysłane im wartości i obliczają minimum z nich oraz już posiadanej wartości.
 Proces ten po pewnym czasie stabilizuje się, to jest każdy wierzchołek posiada tą samą wartość i dalsza propagacja nie ma sensu.
 Wtedy algorytm kończy działanie. 
-Jeśli wierzchołki mają początkowo wartości ${(\mathcal{X}_v)}_{v\in V}$ to zwrócona wartość wynosi $\mathcal{X}=\min_{v\in V} \mathcal{X}_v$.
-Możemy założyć, że ${(\mathcal{X}_v)}_{v\in V}$ są niezależne i mają taki sam rozkład.
+Jeśli wierzchołki mają początkowo wartości ${(M_v)}_{v\in V}$ to zwrócona wartość wynosi $M=\min_{v\in V} M_v$.
+Możemy oczywiście założyć, że ${(M_v)}_{v\in V}$ są niezależne.
 Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
-Przykładowo dla $\mathcal{X}_v\sim\mathcal{U}[0;1]$ mamy $\mathbb{E}[\mathcal{X}]=\frac{1}{1+|V|}$ (\cref{fact:min_of_uniforms}).
-Daje nam to możliwość łatwego oszacowania na wielkości sieci.
-Gdy zaś $\mathcal{X}_v\sim\mathrm{Exp}(\lambda_v)$ to wtedy $\mathcal{X}\sim\mathrm{Exp}(\Lambda)$ przy czym $\Lambda=\sum_{v\in V}\lambda_v$ (\cref{facf:min_of_exponentials}).
-Ponadto $\mathbb{E}[\mathcal{X}]=\frac{1}{\Lambda}$.
+Przykładowo dla $M_v\sim\mathcal{U}[0;1]$ mamy $\mathbb{E}[M]=\frac{1}{1+|V|}$ (\cref{fact:min_of_uniforms}).
+Daje nam to możliwość łatwego oszacowania wielkości sieci.
+Gdy zaś $M_v\sim\mathrm{Exp}(\lambda_v)$ to wtedy $M\sim\mathrm{Exp}(\Lambda)$ gdzie $\Lambda=\sum_{v\in V}\lambda_v$ (\cref{facf:min_of_exponentials}).
+Ponadto $\mathbb{E}[M]=\frac{1}{\Lambda}$.
 Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę pewnych parametrów przechowywanych w węzłach sieci.
-Interesuje nas też oczywiście czas działania algorytmu \textbf{BEP}.
-Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(|V|))$.
-W teorii każde poinformowanie zawsze sie powiedzie.
-Stabilizacja wartości przechowywanej w  $u\in V$ nastąpi, kiedy $u$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(u)$ rundach.
+Główną zaletą tej techniki jest jej szybkość.
+Skuteczność i dokładność są drugorzędne.
+Interesuje nas więc czas działania algorytmu \textbf{BEP}.
+Każda runda zajmuje czas rzędu $\mathcal{O}(|E|)$ a więc całkowity czas działania wynosi $\mathcal{O}(T|E|)$.
+Musimy wiedzieć, jakie $T$ wybrać żeby uzyskać sensowny wynik.
+Górne ograniczenie to $T\le \text{diam}(G)$.
+Stabilizacja wartości przechowywanej w $v\in V$ nastąpi, kiedy $v$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(v)$ rundach.
 Oczywiście cały proces zakończy się po najdłuższym z tych czasów.
 A zatem algorytm po co najwyżej $\mathrm{diam}(G)$ rundach kończy działanie.
+W teoretycznym modelu każde przesłanie wiadomości zawsze się powiedzie.
 W praktyce natomiast ze względu na szumy i zakłócenia komunikacji przesłanie wiadomości nie zawsze się udaje.
 Możemy założyć, że prawdopodobieństwo przesłania informacji w pojedynczej rundzie wynosi $p$.
 Krok aktualizacji wartości jest analogiczny do rozprzestrzeniania się infekcji w modelu \textbf{SI}.
 Dla ustalonego $s\in V$ zmienne losowe, które zdefiniowaliśmy dostarczają nam sporo informacji o przebiegu algorytmu \textbf{BEP}.
 Najistotniejsza jest zmienna $Z$, która jest górnym ograniczeniem na czas zakończenia propagacji.
+Możemy więc przyjąć $T=\mathbb{E}[Z]$.
+Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(|V|))$.

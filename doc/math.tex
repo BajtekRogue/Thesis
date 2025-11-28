@@ -7,7 +7,7 @@ Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim\limits_{x\to\pm\infty} f(x)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
-Zbiór sąsiadów $v\in V$ oznaczamy $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$. 
+Przez $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$ oznaczamy zbiór sąsiadów dla $v\in V$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
 Średnicę grafu $G$ oznaczamy $\mathrm{diam}(G)=\max_{v \in V } \epsilon(v)$.
@@ -31,12 +31,12 @@ Oznaczamy go przez $\mathrm{P}_n$.
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-    \foreach \i in {1,...,5} {
-        \node[circle, draw, inner sep=2pt] (v\i) at (\i, 0) {};
-    }
-    \foreach \i in {1,...,4} {
-        \draw (v\i) -- (v\the\numexpr\i+1\relax);
-    }
+\foreach \i in {1,...,5} {
+    \node[circle, draw, inner sep=4pt, minimum size=8pt] (v\i) at (\i, 0) {\small \i};
+}
+\foreach \i in {1,...,4} {
+    \draw (v\i) -- (v\the\numexpr\i+1\relax);
+}
 \end{tikzpicture}
 \caption{Graf $\mathrm{P}_5$}
 \end{center}
@@ -48,12 +48,11 @@ Oznaczamy go przez $\mathrm{S}_n$.
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-    \node[circle, draw, inner sep=2pt] (c) at (0,0) {};
-    \foreach \i in {1,...,5} {
-        \node[circle, draw, inner sep=2pt] (v\i)
-            at (72*\i:1.5cm) {};
-        \draw (c) -- (v\i);
-    }
+\node[circle, draw, inner sep=4pt, minimum size=8pt] (c) at (0,0) {\small 0};
+\foreach \i in {1,...,5} {
+    \node[circle, draw, inner sep=4pt, minimum size=8pt] (v\i) at (72*\i:1.5cm) {\small \i};
+    \draw (c) -- (v\i);
+}
 \end{tikzpicture}
 \caption{Graf $\mathrm{S}_5$}
 \end{center}
@@ -65,14 +64,13 @@ Oznaczamy go przez $\mathrm{C}_n$.
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-    \foreach \i in {1,...,5} {
-        \node[circle, draw, inner sep=2pt] (v\i)
-            at (72*\i:1.5cm) {};
-    }
-    \foreach \i in {1,...,4} {
-        \draw (v\i) -- (v\the\numexpr\i+1\relax);
-    }
-    \draw (v5) -- (v1);
+\foreach \i in {1,...,5} {
+    \node[circle, draw, inner sep=4pt, minimum size=8pt] (v\i) at (72*\i:1.5cm) {\small \i};
+}
+\foreach \i in {1,...,4} {
+    \draw (v\i) -- (v\the\numexpr\i+1\relax);
+}
+\draw (v5) -- (v1);
 \end{tikzpicture}
 \caption{Graf $\mathrm{C}_5$}
 \end{center}
@@ -84,17 +82,16 @@ Oznaczamy go przez $\mathrm{K}_n$.
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-    \foreach \i in {1,...,5} {
-        \node[circle, draw, inner sep=2pt] (v\i)
-            at (72*\i:1.5cm) {};
+\foreach \i in {1,...,5} {
+    \node[circle, draw, inner sep=4pt, minimum size=8pt] (v\i) at (72*\i:1.5cm) {\small \i};
+}
+\foreach \i in {1,...,5} {
+    \foreach \j in {1,...,5} {
+        \ifnum\i<\j
+            \draw (v\i) -- (v\j);
+        \fi
     }
-    \foreach \i in {1,...,5} {
-        \foreach \j in {1,...,5} {
-            \ifnum\i<\j
-                \draw (v\i) -- (v\j);
-            \fi
-        }
-    }
+}
 \end{tikzpicture}
 \caption{Graf $\mathrm{K}_5$}
 \end{center}
@@ -171,40 +168,6 @@ Oznaczamy $X \sim \mathcal{N}(\mu, \sigma^2)$.
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
 $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
-\distribution{Rozkład jednostajny $\mathcal{U}[a;b]$}
-Niech $a,b \in \mathbb{R}$ przy czym $a<b$. 
-Zmienna losowa $X$ ma rozkład jednostajny, jeżeli jej funkcja gęstości wyraża się wzorem:
-\[
-    f_X(t) = \frac{1}{b-a}, \quad t \in [a;b].
-\]
-Dystrybuanta jest równa:
-\[
-    \mathbb{P}[X \le t] = \frac{t-a}{b-a}, \quad t \in [a;b].
-\]
-Wartość oczekiwana i wariancja wynoszą:
-\[
-    \mathbb{E}[X] = \frac{a+b}{2}, \quad \mathrm{Var}[X] = \frac{{(a-b)}^2}{12}.
-\]
-Oznaczamy $X \sim \mathcal{U}[a;b]$.
-
-\distribution{Rozkład wykładniczy $\mathrm{Exp}(\lambda)$}
-Niech $\lambda > 0$. 
-Zmienna losowa $X$ ma rozkład wykładniczy, jeżeli jej funkcja gęstości wyraża się wzorem:
-\[
-    f_X(t) = \lambda e^{-\lambda t}, \quad t > 0.
-\]
-Dystrybuanta jest równa:
-\[
-    \mathbb{P}[X \le t] = 1 - e^{-\lambda t}, \quad t > 0.
-\]
-Wartość oczekiwana i wariancja wynoszą:
-\[
-    \mathbb{E}[X] = \frac{1}{\lambda}, \quad \mathrm{Var}[X] = \frac{1}{\lambda^2}.
-\]
-Oznaczamy $X \sim \mathrm{Exp}(\lambda)$.
-
-\section{Fakty, sumy i nierówności}
-
 \begin{fact}\label{fact:max_CDF}
 Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
 Zdefiniujmy zmienną losową \mbox{$Y = \max\{X_1,\dots, X_n\}$}. 
@@ -263,24 +226,6 @@ Niech $X \sim \mathcal{N}(\mu_1,\sigma_1^2)$ oraz $Y \sim \mathcal{N}(\mu_2,\sig
 Wtedy 
 \[
     X + Y \sim \mathcal{N}(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2).
-\]
-\end{fact}
-
-\begin{fact}\label{fact:min_of_uniforms}
-Niech $X_1,\dots,X_n\sim\mathcal{U}[0;1]$ będą IID.
-Zdefiniujmy zmienną losową \\ \mbox{$Y=\min\{X_1,\dots,X_n\}$}. 
-Wtedy
-\[
-    \mathbb{E}[Y]=\frac{1}{1+n}.
-\]
-\end{fact}
-
-\begin{fact}\label{facf:min_of_exponentials}
-Niech $X_1\sim\mathrm{Exp}(\lambda_1),  \dots, X_n\sim\mathrm{Exp}(\lambda_n)$ będą niezależne.
-Zdefiniujmy zmienną losową $Y=\min\{X_1,\dots,X_n\}$. 
-Wtedy
-\[
-    Y\sim\mathrm{Exp}(\lambda_1+\cdots+\lambda_n).
 \]
 \end{fact}
 
@@ -404,12 +349,8 @@ Wtedy
 \[
     g(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[g(X_1,\dots,X_n)].
 \]
-Jeśli $g$ jest wklęsła to nierówność zachodzi w drugą stronę. 
-W szczególności, ponieważ $\max$ jest funkcją wypukłą, a $\min$ wklęsłą, mamy:
+W szczególności, ponieważ $\max$ jest funkcją wypukłą, mamy:
 \[
-    \max(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[\max(X_1,\dots,X_n)],
-\]
-\[
-    \min(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \ge \mathbb{E}[\min(X_1,\dots,X_n)].
+    \max(\mathbb{E}[X_1],\dots, \mathbb{E}[X_n]) \le \mathbb{E}[\max(X_1,\dots,X_n)].
 \]
 \end{inequality}

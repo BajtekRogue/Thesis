@@ -1,8 +1,9 @@
 
 \section{Basic Extrema Propagation}
 
-Wyniki i ustalenia modelu \textbf{SI} możemy wykorzystać dla analizy teoretycznej różnych metod propagacji.
-Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation, \textbf{BEP} (\ref{algo:BEP}).
+Rozważamy skończony, nieskierowany i spójny graf $G = (V,E)$, $n=|V|$, w którym wierzchołki reprezentują węzły sieci, a krawędzie odpowiadają niezawodnym lub zawodnym kanałom komunikacyjnym między nimi.
+Każdy wierzchołek $v \in V$ przechowuje lokalnie pewną liczbę rzeczywistą $M_v$.
+Algorytmie Basic Extrema Propagation, BEP (\ref{algo:BEP}) jest silną metodą uzyskania informacji o wartościach ${(M_v)}_{v\in V}$ korzystając wyłacznie z lokalnych połączeń między węzłami.
 
 \begin{algorithm}
 \caption{Basic Extrema Propagation}
@@ -24,35 +25,70 @@ Skoncentrujmy naszą uwagę na algorytmie Basic Extrema Propagation, \textbf{BEP
 \label{algo:BEP}
 \end{algorithm}
 
-Jest to algorytm rozproszony zaprojektowany do obliczania wartości ekstremalnych (np.\ minimalnych lub maksymalnych) w sieciach przy użyciu wyłącznie lokalnych interakcji wierzchołków.
 Algorytm ten działa następująco:
 Każdy wierzchołek ustala wartość początkową losowo, korzystając z funkcji $\mathrm{Rand}$.
 Następnie w synchronicznych rundach węzły przesyłają aktualnie przechowywaną wartość do swoich sąsiadów.
 Potem odbierają wszystkie wysłane im wartości i obliczają minimum z nich oraz już posiadanej wartości.
 Proces ten po pewnym czasie stabilizuje się, to jest każdy wierzchołek posiada tą samą wartość i dalsza propagacja nie ma sensu.
-Wtedy algorytm kończy działanie. 
+Stabilizacja wartości przechowywanej w $v\in V$ nastąpi, kiedy $v$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(v)$ rundach.
+Oczywiście cały proces ustabilizuje się po najdłuższym z tych czasów.
+A zatem algorytm po co najwyżej $\mathrm{diam}(G)$ osiąga punkt stały i dalsza propagacja nie jest konieczna.
 Jeśli wierzchołki mają początkowo wartości ${(M_v)}_{v\in V}$ to zwrócona wartość wynosi $M=\min_{v\in V} M_v$.
 Możemy oczywiście założyć, że ${(M_v)}_{v\in V}$ są niezależne.
-Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
-Przykładowo dla $M_v\sim\mathcal{U}[0;1]$ mamy $\mathbb{E}[M]=\frac{1}{1+|V|}$ (\cref{fact:min_of_uniforms}).
-Daje nam to możliwość łatwego oszacowania wielkości sieci.
-Gdy zaś $M_v\sim\mathrm{Exp}(\lambda_v)$ to wtedy $M\sim\mathrm{Exp}(\Lambda)$ gdzie $\Lambda=\sum_{v\in V}\lambda_v$ (\cref{facf:min_of_exponentials}).
-Ponadto $\mathbb{E}[M]=\frac{1}{\Lambda}$.
-Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę pewnych parametrów przechowywanych w węzłach sieci.
+
 Główną zaletą tej techniki jest jej szybkość.
 Skuteczność i dokładność są drugorzędne.
-Interesuje nas więc czas działania algorytmu \textbf{BEP}.
-Każda runda zajmuje czas rzędu $\mathcal{O}(|E|)$ a więc całkowity czas działania wynosi $\mathcal{O}(T|E|)$.
+Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(n))$.
+Interesuje nas też czas działania algorytmu BEP.
+Każda runda zajmuje czas rzędu $\mathcal{O}(|E|)$ a więc całkowity czas działania wynosi $\mathcal{O}(T\cdot|E|)$.
 Musimy wiedzieć, jakie $T$ wybrać żeby uzyskać sensowny wynik.
-Górne ograniczenie to $T\le \text{diam}(G)$.
-Stabilizacja wartości przechowywanej w $v\in V$ nastąpi, kiedy $v$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(v)$ rundach.
-Oczywiście cały proces zakończy się po najdłuższym z tych czasów.
-A zatem algorytm po co najwyżej $\mathrm{diam}(G)$ rundach kończy działanie.
-W teoretycznym modelu każde przesłanie wiadomości zawsze się powiedzie.
+W przypadku pełnej niezawodności kanałów komunikacyjnych górne ograniczenie to $T\le \text{diam}(G)$.
 W praktyce natomiast ze względu na szumy i zakłócenia komunikacji przesłanie wiadomości nie zawsze się udaje.
-Możemy założyć, że prawdopodobieństwo przesłania informacji w pojedynczej rundzie wynosi $p$.
+Możemy założyć, że prawdopodobieństwo przesłania informacji w pojedynczej rundzie wynosi $p$, niezależnie między kanałami i rundami.
 Krok aktualizacji wartości jest analogiczny do rozprzestrzeniania się infekcji w modelu \textbf{SI}.
 Dla ustalonego $s\in V$ zmienne losowe, które zdefiniowaliśmy dostarczają nam sporo informacji o przebiegu algorytmu \textbf{BEP}.
 Najistotniejsza jest zmienna $Z$, która jest górnym ograniczeniem na czas zakończenia propagacji.
-Możemy więc przyjąć $T=\mathbb{E}[Z]$.
-Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(|V|))$.
+Możemy więc przyjąć $T\approx\mathbb{E}[Z]$.
+Uzyskane oszacowania dla oczekiwanej liczby rund zakończenia propagacji na klasycznych rodzinach grafów wynoszą
+\begin{itemize}
+\item ścieżka $\mathrm{P}_n$:
+      \[
+      \mathbb{E}[Z] = \frac{n-1}{p}
+      \]
+\item gwiazda $\mathrm{S}_n$:
+      \[
+      \mathbb{E}[Z] = \frac{H_n}{\log(\frac{1}{1-p})}
+      \]
+\item cykl $\mathrm{C}_n$:
+      \[
+      \mathbb{E}[Z] = \frac{n-1}{2p} + \mathcal{O}(1)
+      \]
+\item graf pełny $\mathrm{K}_n$:
+      \[
+      \mathbb{E}[Z] = 2 + o(1)
+      \]
+\end{itemize}
+Ponadto, dla dowolnego grafu (\cref{theorem:montonicity_of_total_infection}) mamy
+\[
+    \mathbb{E}[Z] \le D + D\cdot \frac{\log(\frac{n-1}{D})+1}{\log(\frac{1}{1-p})},
+\]
+gdzie $D=\mathrm{diam}(G)$.
+
+Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
+Przykładowo jeśli $M_v\sim\mathcal{U}[0;1]$ (rozkład jednostajny na $[0;1]$) to mamy mamy $\mathbb{E}[M]=\frac{1}{1+|V|}$.
+Gdy zaś $M_v\sim\mathrm{Exp}(\lambda_v)$ (rozkład wykładniczy) to wtedy $M\sim\mathrm{Exp}(\Lambda)$ gdzie $\Lambda=\sum_{v\in V}\lambda_v$ a ponadto $\mathbb{E}[M]=\frac{1}{\Lambda}$.
+Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę parametrów przechowywanych w węzłach sieci.
+W celu kontroli błedu szacowanej wielkości sieci algorytm możemy zmodyfikować.
+Wprowadzamy dodatkowy parametr $k\ge 3$.
+Na początku generujemy $k$-wymiarowy wektor $\mathbf{x}$ według zadanego rozkładu.
+W późniejszej fazie algorytmu przesyłamy ten wektor i obliczamy na nim minimum punktowo.
+Jeśli początkowym rozkładem będzie $\mathrm{Exp}(1)$ to wartość 
+\[
+    V^* = \frac{k-1}{x_{1} + \cdots + x_{k}}
+\]
+jest estymatorem na wielkość sieci. \cite{5963654}
+Ponadto
+\[
+    \mathbb{E}[V^*] = n, \quad \mathrm{Var}(V^*) = \frac{n^2}{k-2},
+\]
+co umożliwia regulację względnej dokładności poprzez dobór $k$.

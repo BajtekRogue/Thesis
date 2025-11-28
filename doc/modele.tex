@@ -4,13 +4,15 @@ Propagacja na takim grafie jest procesem stochastycznym.
 Zakładamy, że czas dla tego procesu jest dyskretny i mierzony w jednostkach naturalnych, zatem za zbiór chwil przyjmujemy $\mathbb{N}$.  
 Niech $\mathcal{Q}$ będzie skończonym zbiorem stanów, jakie mogą przyjmować wierzchołki $G$.  
 W każdej chwili $t \in \mathbb{N}$ każdy wierzchołek $v \in V$ znajduje się w pewnym stanie $Q \in \mathcal{Q}$.  
-Definiujemy zmienną losową $\mathbf{X} : \mathbb{N}\times V \to \mathcal{Q}$, taką, że $\mathbf{X}_t(v) = Q$ wtedy i tylko wtedy, gdy wierzchołek $v$ w chwili $t$ znajduje się w stanie $Q$.  
+Nie będzie nas interesować przestrzeń zdarzeń elementarnych tego procesu.
+Definiujemy realizacje zmiennej losową $\mathbf{X} : \mathbb{N}\times V \to \mathcal{Q}$ określającą stany wierzchołków grafu w czasie.
+Mamy $\mathbf{X}_t(v) = Q$ wtedy i tylko wtedy, gdy wierzchołek $v$ w chwili $t$ znajduje się w stanie $Q$.  
 
 \section{Model SI}
 
 Model \textbf{Susceptible—Infected (SI)} opisuje propagację w sieci, w której każdy wierzchołek znajduje się w jednym z dwóch stanów: podatny ($S$) lub zainfekowany ($I$).  
 Mamy więc $\mathcal{Q} = \{S, I\}$.  
-Początkowo ustalony wierzchołek $s \in V$ znajduje się w stanie $I$, natomiast pozostałe wierzchołki są w stanie $S$. 
+Początkowo ustalone źródło $s \in V$ znajduje się w stanie $I$, natomiast pozostałe wierzchołki są w stanie $S$. 
 A więc
 \[
 \mathbf{X}_0(v) =
@@ -24,14 +26,14 @@ Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.
 W modelu \textbf{SI} liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
 Dla uproszczenia notacji kładziemy 
 \[
-    q=1-p,\quad \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}.
+    q=1-p,\quad \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}, \quad i_v=|\mathrm{N}(v) \cap \mathcal{I}_t|.
 \]
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I] = 0, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = 1.
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = 0, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = 1.
 \end{align*}
 Zdefiniujmy teraz zmienne losowe opisujące istotne dla nas własności.  
 Dla każdego $v \in V$ definiujemy zmienną $X_v$ określającą chwilę czasu zarażenia wierzchołka $v$.  
@@ -48,7 +50,7 @@ Zatem
     Y_t = |\mathcal{I}_t|.
 \]
 Interesować nas będzie rozkład prawdopodobieństwa $Y_t$ oraz wartość oczekiwana $\mathbb{E}[Y_t]$.
-Pokażemy, że $\mathbb{E}[Y_t] \to |V|$ wraz z $t\to\infty$.
+Pokażemy, że $\mathbb{E}[Y_t] \to |V|$ wraz z $t\to\infty$ (\cref{theorem:total_infection}). 
 Dlatego też nie będziemy badać asymptotyki $\mathbb{E}[Y_t]$ względem $t$.
 Dodatkowo definiujemy zmienną $Z$ opisującą czas całkowitego zarażenia grafu:
 \[
@@ -59,13 +61,26 @@ Dla propagacji \textbf{SI} zainfekowanie całego grafu jest jednakże zdarzeniem
 Alternatywnie możemy zapisać $Z = \max_{v \in V} X_v$.  
 Wyznacznie rozkładu $Z$ oraz jej wartości oczekiwanej dla konkretnych rodzin grafów będzie głównym celem w tym modelu.
 
+\begin{figure}[ht]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, node distance=3cm]
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (I) to node[above] {$1$} (I);
+    \draw[->, thick] (S) to node[above] {$1-q^{i_v}$} (I);
+\end{tikzpicture}
+\caption{Diagram przejść dla modelu SI.}
+\end{center}
+\end{figure}
+
 
 \section{Model SIR}
 
 Model \textbf{Susceptible—Infected—Recovered (SIR)} rozszerza model \textbf{SI} o dodanie trzeciego stanu.  
 Stanem tym jest $R$ (Recovered). 
 W tym modelu mamy $\mathcal{Q} = \{S, I, R\}$.  
-Stan $R$ jest trwały — wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić.  
+Stan $R$ jest pochłaniający — wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić.  
 Zarażony wierzchołek może przejść z $I$ do stanu $R$ z prawdopodobieństwem $\alpha \in (0;1)$.  
 Przyjmujemy, że w każda runda odbywa się w dwóch etapach.
 W pierwszym z nich wierzchołki przekazują infekcje.
@@ -76,21 +91,21 @@ Dla uproszczenia notacji kładziemy
 \]
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = S] = 0, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I] = 0, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = \beta, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = I] = \alpha, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = R] = 0, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = R] = 0, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = R \mid \mathbf{X}_t(u) = R] = 1.
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = R \mid \mathbf{X}_t(v) = S] = 0, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = 0, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = \beta, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = R \mid \mathbf{X}_t(v) = I] = \alpha, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = R] = 0, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = R] = 0, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = R \mid \mathbf{X}_t(v) = R] = 1.
 \end{align*}
 Tak jak poprzednio rozważmy zmienne 
 \[
     X_v=\min\{t\in\mathbb{N}:v\in\mathcal{I}_t\}.
 \]
-W kontraście dla modelu \textbf{SI} zachodzi $\mathbb{P}[X_v=\infty]>0$ (patrz \cref{theorem:infection_dies_out_SIR}).
+W kontraście dla modelu \textbf{SI} zachodzi $\mathbb{P}[X_v=\infty]>0$ (\cref{theorem:infection_dies_out_SIR}).
 Z tego powodu wartość oczekiwana $\mathbb{E}[X_v]=\infty$ niezależnie od struktury grafu.
 Dlatego też poza rozkładem $X_v$ możemy wyznaczyć $\mathbb{E}[X_v|X_v<\infty]$.
 Istnienie stanu $R$ narzuca pomysł rozważania podobnej zmiennej na pierwszy czas wyzdrowienia wierzchołka $v$.
@@ -113,6 +128,22 @@ Dodatkowo definiujemy zmienną $W$ będącą liczba finalnie wyzdrowiałych wier
 \]
 Rozkłady $Z,W$ jak i ich wartości oczekiwane będą naszym głównym obiektem zainteresowań w tym modelu.
 
+\begin{figure}[ht]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, node distance=3cm]
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (R) [right of=I] {$R$};
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (I) to node[above] {$\beta$} (I);
+    \draw[->, thick, loop above] (R) to node[above] {$1$} (R);
+    \draw[->, thick] (S) to node[above] {$1-q^{i_v}$} (I);
+    \draw[->, thick] (I) to node[above] {$\alpha$} (R);
+\end{tikzpicture}
+\caption{Diagram przejść dla modelu SIR.}
+\end{center}
+\end{figure}
+
 
 \section{Model SIS}
 
@@ -128,10 +159,10 @@ Jest to odzwierciedlenie naturalnego stanu rzeczy.
 Jeśli ktoś zostanie zakażony chorobą to nie może wyzdrowieć szybciej niż jego zakaziciel.  
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = S] = \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = S] = 1 - \prod_{v \in \mathrm{N}(u) \cap \mathcal{I}_t} q, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = S \mid \mathbf{X}_t(u) = I] = \alpha, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(u) = I \mid \mathbf{X}_t(u) = I] = \beta.
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = \alpha, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = \beta.
 \end{align*}
 Zmienne losowe opisujące istotne własności są tutaj podobne jak w modelu \textbf{SI}.  
 Dla każdego $v \in V$ kładziemy
@@ -151,3 +182,17 @@ Mamy $\mathbb{P}[X_v=\infty] > 0$ a więc interesować nas będzie $\mathbb{E}[X
 Dalej wykażemy, że $\mathbb{E}[Y_t]$ dążą do $0$, a więc także nie będą nas interesować.
 Skupimy się tylko na rozkładzie $Y_t$.
 Jeśli chodzi o zmienną $Z$ to przyjrzyjmy się zarówno jej rozkładowi jak i wartości oczekiwanej.
+
+\begin{figure}[ht]
+\begin{center}
+\begin{tikzpicture}[scale=1.5, node distance=3.5cm]
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
+    \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (I) to node[above] {$\beta$} (I);
+    \draw[->, thick, bend left=30] (S) to node[above] {$1-q^{i_v}$} (I);
+    \draw[->, thick, bend left=30] (I) to node[below] {$\alpha$} (S);
+\end{tikzpicture}
+\caption{Diagram przejść dla modelu SIS.}
+\end{center}
+\end{figure}

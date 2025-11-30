@@ -1,9 +1,9 @@
 \section{Dwa wierzchołki, jedna krawędź}
 
-W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest \textbf{SIR}, przeanalizujmy graf o jednej krawędzi. 
+W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest SIR, przeanalizujmy graf o jednej krawędzi. 
 Niech $V=\{u,v\}$ oraz niech $u$ będzie wierzchołkiem startowym. 
 Oczywiście $X_u=0$. 
-Pierwsza runda jest identyczna jak w modelu \textbf{SI}, a więc $\mathbb{P}[X_v=1]=p$. 
+Pierwsza runda jest identyczna jak w modelu SI, a więc $\mathbb{P}[X_v=1]=p$. 
 Jeżeli węzeł $v$ nie zostanie poinformowany w rundzie pierwszej, a propagacja nie wygaśnie, to sytuacja się powtórzy. 
 Zachodzi to z prawdopodobieństwem $q\beta$. Aby $X_v=t$, potrzebujemy, by ten cykl nastąpił $t-1$ razy. 
 Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny, 
@@ -15,7 +15,7 @@ a co za tym idzie
     \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
 \]
 Z założeń modelu $p,\alpha\in(0;1)$, a zatem $\mathbb{P}[X_v=\infty]\ne 0$. 
-Jest cecha kontrastująca \textbf{SIR} względem \textbf{SI}.
+Jest cecha kontrastująca SIR względem SI.
 
 Przyjrzyjmy się teraz zmiennej $Y_t$.
 Zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
@@ -48,7 +48,7 @@ Mamy
 
 \section{Pewne wygaśnięcie}
 
-W modelu \textbf{SIR} wygaśnięcie infekcji jest zdarzeniem pewnym. 
+W modelu SIR wygaśnięcie infekcji jest zdarzeniem pewnym. 
 Sformalizujmy ten fakt prostym twierdzeniem.
 
 \begin{theorem}\label{theorem:infection_dies_out_SIR}
@@ -86,7 +86,7 @@ A więc z Twierdzenia Lebesgue dostajemy wzory na rozkład i wartość oczekiwan
 
 Przyjrzyjmy się teraz grafom $\mathrm{P}_n$.
 Oczywiście za źródło propagacji wybieramy wierzchołek $s=1$.
-Podobnie jak w modelu \textbf{SI} propagacja rozchodzi się miedzy kolejnymi wierzchołkami niezależnie a więc
+Podobnie jak w modelu SI propagacja rozchodzi się miedzy kolejnymi wierzchołkami niezależnie a więc
 \[
     X_1=0, \quad X_v=X_{v-1}+U_v, \quad v\in\{2,3,\dots,n\},
 \]
@@ -167,7 +167,7 @@ Zauważmy natomiast, że zmienne $X_1,X_2,\dots,X_n$ sa zależne, bo gdy central
 Przyjrzyjmy się teraz zmiennej $Y_t$. 
 Połóżmy $C=\min\{\tau\in\mathbb{N}:0\in\mathcal{R}_\tau\}$.
 Jeśli centrum zarazi się po $j$ rundach to liście gwiazdy mogą byc zarażane przez $\min\{j,t\}$ rund.
-$Y_t$ zachowuje się tak samo jak w modelu \textbf{SI} dla grafów gwiezdnych.
+$Y_t$ zachowuje się tak samo jak w modelu SI dla grafów gwiezdnych.
 Przypomnijmy, że rozkład ten wynosi $1+B_{j,t}$ gdzie $B_{j,t}\sim\mathrm{Bin}(n,1-q^{\min\{j,t\}})$.
 A więc
 \[
@@ -235,7 +235,7 @@ Ostatecznie otrzymujemy
 
 \section{Eksperymenty}
 
-W modelu \textbf{SIR} symulować będziemy rozkłady zmiennych $W,Z$ oraz ich wartości oczekiwane.
+W modelu SIR symulować będziemy rozkłady zmiennych $W,Z$ oraz ich wartości oczekiwane.
 Ustalmy $p=0.2$ oraz $\alpha=0.05$.
 Do przeprowadzenia eksperymentu używamy \cref{algo:SIR}.
 Rozkłady wyznaczymy na na grafach o $n=100$ wierzchołkach natomiast wartości oczekiwane dla $n\in\{1,2,\dots,300\}$.
@@ -251,32 +251,32 @@ Możemy zauważyć dobre przybliżenie na $\mathbb{E}[W]$.
 
 
 \begin{algorithm}
-\caption{SIR Propagation}
+\caption{Propagacja SIR}
 \begin{algorithmic}[1]
-\State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
-\State\textbf{Output:} Sets of recovered vertices $(\mathcal{R}_t)$ and extinction time $Z$
+\State\textbf{Input:} Graf $G=(V,E)$, prawdopodobieństwo infekcji $p$, prawdopodobieństwo wyzdrowienia $\alpha$, źródło $s\in V$
+\State\textbf{Output:} Zbiór wyzdrowiałych wierzchołków $(\mathcal{R}_t)$, czas wymarcia infekcji $Z$
 \State$\mathcal{S}_0 \gets V\setminus\{s\}$
 \State$\mathcal{I}_0 \gets \{s\}$
 \State$\mathcal{R}_0 \gets \varnothing$
 \State$t \gets 0$
 \While{$\mathcal{I}_t \ne \varnothing$ \textbf{and} $\exists v\in\mathcal{I}_t: \mathcal{S}_t\cap\mathrm{N}(v)\neq\varnothing$}
-    \State$\mathcal{I}_{\text{new}} \gets \varnothing$
-    \For{each $u \in \mathcal{I}_t$}
-        \For{each $v \in \mathrm{N}(u)$}
+    \State$\mathcal{I}' \gets \varnothing$
+    \For{\textbf{each} $u \in \mathcal{I}_t$}
+        \For{\textbf{each} $v \in \mathrm{N}(u)$}
             \If{$v \in \mathcal{S}_t$ \textbf{and} $\text{random}() < p$}
-                \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                \State$\mathcal{I}' \gets \mathcal{I}' \cup \{v\}$
             \EndIf%
         \EndFor%
     \EndFor%
-    \State$\mathcal{R}_{\text{new}} \gets \varnothing$
-    \For{each $u \in \mathcal{I}_t$}
+    \State$\mathcal{R}' \gets \varnothing$
+    \For{\textbf{each} $u \in \mathcal{I}_t$}
         \If{$\text{random}() < \alpha$}
-            \State$\mathcal{R}_{\text{new}} \gets \mathcal{R}_{\text{new}} \cup \{u\}$
+            \State$\mathcal{R}' \gets \mathcal{R}' \cup \{u\}$
         \EndIf%
     \EndFor%
-    \State$\mathcal{S}_{t+1} \gets \mathcal{S}_t \setminus \mathcal{I}_{\text{new}}$
-    \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus \mathcal{R}_{\text{new}}$
-    \State$\mathcal{R}_{t+1} \gets \mathcal{R}_t \cup \mathcal{R}_{\text{new}}$
+    \State$\mathcal{S}_{t+1} \gets \mathcal{S}_t \setminus \mathcal{I}'$
+    \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}') \setminus \mathcal{R}'$
+    \State$\mathcal{R}_{t+1} \gets \mathcal{R}_t \cup \mathcal{R}'$
     \State$t \gets t + 1$
 \EndWhile%
 \State$\mathcal{R}_t \gets \mathcal{R}_t \cup \mathcal{I}_t$
@@ -353,3 +353,5 @@ Możemy zauważyć dobre przybliżenie na $\mathbb{E}[W]$.
     \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{S}_n$.}%
     \label{fig:SIR_star_Z}
 \end{figure}
+
+\clearpage

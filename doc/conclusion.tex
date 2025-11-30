@@ -1,0 +1,80 @@
+\section{Wnioski}
+
+W niniejszej pracy przeprowadziliśmy kompleksową analizę trzech klasycznych modeli propagacji stochastycznej w grafach: SI, SIR oraz SIS. 
+Wyznaczenie rozkładów prawdopodobieństwa i wartości oczekiwanych kluczowych zmiennych losowych ($X_v$, $Y_t$, $Z$, $W$) dla różnych topologii sieciowych pozwoliło na głębokie zrozumienie wpływu struktury grafu na dynamikę propagacji.
+
+\paragraph{Model SI.}
+Dla modelu SI udowodniliśmy, że całkowita infekcja grafu jest zdarzeniem pewnym oraz wyznaczyliśmy dokładne rozkłady dla wszystkich badanych rodzin grafów.
+Kluczowe wyniki obejmują:
+\begin{itemize}
+\item Dla grafów ścieżkowych $\mathrm{P}_n$: czas całkowitej infekcji $Z \sim \mathrm{NegBin}(n-1, p)$ z wartością oczekiwaną $\mathbb{E}[Z] = \frac{n-1}{p}$, co czyni je najbardziej odpornymi na szybką propagację.
+\item Dla grafów gwiazdowych $\mathrm{S}_n$: asymptotyczny czas infekcji $\mathbb{E}[Z] \sim \frac{H_n}{\log(\frac{1}{1-p})}$.
+\item Dla grafów cyklicznych $\mathrm{C}_n$: czas infekcji $\mathbb{E}[Z] \sim \frac{n-1}{2p}$, czyli w przybliżeniu połowa czasu dla grafów ścieżkowych dzięki dwukierunkowej propagacji.
+\item Dla grafów pełnych $\mathrm{K}_n$: udowodniliśmy, że $\lim\limits_{n \to \infty} \mathbb{E}[Z] = 2$, co oznacza, że gęste sieci są ekstremalnie podatne na szybką propagację.
+\end{itemize}
+Wyprowadzone ogólne ograniczenie $\mathbb{E}[Z] \le h + \frac{h}{\lambda}(\log(\frac{n-1}{h}) + 1)$, gdzie $h$ jest ekscentrycznością źródła, dostarcza uniwersalnego narzędzia do oszacowania czasu propagacji w dowolnym grafie spójnym.
+
+\paragraph{Model SIR.}
+Wprowadzenie stanu wyzdrowiałego ($R$) fundamentalnie zmienia dynamikę propagacji. 
+Udowodniliśmy, że wygaśnięcie infekcji jest zdarzeniem pewnym oraz $\mathbb{P}[X_v = \infty] > 0$ dla każdego wierzchołka $v \neq s$.
+Dla grafów ścieżkowych i gwiazdowych wyznaczyliśmy rozkłady zmiennych $W$ (liczba finalnie zarażonych) oraz $Z$ (czas wygaśnięcia).
+Kluczowe obserwacje to:
+\begin{itemize}
+\item Parametr wyzdrowienia $\alpha$ ma kluczowy wpływ na zasięg epidemii — większe $\alpha$ prowadzi do mniejszego $\mathbb{E}[W]$.
+\item Dla grafów ścieżkowych: $\mathbb{E}[W] = \frac{1-\theta^n}{1-\theta}$ gdzie $\theta = \frac{p}{1-q\beta}$, co pokazuje wykładniczy spadek zasięgu dla małych wartości $p$ lub dużych $\alpha$.
+\item Wprowadzone rozkłady wymierające (KGeo, KNegBin) okazały się niezbędnym narzędziem do precyzyjnej analizy modeli z możliwością przerwania propagacji.
+\end{itemize}
+
+\paragraph{Model SIS.}
+Analiza modelu SIS dla grafu pełnego $\mathrm{K}_n$ ujawniła najbardziej złożoną dynamikę spośród trzech modeli.
+Wykorzystanie formalizmu łańcuchów Markova pozwoliło na wyznaczenie rozkładów $Y_t$ i $Z$ poprzez macierze przejść.
+Udowodniliśmy, że mimo możliwości wielokrotnej reinfekacji, wygaśnięcie infekcji jest zdarzeniem pewnym oraz $\lim\limits_{t\to\infty} \mathbb{E}[Y_t] = 0$.
+Symulacje pokazały, że dla różnych wartości parametrów $p$ i $\alpha$ rozkłady $Y_t$ wykazują zarówno szybkie wygasanie (wysokie $\alpha$, niskie $p$) jak i długotrwałą oscylację z wieloma falami infekcji (wysokie $p$, wysokie $\alpha$).
+
+\paragraph{Weryfikacja eksperymentalna.}
+Przeprowadzone symulacje komputerowe potwierdziły teoretyczne przewidywania dla wszystkich badanych modeli i topologii.
+Rozkłady empiryczne zmiennych losowych pokrywały się z teoretycznymi, a wartości oczekiwane zbiegały do wyznaczonych wzorów asymptotycznych.
+Szczególnie istotne było potwierdzenie, że dla grafu pełnego w modelu SI wartość $\mathbb{E}[Z]$ rzeczywiście zbiega do $2$ wraz ze wzrostem $n$.
+
+\paragraph{Scenariusz aplikacyjny.}
+Przedstawiony scenariusz rozprzestrzeniania się wirusa komputerowego ilustruje praktyczną użyteczność modeli:
+\begin{itemize}
+\item Model SI odpowiada infrastrukturze bez zabezpieczeń (systemy legacy, SCADA).
+\item Model SIR modeluje nowoczesne środowiska z automatycznymi łatkami bezpieczeństwa.
+\item Model SIS opisuje systemy z tymczasowymi mechanizmami oczyszczania (kontenery, IoT).
+\end{itemize}
+
+
+\section{Kierunki dalszych badań}
+
+Przeprowadzona analiza otwiera kilka interesujących kierunków kontynuacji badań:
+
+\paragraph{Rozszerzenie na inne rodziny grafów.}
+Analiza ograniczyła się do czterech klasycznych rodzin grafów oraz drzew. 
+Naturalne rozszerzenie obejmowałoby:
+\begin{itemize}
+\item Grafy dwudzielne pełne $\mathrm{K}_{m,n}$, modelujące sieci z wyraźnym podziałem na dwie grupy (np. serwery i klienci).
+\item Grafy kratowe (grid graphs), istotne dla modelowania rozprzestrzeniania się epidemii w przestrzeni geograficznej.
+\item Grafy losowe Erdősa-Rényiego $G(n,p)$, reprezentujące realistyczne sieci społeczne i technologiczne.
+\end{itemize}
+
+\paragraph{Modele z heterogenicznymi parametrami.}
+W niniejszej pracy zakładaliśmy jednolite prawdopodobieństwa transmisji $p$ i wyzdrowienia $\alpha$ dla wszystkich wierzchołków i krawędzi.
+Realistyczne rozszerzenie obejmowałoby:
+\begin{itemize}
+\item Prawdopodobieństwa transmisji zależne od krawędzi: $p_e$, modelujące różną jakość połączeń sieciowych lub intensywność kontaktów społecznych.
+\item Prawdopodobieństwa wyzdrowienia zależne od wierzchołka: $\alpha_v$, uwzględniające zróżnicowaną odporność jednostek lub systemów.
+\item Modele z progową transmisją, gdzie wierzchołek zarażany jest dopiero po przekroczeniu określonej liczby zarażonych sąsiadów.
+\end{itemize}
+
+\paragraph{Modele z opóźnieniami czasowymi.}
+Obecne modele zakładają, że zarażenie i wyzdrowienie następują po jednej jednostce czasu.
+Bardziej realistyczne modele uwzględniałyby:
+\begin{itemize}
+\item Losowe opóźnienia zarażenia, modelujące okres inkubacji w epidemiach biologicznych lub czas propagacji w sieciach fizycznych.
+\item Losowe czasy wyzdrowienia o rozkładzie bardziej ogólnym niż geometryczny, np. wykładniczym lub gamma.
+\item Model SEIR (Susceptible–Exposed–Infected–Recovered) z jawnym stanem narażenia.
+\end{itemize}
+
+Podsumowując, modele probabilistycznej propagacji w grafach stanowią bogate pole badawcze łączące teorię grafów, rachunek prawdopodobieństwa, procesy stochastyczne oraz zastosowania praktyczne.
+Niniejsza praca dostarcza solidnych fundamentów teoretycznych i metodologicznych dla kontynuacji badań w tym fascynującym obszarze.

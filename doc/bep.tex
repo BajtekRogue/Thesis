@@ -1,0 +1,92 @@
+
+% Rozważamy skończony, nieskierowany i spójny graf $G = (V,E)$, $n=|V|$, w którym wierzchołki reprezentują węzły sieci, a krawędzie odpowiadają niezawodnym lub zawodnym kanałom komunikacyjnym między nimi.
+% Każdy wierzchołek $v \in V$ przechowuje lokalnie pewną liczbę rzeczywistą $M_v$.
+% Algorytmie Basic Extrema Propagation, BEP (\ref{algo:BEP}) jest silną metodą uzyskania informacji o wartościach ${(M_v)}_{v\in V}$ korzystając wyłacznie z lokalnych połączeń między węzłami.
+
+% \begin{algorithm}
+% \caption{Basic Extrema Propagation}
+% \begin{algorithmic}[1]  
+% \State\textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$, number of steps $T$
+% \State\textbf{Output:} Values ${(M_v)}_{v\in V}$
+% \For{$v \in V$}
+%     \State$M_v \gets \text{Rand}()$ 
+% \EndFor%
+% \For{$i=1,2,\ldots,T$}
+%     \For{$v \in V$}
+%         \State\text{send} $M_v$ \text{to every} $u\in\text{N}(v)$
+%         \State\text{receive} $M_u$ \text{from every} $u\in\text{N}(v)$
+%         \State$M_{v} \gets \min\{M_{v}, \{M_u : u \in \text{N}(v)\}\}$
+%     \EndFor%
+% \EndFor%
+% \State\textbf{return} ${(M_v)}_{v\in V}$
+% \end{algorithmic}%
+% \label{algo:BEP}
+% \end{algorithm}
+
+% Algorytm ten działa następująco:
+% Każdy wierzchołek ustala wartość początkową losowo, korzystając z funkcji $\mathrm{Rand}$.
+% Następnie w synchronicznych rundach węzły przesyłają aktualnie przechowywaną wartość do swoich sąsiadów.
+% Potem odbierają wszystkie wysłane im wartości i obliczają minimum z nich oraz już posiadanej wartości.
+% Proces ten po pewnym czasie stabilizuje się, to jest każdy wierzchołek posiada tą samą wartość i dalsza propagacja nie ma sensu.
+% Stabilizacja wartości przechowywanej w $v\in V$ nastąpi, kiedy $v$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(v)$ rundach.
+% Oczywiście cały proces ustabilizuje się po najdłuższym z tych czasów.
+% A zatem algorytm po co najwyżej $D$, gdzie $D$ jest średnicą grafu, osiąga punkt stały i dalsza propagacja nie jest konieczna.
+% Jeśli wierzchołki mają początkowo wartości ${(M_v)}_{v\in V}$ to zwrócona wartość wynosi $M=\min_{v\in V} M_v$.
+% Możemy oczywiście założyć, że ${(M_v)}_{v\in V}$ są niezależne.
+
+% Główną zaletą tej techniki jest jej szybkość.
+% Skuteczność i dokładność są drugorzędne.
+% Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(n))$.
+% Interesuje nas też czas działania algorytmu BEP.
+% Każda runda zajmuje czas rzędu $\mathcal{O}(|E|)$ a więc całkowity czas działania wynosi $\mathcal{O}(T\cdot|E|)$.
+% Musimy wiedzieć, jakie $T$ wybrać żeby uzyskać sensowny wynik.
+% W przypadku pełnej niezawodności kanałów komunikacyjnych górne ograniczenie to $T\le D$.
+% W praktyce natomiast ze względu na szumy i zakłócenia komunikacji przesłanie wiadomości nie zawsze się udaje.
+% Możemy założyć, że prawdopodobieństwo przesłania informacji w pojedynczej rundzie wynosi $p$, niezależnie między kanałami i rundami.
+% Krok aktualizacji wartości jest analogiczny do rozprzestrzeniania się infekcji w modelu SI.
+% Dla ustalonego $s\in V$ zmienne losowe, które zdefiniowaliśmy dostarczają nam sporo informacji o przebiegu algorytmu BEP.
+% Najistotniejsza jest zmienna $Z$, która jest górnym ograniczeniem na czas zakończenia propagacji.
+% Możemy więc przyjąć $T\approx\mathbb{E}[Z]$.
+% Uzyskane oszacowania dla oczekiwanej liczby rund zakończenia propagacji na klasycznych rodzinach grafów wynoszą
+% \begin{itemize}
+% \item ścieżka $\mathrm{P}_n$:
+%       \[
+%       \mathbb{E}[Z] = \frac{n-1}{p}
+%       \]
+% \item gwiazda $\mathrm{S}_n$:
+%       \[
+%       \mathbb{E}[Z] = \frac{H_n}{\log(\frac{1}{1-p})}
+%       \]
+% \item cykl $\mathrm{C}_n$:
+%       \[
+%       \mathbb{E}[Z] = \frac{n-1}{2p} + \mathcal{O}(1)
+%       \]
+% \item graf pełny $\mathrm{K}_n$:
+%       \[
+%       \mathbb{E}[Z] = 2 + o(1)
+%       \]
+% \end{itemize}
+% Ponadto, dla dowolnego grafu (\cref{theorem:montonicity_of_total_infection}) mamy
+% \[
+%     \mathbb{E}[Z] \le D + D\cdot \frac{\log(\frac{n-1}{D})+1}{\log(\frac{1}{1-p})},
+% \]
+% gdzie $D$ jest średnicą $G$.
+
+% Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
+% Przykładowo jeśli $M_v\sim\mathcal{U}[0;1]$ (rozkład jednostajny na $[0;1]$) to mamy mamy $\mathbb{E}[M]=\frac{1}{1+|V|}$.
+% Gdy zaś $M_v\sim\mathrm{Exp}(\lambda_v)$ (rozkład wykładniczy) to wtedy $M\sim\mathrm{Exp}(\Lambda)$ gdzie $\Lambda=\sum_{v\in V}\lambda_v$ a ponadto $\mathbb{E}[M]=\frac{1}{\Lambda}$.
+% Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę parametrów przechowywanych w węzłach sieci.
+% W celu kontroli błedu szacowanej wielkości sieci algorytm możemy zmodyfikować.
+% Wprowadzamy dodatkowy parametr $k\ge 3$.
+% Na początku generujemy $k$-wymiarowy wektor $\mathbf{x}$ według zadanego rozkładu.
+% W późniejszej fazie algorytmu przesyłamy ten wektor i obliczamy na nim minimum punktowo.
+% Jeśli początkowym rozkładem będzie $\mathrm{Exp}(1)$ to wartość 
+% \[
+%     V^* = \frac{k-1}{x_{1} + \cdots + x_{k}}
+% \]
+% jest estymatorem na wielkość sieci. \cite{5963654}
+% Ponadto
+% \[
+%     \mathbb{E}[V^*] = n, \quad \mathrm{Var}[V^*] = \frac{n^2}{k-2},
+% \]
+% co umożliwia regulację względnej dokładności poprzez dobór $k$.

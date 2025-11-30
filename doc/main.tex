@@ -26,7 +26,6 @@
 \addbibresource{../bibliography.bib}
 
 % ------------------------ Theorems ------------------------
-\newtheorem{definition}{Definicja}
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
@@ -50,17 +49,19 @@
 \Crefname{algorithm}{Algorytmu}{Algorytmu}
 
 
-
-% ------------------------ Figures ------------------------
 \newcommand{\graphfamily}[1]{%
-  \vspace{0.8em}
-  \noindent\textbf{#1}\\[0.3em]
+  \vspace{0.8em}%
+  \noindent\textbf{#1}\par
 }
 
 \newcommand{\distribution}[1]{%
   \vspace{0.8em}
   \noindent\textbf{#1}\\[0.3em]
 }
+
+\makeatletter
+\renewcommand{\ALG@name}{Algorytm}
+\makeatother
 
 \renewcommand{\thefigure}{\arabic{figure}} 
 
@@ -96,6 +97,9 @@
 \chapter{Modele propagacji losowej}
 \input{modele.tex}
 
+\chapter{Scenariusz aplikacyjny}
+\input{application.tex}
+
 \chapter{Analiza modelu SI}
 \input{SI.tex}
 
@@ -108,8 +112,11 @@
 \chapter{Analiza modelu SIS}
 \input{SIS.tex}
 
-\chapter{Zastosowania praktyczne}
-\input{application.tex}
+% \chapter{Extrema Propagation}
+% \input{bep.tex}
+
+\chapter{Podsumowanie}
+\input{conclusion.tex}
 
 \nocite{*}
 \printbibliography[heading=bibintoc,title={Bibliografia}]

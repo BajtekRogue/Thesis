@@ -1,6 +1,6 @@
 \section{Pewne wygaśnięcie}
 
-Analizę modelu \textbf{SIS} zacznijmy od formalnego udowodnienia pewności wygaśnięcia infekcji.
+Analizę modelu SIS zacznijmy od formalnego udowodnienia pewności wygaśnięcia infekcji.
 
 \begin{theorem}\label{theorem:infection_dies_out_SIS}
 Niech $G=(V,E)$ będzie grafem spójnym, $s\in V$ źródłem infekcji oraz $v\in V\setminus\{s\}$.
@@ -27,7 +27,7 @@ Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,
 Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
-Rozkład $X_v$ będzie tutaj taki sam jak dla modelu \textbf{SIR} a więc
+Rozkład $X_v$ będzie tutaj taki sam jak dla modelu SIR a więc
 \[
     X_v\sim \mathrm{KGeo}(p,\alpha),
 \]
@@ -233,7 +233,7 @@ Licząc wartość oczekiwaną dostajemy
 
 \section{Eksperymenty}
 
-Dla modelu \textbf{SIS} przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
+Dla modelu SIS przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
 Na nasze potrzeby wystarczy nam $n=10$.
 Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\Cref{fig:SIS_p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\Cref{fig:SIS_p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\Cref{fig:SIS_p0.5_a0.9}).
 Połóżmy $\tau=\max\{20, \mathbb{E}[Z]\}$.
@@ -255,29 +255,29 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
 
 
 \begin{algorithm}
-\caption{SIS Propagation}
+\caption{Propagacja SIS}
 \begin{algorithmic}[1]
-    \State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, recovering probability $\alpha$, source $s\in V$
-    \State\textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and extinction time $Z$
+    \State\textbf{Input:} Graf $G=(V,E)$, prawdopodobieństwo infekcji $p$, prawdopodobieństwo wyzdrowienia $\alpha$, źródło $s\in V$
+    \State\textbf{Output:} Zbiór zarażonych wierzchołków $(\mathcal{I}_t)$, czas wymarcia infekcji $Z$
     \State$\mathcal{I}_0 \gets \{s\}$
     \State$t \gets 0$
 
     \While{$\mathcal{I}_t \ne \varnothing$}
-        \State$\mathcal{I}_{\text{new}} \gets \varnothing$
-        \For{each $u \in \mathcal{I}_t$}
-            \For{each $v \in \mathrm{N}(u)$}
+        \State$\mathcal{I}' \gets \varnothing$
+        \For{\textbf{each} $u \in \mathcal{I}_t$}
+            \For{\textbf{each} $v \in \mathrm{N}(u)$}
                 \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
-                    \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                    \State$\mathcal{I}' \gets \mathcal{I}' \cup \{v\}$
                 \EndIf%
             \EndFor%
         \EndFor%
         \State$R \gets \varnothing$
-        \For{each $u \in \mathcal{I}_t$}
+        \For{\textbf{each} $u \in \mathcal{I}_t$}
             \If{$\text{random}() < \alpha$}
                 \State$R \gets R \cup \{u\}$
             \EndIf%
         \EndFor%
-        \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}_{\text{new}}) \setminus R$
+        \State$\mathcal{I}_{t+1} \gets (\mathcal{I}_t \cup \mathcal{I}') \setminus R$
         \State$t \gets t + 1$
     \EndWhile%
 
@@ -457,3 +457,5 @@ Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantyczni
     \caption{Rozkłady dla $p=0.5,\;\alpha=0.9$.}%
     \label{fig:SIS_p0.5_a0.9}
 \end{figure}
+
+\clearpage

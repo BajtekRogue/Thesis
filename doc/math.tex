@@ -10,7 +10,6 @@ Niech $G=(V,E)$ będzie grafem prostym nieskierowanym.
 Przez $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$ oznaczamy zbiór sąsiadów dla $v\in V$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
-Średnicę grafu $G$ oznaczamy $\mathrm{diam}(G)=\max_{v \in V } \epsilon(v)$.
 
 Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
 Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. 
@@ -22,12 +21,13 @@ Mówimy, że zmienne losowe $X_1,\dots,X_n$ są IDD (independent and identically
 
 W tej pracy ograniczymy rozważanie propagacji do konkretnych rodzin grafów.
 Są to grafy ścieżkowe, gwiezdne, cykliczne oraz pełne.
-Poniżej znajdują się szczegółowe definicje tych rodzin dla $n \in \mathbb{N}_+$.
-Dodatkowo opisy te zawierają wizualizacje reprezentanta rodzin dla $n=5$.
+Poniżej znajdują się szczegółowe definicje zbioru wierzchołków $V$ oraz zbioru krawędzi $E$ tych rodzin dla $n \in \mathbb{N}_+$.
+Dodatkowo opisy te zawierają wizualizacje reprezentanta rodziny dla $n=5$.
 
 \graphfamily{Graf ścieżkowy $\mathrm{P}_n$}
-Graf ścieżkowy ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}$}. 
-Oznaczamy go przez $\mathrm{P}_n$.
+\[
+    V = \{1, 2, \dots, n\}, \quad E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\}.
+\]
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
@@ -43,8 +43,9 @@ Oznaczamy go przez $\mathrm{P}_n$.
 \end{figure}
 
 \graphfamily{Graf gwiazda $\mathrm{S}_n$}
-Graf gwiazda ma zbiór wierzchołków $V = \{0, 1, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}$}. 
-Oznaczamy go przez $\mathrm{S}_n$.
+\[
+    V = \{0, 1, \dots, n\}, \quad E = \{\{0, i\} : i \in \{1, 2, \dots, n\}\}.
+\]
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
@@ -59,8 +60,9 @@ Oznaczamy go przez $\mathrm{S}_n$.
 \end{figure}
 
 \graphfamily{Graf cykliczny $\mathrm{C}_n$}
-Graf cykliczny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}$}. 
-Oznaczamy go przez $\mathrm{C}_n$.
+\[
+    V = \{1, 2, \dots, n\}, \quad E = \{\{i, i+1\} : i \in \{1, 2, \dots, n-1\}\} \cup \{\{n, 1\}\}.
+\]
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
@@ -77,8 +79,9 @@ Oznaczamy go przez $\mathrm{C}_n$.
 \end{figure}
 
 \graphfamily{Graf pełny $\mathrm{K}_n$}
-Graf pełny ma zbiór wierzchołków $V = \{1, 2, \dots, n\}$ oraz zbiór krawędzi \\\mbox{$E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}$}. 
-Oznaczamy go przez $\mathrm{K}_n$.
+\[
+    V = \{1, 2, \dots, n\}, \quad E = \{\{i, j\} : i, j \in \{1, 2, \dots, n\} \land i \ne j\}.
+\]
 \begin{figure}[ht]
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
@@ -100,11 +103,20 @@ Oznaczamy go przez $\mathrm{K}_n$.
 
 \section{Rozkłady prawdopodobieństwa}
 
+Przedstawiamy specyfikacje klasycznych rozkładów prawdopodobieństwa obejmującą ich funkcje masy, wartości oczekiwane i wariancje. 
+
 \distribution{Rozkład Bernoulliego $\mathrm{Ber}(p)$}
 Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch: sukces z prawdopodobieństwem $p \in (0;1)$ albo porażka z prawdopodobieństwem $1 - p$.
 Zmienna losowa $X$ ma rozkład Bernoulliego jeżeli przyjmuje wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki próby Bernoulliego.
-Oznaczamy $X \sim \mathrm{Ber}(p)$.
- 
+Wtedy:
+\[
+\mathbb{P}[X = 0] = 1-p, \quad \mathbb{P}[X = 1] = p.
+\]
+Wartość oczekiwana i wariancja wynoszą:
+\[
+    \mathbb{E}[X] = p, \quad \mathrm{Var}[X] = p(1-p).
+\]
+
 \distribution{Rozkład dwumianowy $\mathrm{Bin}(n,p)$}
 Zmienna losowa $X$ ma rozkład dwumianowy, jeżeli opisuję liczbę sukcesów w $n$ próbach Bernoulliego gdzie $n\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
@@ -115,7 +127,6 @@ Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = np, \quad \mathrm{Var}[X] = np(1-p).
 \]
-Oznaczamy $X \sim \mathrm{Bin}(n,p)$.
 
 \distribution{Rozkład geometryczny $\mathrm{Geo}(p)$}
 Zmienna losowa $X$ ma rozkład geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu gdzie każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
@@ -131,7 +142,6 @@ Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \frac{1}{p}, \quad \mathrm{Var}[X] = \frac{1 - p}{p^2}.
 \]
-Oznaczamy $X \sim \mathrm{Geo}(p)$.
 
 \distribution{Rozkład ujemny dwumianowy $\mathrm{NegBin}(m, p)$}
 Zmienna losowa $X$ ma rozkład ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów gdzie $m\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.
@@ -143,7 +153,6 @@ Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \frac{m}{p}, \quad \mathrm{Var}[X] = \frac{m(1 - p)}{p^2}.
 \]
-Oznaczamy $X \sim \mathrm{NegBin}(m, p)$.
 
 \distribution{Rozkład normalny $\mathcal{N}(\mu, \sigma^2)$}
 Zdefiniujmy funkcje
@@ -163,14 +172,17 @@ Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \mu, \quad \mathrm{Var}[X] = \sigma^2.
 \]
-Oznaczamy $X \sim \mathcal{N}(\mu, \sigma^2)$.
-
 Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
 $\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
+
+\section{Fakty, sumy i nierówności}
+
+W tej sekcji gromadzimy używane w pracy fakty pomocnicze, wzory sumacyjne oraz nierówności dotyczące zmiennych losowych i przekształceń analitycznych.
+
 \begin{fact}\label{fact:max_CDF}
-Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową \mbox{$Y = \max\{X_1,\dots, X_n\}$}. 
+Niech $X_1,\dots, X_n$ będą IID zmiennymi losowymi o CDF równej $F_X$. 
+Połóżmy \mbox{$Y = \max\{X_1,\dots, X_n\}$}. 
 Wtedy 
 \[
     F_Y(t)=F_X^n(t).
@@ -178,8 +190,8 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:min_CDF}
-Niech $X_1,\dots, X_n$ będą IID o CDF równej $F_X$. 
-Zdefiniujmy zmienną losową \mbox{$Y = \min\{X_1,\dots, X_n\}$}. 
+Niech $X_1,\dots, X_n$ będą IID zmiennymi losowymi o CDF równej $F_X$. 
+Połóżmy \mbox{$Y = \min\{X_1,\dots, X_n\}$}. 
 Wtedy 
 \[
     F_Y(t)=1-{(1-F_X(t))}^n.
@@ -196,10 +208,10 @@ Wtedy
 
 \begin{fact}\label{fact:sum_of_bin_RV_2}
 Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezależnymi zmiennymi losowymi.  
-Zdefiniujmy zmienną losową $Z=X+Y$.
-Wtedy
+Połóżmy $Z=X+Y$.
+Wtedy dla $k\in \{0,1,\ldots,n+m\}$ zachodzi
 \[
-    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
+    \mathbb{P}[X+Y=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
 \]
 \end{fact}
 
@@ -213,11 +225,10 @@ Wtedy
 \end{fact}
 
 \begin{fact}\label{fact:sum_of_geo_RV}
-Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID.\@
-Zdefiniujmy zmienną losową \\ \mbox{$Y=X_1 +  \cdots + X_m$}. 
+Niech $X_1, \dots, X_m \sim \mathrm{Geo}(p)$ będą IID zmiennymi losowymi.
 Wtedy 
 \[
-    Y \sim \mathrm{NegBin}(m, p).
+    X_1 +  \cdots + X_m \sim \mathrm{NegBin}(m, p).
 \]
 \end{fact}
 
@@ -335,7 +346,7 @@ Wtedy dla dowolnego $t>0$
 \]
 \end{inequality}
 
-\begin{inequality}[Nierówność Cauchy’ego-Schwarza]\label{inequality:Cauchy_Schwarz}
+\begin{inequality}[Nierówność Cauchy'ego-Schwarza]\label{inequality:Cauchy_Schwarz}
 Niech $X,Y$ będą zmiennymi losowymi takimi, że $\mathbb{E}[X^2],\mathbb{E}[Y^2]< \infty$. 
 Wtedy
 \[
@@ -343,7 +354,7 @@ Wtedy
 \]
 \end{inequality}
 
-\begin{inequality}[Nierówność Jensena dla wartości oczekiwanej]\label{inequality:Jensen} 
+\begin{inequality}[Nierówność Jensena]\label{inequality:Jensen} 
 Niech $n\in\mathbb{N}_+$ oraz \mbox{$g:\mathbb{R}^n\to\mathbb{R}$} będzie funkcją wypukłą, zaś $X_1,\dots, X_n$ będą zmiennymi losowymi (niekoniecznie niezależnymi). 
 Wtedy
 \[

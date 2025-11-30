@@ -72,7 +72,7 @@ Wartość oczekiwana wynosi więc:
 \end{aligned}
 \end{equation*}
 Wykonaliśmy dość sporo obliczeń jak na tak mały graf. 
-Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model \textbf{SI}.
+Możemy więc zauważyć, że istnienie cykli w grafie znacząco komplikuje sytuację, jeśli chodzi o model SI.
 
 
 \section{Całkowita infekcja pewna}
@@ -252,7 +252,7 @@ Teraz postaramy się uogólnić tę obserwację.
 
 \begin{theorem}\label{theorem:montonicity_of_total_infection}
 Niech $G = (V, E)$ będzie grafem spójnym, a $G' = (V, E')$ jego spójnym podgrafem.  
-Załóżmy, że $\mathbf{X}$ opisuje proces stochastyczny w modelu \textbf{SI} prowadzony równocześnie na $G$ oraz $G'$ z tym samym źródłem $s \in V$.  
+Załóżmy, że $\mathbf{X}$ opisuje proces stochastyczny w modelu SI prowadzony równocześnie na $G$ oraz $G'$ z tym samym źródłem $s \in V$.  
 Jeśli przez $X_v'$, $Y_t'$ oraz $Z'$ oznaczymy odpowiednie zmienne losowe dla $G'$, to zachodzą nierówności:
 \[
     X_v \le X_v', \quad Y_t \ge Y_t', \quad Z \le Z'.
@@ -690,8 +690,8 @@ Przewidywany czas całkowitej infekcji to $\frac{n}{p}$.
 Wyznaczmy zatem rozkład dla wartości $t=r\cdot\frac{n}{p}$ dla $r\in\{0.1, 0.5, 0.8, 0.9\}$.
 Widzimy, że rozkłady są sa coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:SI_path_Yt}).
 Nie będziemy już wyznaczać wartości oczekiwanej $Y_t$.
-Dla $Z$ sprawa jest prosta. 
-Rozkład i wartość oczekiwana przedstawiono na \Cref{fig:SI_path_Z}.
+Rozkład $Z$ jest rozkładem ujemnym dwumianowym i jest dość dobrze znany.
+Nie będziemy zatem go sprawdzać.
 
 Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
 Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
@@ -708,23 +708,23 @@ Aby się upewnić, że na pewno tak jest sprawdźmy to dla $p\in\{0.2, 0.1\}$.
 Jak widać na \Cref{fig:SI_complete_Z} rzeczywiście dla wiekszych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
 
 \begin{algorithm}
-\caption{SI Propagation}
+\caption{Propagacja SI}
 \begin{algorithmic}[1]
-    \State\textbf{Input:} Graph $G=(V,E)$, infection probability $p$, source $s\in V$
-    \State\textbf{Output:} Sets of infected vertices $(\mathcal{I}_t)$ and final time $Z$
+    \State\textbf{Input:} Graf $G=(V,E)$, prawdopodobieństwo infekcji $p$, źródło $s\in V$
+    \State\textbf{Output:} Zbiór zarażonych wierzchołków $(\mathcal{I}_t)$, czas trwania propagacji $Z$
     \State$\mathcal{I}_0 \gets \{s\}$
     \State$t \gets 0$
 
     \While{$\mathcal{I}_t \ne V$}
-        \State$\mathcal{I}_{\text{new}} \gets \varnothing$
-        \For{each $u \in \mathcal{I}_t$}
-            \For{each $v \in N(u)$}
+        \State$\mathcal{I}' \gets \varnothing$
+        \For{\textbf{each} $u \in \mathcal{I}_t$}
+            \For{\textbf{each} $v \in N(u)$}
                 \If{$v \notin \mathcal{I}_t$ \textbf{and} $\text{random}() < p$}
-                    \State$\mathcal{I}_{\text{new}} \gets \mathcal{I}_{\text{new}} \cup \{v\}$
+                    \State$\mathcal{I}' \gets \mathcal{I}' \cup \{v\}$
                 \EndIf%
             \EndFor%
         \EndFor%
-        \State$\mathcal{I}_{t+1} \gets \mathcal{I}_t \cup \mathcal{I}_{\text{new}}$
+        \State$\mathcal{I}_{t+1} \gets \mathcal{I}_t \cup \mathcal{I}'$
         \State$t \gets t + 1$
     \EndWhile%
 
@@ -767,22 +767,22 @@ Jak widać na \Cref{fig:SI_complete_Z} rzeczywiście dla wiekszych $n$ czas cał
     \label{fig:SI_path_Yt}
 \end{figure}
 
-\begin{figure}[ht!]
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../img/SI/path/Z_dist.png}
-        \caption{Rozkład zmiennej $Z$.}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
-        \caption{Wartość oczekiwana $Z$.}
-    \end{subfigure}
-    \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}%
-    \label{fig:SI_path_Z}
-\end{figure}
+% \begin{figure}[ht!]
+%     \centering
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Z_dist.png}
+%         \caption{Rozkład zmiennej $Z$.}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{../img/SI/path/Z_expectation.png}
+%         \caption{Wartość oczekiwana $Z$.}
+%     \end{subfigure}
+%     \caption{Rozkład i wartość oczekiwana zmiennej $Z$ dla $\mathrm{P}_n$.}%
+%     \label{fig:SI_path_Z}
+% \end{figure}
 
 \begin{figure}[ht!]
     \centering
@@ -848,3 +848,5 @@ Jak widać na \Cref{fig:SI_complete_Z} rzeczywiście dla wiekszych $n$ czas cał
     \caption{Wartości oczekiwane $Z$ dla $\mathrm{K_n}$.}%
     \label{fig:SI_complete_Z}
 \end{figure}
+
+\clearpage

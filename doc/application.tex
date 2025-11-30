@@ -1,94 +1,88 @@
 
-\section{Basic Extrema Propagation}
+Modele propagacji SI, SIR i SIS mają szerokie zastosowanie w analizie rozprzestrzeniania się zjawisk w sieciach.
+Jednym z naturalnych zastosowań jest modelowanie rozprzestrzeniania się wirusa komputerowego w sieci.
+W tym rozdziale przedstawimy szczegółowy scenariusz aplikacyjny dla każdego z trzech modeli, pokazując jak zmienne losowe zdefiniowane wcześniej pozwalają na analizę różnych aspektów epidemii cyfrowej.
+Rozważamy sieć komputerową reprezentowaną przez graf $G = (V, E)$, gdzie wierzchołki odpowiadają poszczególnym komputerom, a krawędzie reprezentują bezpośrednie połączenia sieciowe (np.\ w sieci lokalnej, klastrze serwerów lub infrastrukturze chmurowej).
+Wirus rozpoczyna swoje rozprzestrzenianie od pojedynczego zainfekowanego komputera $s \in V$.
+W każdym cyklu czasowym zainfekowane komputery próbują zarazić bezpośrednio połączone z nimi komputery z prawdopodobieństwem $p$, które modeluje skuteczność transmisji wirusa przez połączenie sieciowe.
 
-Rozważamy skończony, nieskierowany i spójny graf $G = (V,E)$, $n=|V|$, w którym wierzchołki reprezentują węzły sieci, a krawędzie odpowiadają niezawodnym lub zawodnym kanałom komunikacyjnym między nimi.
-Każdy wierzchołek $v \in V$ przechowuje lokalnie pewną liczbę rzeczywistą $M_v$.
-Algorytmie Basic Extrema Propagation, BEP (\ref{algo:BEP}) jest silną metodą uzyskania informacji o wartościach ${(M_v)}_{v\in V}$ korzystając wyłacznie z lokalnych połączeń między węzłami.
 
-\begin{algorithm}
-\caption{Basic Extrema Propagation}
-\begin{algorithmic}[1]  
-\State\textbf{Input:} Graph $G=(V,E)$,  random function $\text{Rand}$, number of steps $T$
-\State\textbf{Output:} Values ${(M_v)}_{v\in V}$
-\For{$v \in V$}
-    \State$M_v \gets \text{Rand}()$ 
-\EndFor%
-\For{$i=1,2,\ldots,T$}
-    \For{$v \in V$}
-        \State\text{send} $M_v$ \text{to every} $u\in\text{N}(v)$
-        \State\text{receive} $M_u$ \text{from every} $u\in\text{N}(v)$
-        \State$M_{v} \gets \min\{M_{v}, \{M_u : u \in \text{N}(v)\}\}$
-    \EndFor%
-\EndFor%
-\State\textbf{return} ${(M_v)}_{v\in V}$
-\end{algorithmic}%
-\label{algo:BEP}
-\end{algorithm}
+\section{Model SI — Sieć bez zabezpieczeń}
 
-Algorytm ten działa następująco:
-Każdy wierzchołek ustala wartość początkową losowo, korzystając z funkcji $\mathrm{Rand}$.
-Następnie w synchronicznych rundach węzły przesyłają aktualnie przechowywaną wartość do swoich sąsiadów.
-Potem odbierają wszystkie wysłane im wartości i obliczają minimum z nich oraz już posiadanej wartości.
-Proces ten po pewnym czasie stabilizuje się, to jest każdy wierzchołek posiada tą samą wartość i dalsza propagacja nie ma sensu.
-Stabilizacja wartości przechowywanej w $v\in V$ nastąpi, kiedy $v$ prześle informacje do najdalej oddalonego od niego wierzchołka, to jest po $\epsilon(v)$ rundach.
-Oczywiście cały proces ustabilizuje się po najdłuższym z tych czasów.
-A zatem algorytm po co najwyżej $\mathrm{diam}(G)$ osiąga punkt stały i dalsza propagacja nie jest konieczna.
-Jeśli wierzchołki mają początkowo wartości ${(M_v)}_{v\in V}$ to zwrócona wartość wynosi $M=\min_{v\in V} M_v$.
-Możemy oczywiście założyć, że ${(M_v)}_{v\in V}$ są niezależne.
+Rozważmy starszą infrastrukturę IT, która nie posiada żadnych aktywnych zabezpieczeń antywirusowych ani mechanizmów automatycznego wykrywania zagrożeń.
+Może to być na przykład sieć przemysłowych systemów SCADA, które często działają na przestarzałym oprogramowaniu bez regularnych aktualizacji bezpieczeństwa, lub izolowana sieć wewnętrzna firmy z przestarzałymi systemami operacyjnymi.
+W takim środowisku, gdy komputer zostanie raz zainfekowany, pozostaje w tym stanie permanentnie — nie ma mechanizmu samoczynnego usunięcia wirusa.
+Model SI doskonale opisuje tę sytuację, gdzie $S$ reprezentuje komputery podatne na infekcję, a $I$ komputery już zainfekowane.
 
-Główną zaletą tej techniki jest jej szybkość.
-Skuteczność i dokładność są drugorzędne.
-Można pokazać~\cite{OnMessageComplexityOfExtremaPropagationTechniques}, że w dowolnym grafie średnia liczba wiadomości wysłanych przez dowolny wierzchołek podczas całego procesu jest rzędu $\mathcal{O}(\log(n))$.
-Interesuje nas też czas działania algorytmu BEP.
-Każda runda zajmuje czas rzędu $\mathcal{O}(|E|)$ a więc całkowity czas działania wynosi $\mathcal{O}(T\cdot|E|)$.
-Musimy wiedzieć, jakie $T$ wybrać żeby uzyskać sensowny wynik.
-W przypadku pełnej niezawodności kanałów komunikacyjnych górne ograniczenie to $T\le \text{diam}(G)$.
-W praktyce natomiast ze względu na szumy i zakłócenia komunikacji przesłanie wiadomości nie zawsze się udaje.
-Możemy założyć, że prawdopodobieństwo przesłania informacji w pojedynczej rundzie wynosi $p$, niezależnie między kanałami i rundami.
-Krok aktualizacji wartości jest analogiczny do rozprzestrzeniania się infekcji w modelu \textbf{SI}.
-Dla ustalonego $s\in V$ zmienne losowe, które zdefiniowaliśmy dostarczają nam sporo informacji o przebiegu algorytmu \textbf{BEP}.
-Najistotniejsza jest zmienna $Z$, która jest górnym ograniczeniem na czas zakończenia propagacji.
-Możemy więc przyjąć $T\approx\mathbb{E}[Z]$.
-Uzyskane oszacowania dla oczekiwanej liczby rund zakończenia propagacji na klasycznych rodzinach grafów wynoszą
-\begin{itemize}
-\item ścieżka $\mathrm{P}_n$:
-      \[
-      \mathbb{E}[Z] = \frac{n-1}{p}
-      \]
-\item gwiazda $\mathrm{S}_n$:
-      \[
-      \mathbb{E}[Z] = \frac{H_n}{\log(\frac{1}{1-p})}
-      \]
-\item cykl $\mathrm{C}_n$:
-      \[
-      \mathbb{E}[Z] = \frac{n-1}{2p} + \mathcal{O}(1)
-      \]
-\item graf pełny $\mathrm{K}_n$:
-      \[
-      \mathbb{E}[Z] = 2 + o(1)
-      \]
-\end{itemize}
-Ponadto, dla dowolnego grafu (\cref{theorem:montonicity_of_total_infection}) mamy
-\[
-    \mathbb{E}[Z] \le D + D\cdot \frac{\log(\frac{n-1}{D})+1}{\log(\frac{1}{1-p})},
-\]
-gdzie $D=\mathrm{diam}(G)$.
+Dla każdego komputera $v \in V$ zmienna $X_v$ określa, w której godzinie cyklu ten konkretny komputer zostanie zainfekowany.
+Jest to kluczowa informacja dla administratora sieci próbującego zrozumieć dynamikę ataku.
+Rozkład prawdopodobieństwa $X_v$ pozwala odpowiedzieć na pytanie: jakie jest prawdopodobieństwo, że dany komputer zostanie zarażony w określonym czasie?
+Wartość oczekiwana $\mathbb{E}[X_v]$ wskazuje średni czas, po którym można spodziewać się infekcji tego komputera.
+W kontekście praktycznym, znajomość rozkładu $X_v$ pozwala na odpowiednią priorytetyzacje działań obronnych — komputery o małym $\mathbb{E}[X_v]$ powinny być zabezpieczone jako pierwsze, planowanie harmonogramu ręcznej interwencji technicznej a także oszacowanie okna czasowego na izolację krytycznych systemów.
 
-Dobierając odpowiedni rozkład początkowy wierzchołków możemy w wyniku algorytmu uzyskać różne interesujące wartości.
-Przykładowo jeśli $M_v\sim\mathcal{U}[0;1]$ (rozkład jednostajny na $[0;1]$) to mamy mamy $\mathbb{E}[M]=\frac{1}{1+|V|}$.
-Gdy zaś $M_v\sim\mathrm{Exp}(\lambda_v)$ (rozkład wykładniczy) to wtedy $M\sim\mathrm{Exp}(\Lambda)$ gdzie $\Lambda=\sum_{v\in V}\lambda_v$ a ponadto $\mathbb{E}[M]=\frac{1}{\Lambda}$.
-Tego rozkładu startowego możemy użyć jeśli chcemy wyłuskać sumę parametrów przechowywanych w węzłach sieci.
-W celu kontroli błedu szacowanej wielkości sieci algorytm możemy zmodyfikować.
-Wprowadzamy dodatkowy parametr $k\ge 3$.
-Na początku generujemy $k$-wymiarowy wektor $\mathbf{x}$ według zadanego rozkładu.
-W późniejszej fazie algorytmu przesyłamy ten wektor i obliczamy na nim minimum punktowo.
-Jeśli początkowym rozkładem będzie $\mathrm{Exp}(1)$ to wartość 
-\[
-    V^* = \frac{k-1}{x_{1} + \cdots + x_{k}}
-\]
-jest estymatorem na wielkość sieci. \cite{5963654}
-Ponadto
-\[
-    \mathbb{E}[V^*] = n, \quad \mathrm{Var}(V^*) = \frac{n^2}{k-2},
-\]
-co umożliwia regulację względnej dokładności poprzez dobór $k$.
+Zmienna $Y_t$ określa, ile komputerów jest zainfekowanych w chwili $t$.
+Rozkład $Y_t$ pokazuje możliwe scenariusze rozwoju epidemii — czy atak rozwija się szybko, czy powoli.
+Wartość oczekiwana $\mathbb{E}[Y_t]$ daje średnią liczbę zainfekowanych komputerów po czasie $t$.
+Z punktu widzenia zarządzania infrastrukturą, $Y_t$ pozwala na monitorowanie tempa rozprzestrzeniania się wirusa czy ocenę skuteczności częściowych działań obronnych.
+
+Zmienna $Z$ opisuje, po ilu cyklach czasowych wszystkie komputery w sieci zostaną zainfekowane.
+Jest to moment, w którym cała infrastruktura zostaje skompromitowana.
+Rozkład $Z$ określa prawdopodobieństwo różnych scenariuszy czasowych dla całkowitego przejęcia sieci.
+Wartość oczekiwana $\mathbb{E}[Z]$ wskazuje średni czas, jaki administrator ma na reakcję zanim stracimy kontrolę nad całą siecią.
+Znajomość $Z$ jest krytyczna dla określenia maksymalnego czasu reakcji zespołu bezpieczeństwa czy też oceny ryzyka związanego z konkretną architekturą sieci.
+Pozwala to na projektowania topologii sieci odpornej na szybkie rozprzestrzenianie się zagrożeń.
+
+
+\section{Model SIR — Sieć z automatycznymi łatkami bezpieczeństwa}
+
+Rozważmy nowoczesną infrastrukturę korporacyjną z aktywnym systemem zarządzania aktualizacjami i automatycznymi mechanizmami odpowiedzi na incydenty.
+Gdy komputer zostaje zainfekowany, system bezpieczeństwa może wykryć zagrożenie i zastosować łatkę zabezpieczającą, przenosząc komputer do stanu odpornego ($R$).
+Prawdopodobieństwo $\alpha$ modeluje skuteczność systemu automatycznych łatek — im większe $\alpha$, tym szybciej komputery są naprawiane.
+W modelu SIR komputer przechodzi przez stany: podatny ($S$) $\to$ zainfekowany ($I$) $\to$ odporny ($R$).
+Stan $R$ jest absorpcyjny — załatany komputer nie może być ponownie zainfekowany tym samym wariantem wirusa.
+To realistyczne założenie w kontekście nowoczesnych systemów, gdzie zaktualizowane oprogramowanie jest odporne na znane exploity.
+
+W modelu SIR zmienna $X_v$ nadal określa czas pierwszego zarażenia komputera $v$.
+Jednak w przeciwieństwie do modelu SI, nie każdy komputer musi zostać kiedykolwiek zainfekowany — istnieje możliwość, że wirus wygaśnie zanim dotrze do wszystkich węzłów.
+Zachodzi bowiem $\mathbb{P}[X_v = \infty] > 0$, co oznacza, że część komputerów może uniknąć infekcji całkowicie.
+Z tego powodu interesujące jest warunkowe oczekiwanie $\mathbb{E}[X_v | X_v < \infty]$ — średni czas zarażenia dla tych komputerów, które rzeczywiście zostały zainfekowane.
+Rozkład $X_v$ pozwala na identyfikację komputerów w strefie największego ryzyka.
+
+W modelu SIR definiujemy $Y_t$ jako liczbę komputerów, które nie są już w stanie podatnym.
+Pokazuje to postęp epidemii z innej perspektywy — ile systemów zostało już „dotkniętych" (zarażonych lub załatanych).
+Wraz z czasem $Y_t$ stabilizuje się, osiągając wartość równą $W$.
+
+Zmienna $W$ określa całkowitą liczbę komputerów, które zostały zainfekowane w trakcie całej epidemii.
+To kluczowa metryka dla oceny skali incydentu bezpieczeństwa.
+Rozkład $W$ pokazuje możliwe scenariusze zasięgu ataku — czy zainfekowane zostaną tylko nieliczne komputery w pobliżu źródła, czy znaczna część sieci.
+Wartość oczekiwana $\mathbb{E}[W]$ daje średnią liczbę skompromitowanych systemów, co bezpośrednio przekłada się na szacowanie kosztów naprawy i przywrócenia systemów, ocenę potencjalnego wycieku danych lub szkód biznesowych, planowanie zasobów zespołu reagowania na incydenty.
+
+Zmienna $Z$ określa moment, w którym epidemia wygasa — żaden nowy komputer nie może już zostać zainfekowany, ponieważ wszystkie zainfekowane komputery albo wyzdrowiały, albo nie mają podatnych sąsiadów.
+To moment, w którym incydent bezpieczeństwa można uznać za opanowany.
+Rozkład $Z$ i wartość $\mathbb{E}[Z]$ są krytyczne dla planowania czasu trwania trybu kryzysowego w organizacji, oszacowania czasu, przez który zespół bezpieczeństwa musi działać w trybie podwyższonej gotowości. 
+Warto jest też dokonać oceny, jak parametry $p$ (skuteczność transmisji) i $\alpha$ (skuteczność łatek) wpływają na czas trwania incydentu.
+
+
+\section{Model SIS — Sieć z tymczasowymi zabezpieczeniami}
+
+Rozważmy sieć z mechanizmami tymczasowego oczyszczania, takimi jak regularne restarty systemów, okresowe czyszczenie pamięci podręcznej, lub rotacyjne odświeżanie obrazów systemowych.
+W takim środowisku zainfekowany komputer może wrócić do stanu podatnego z prawdopodobieństwem $\alpha$ w każdym cyklu.
+Model ten jest szczególnie odpowiedni dla serwerów z krótkotrwałymi sesjami czy z automatycznymi resetami.
+W modelu SIS komputer może być zarażany wielokrotnie, a wirus może krążyć w sieci przez długi czas, powodując powtarzające się fale infekcji.
+W przeciwieństwie do modeli SI i SIR, tutaj nie ma stanu końcowego — sieć może oscylować między różnymi stanami zarażenia.
+
+Podobnie jak w modelu SIR, nie każdy komputer musi zostać kiedykolwiek zainfekowany — wirus może wygasnąć zanim dotrze do odległych węzłów.
+Zachodzi $\mathbb{P}[X_v = \infty] > 0$.
+Interesuje nas $\mathbb{E}[X_v | X_v < \infty]$ — średni czas do pierwszego zarażenia, jeśli do niego dojdzie.
+W kontekście praktycznym, $X_v$ pozwala zrozumieć, które komputery są najbardziej narażone na początkową falę ataku.
+
+W modelu SIS zmienna $Y_t$ ma szczególne znaczenie, ponieważ liczba zainfekowanych komputerów może oscylować w czasie.
+Rozkład $Y_t$ pokazuje możliwe stany sieci w różnych momentach — ile komputerów może być jednocześnie skompromitowanych.
+To pozwala na oszacowanie średniego obciążenia zespołu IT obsługą incydentów albo
+planowanie pojemności systemów monitoringu bezpieczeństwa.
+Warto zauważyć, że $\mathbb{E}[Y_t] \to 0$ wraz z $t \to \infty$ — średnio liczba zarażonych komputerów dąży do zera, co oznacza, że wirus ostatecznie wygasa.
+Jednak rozkład $Y_t$ dla skończonych $t$ może wykazywać znaczną wariancję.
+
+Zmienna $Z$ określa moment, w którym wirus całkowicie znika z sieci — wszystkie komputery są w stanie podatnym i żaden nie jest zainfekowany.
+W przeciwieństwie do modelu SIR, gdzie epidemia wygasa z braku podatnych celów, w modelu SIS wirus wygasa losowo z powodu równoczesnego „wyleczenia" wszystkich zainfekowanych komputerów.
+Rozkład $Z$ i wartość $\mathbb{E}[Z]$ informują o średnim czasie, przez który wirus będzie krążył w sieci czy skuteczności strategii „poczekaj aż wirus sam wygaśnie" w porównaniu z aktywną interwencją.

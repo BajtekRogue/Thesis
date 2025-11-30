@@ -4,9 +4,18 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{0.7cm}
+
+\frenchspacing
+
+\usepackage{titlesec}
+\usepackage{newtxtext}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathtools}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{graphicx}
@@ -14,18 +23,70 @@
 \usepackage{subcaption}
 \usepackage{tikz}
 \usepackage{csquotes}
+\usepackage{fancyhdr}
+\usepackage[table, svgnames]{xcolor}
+
 \usepackage{hyperref}
-\usepackage[nameinlink,capitalise]{cleveref}
+\hypersetup{
+	colorlinks	= true,
+	linkcolor	= blue,
+    citecolor	= blue,
+	urlcolor	= blue
+}
+\urlstyle{same}  
+
+\usepackage[nameinlink,capitalise]{cleveref}  
+
+% ------------------------ Bibliography ------------------------
 \usepackage[backend=biber,style=numeric]{biblatex}
-\usepackage{chngcntr}
-\counterwithout{figure}{chapter}
-
-% ------------------------ Margins ------------------------
-\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
-
 \addbibresource{../bibliography.bib}
 
-% ------------------------ Theorems ------------------------
+% ------------------------ Counters ------------------------
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+
+% ------------------------ Margins ------------------------
+\usepackage[
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    inner=30mm,    % lewy margines (2.5cm + 0.5cm oprawy)
+    outer=25mm,    % prawy margines
+    bindingoffset=0mm  % już uwzględnione w inner
+]{geometry}
+
+\titleformat{\chapter}
+  {\normalfont\bfseries\fontsize{14}{16}\selectfont} % pogrubione 14 pkt
+  {\thechapter}{1em}{}
+
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{13}{15}\selectfont} % pogrubione 13 pkt
+  {\thesection}{1em}{}
+
+% ------------------------ Captions ------------------------
+% Podpisy tabel i rysunków (10pt)
+\captionsetup{
+    font=small,           % 10pt
+    labelfont=bf,         % pogrubiona etykieta
+    skip=10pt,            % odstęp 10pt
+    justification=centering
+}
+
+% Odstępy wokół floatów (10pt)
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+% Styl dla pierwszych stron rozdziałów - OPCJONALNE
+\fancypagestyle{chapterBeginStyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+}
+
+% ------------------------ Theorems ------------------------------
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
@@ -48,54 +109,53 @@
 \crefname{algorithm}{Algorytm}{Algorytmu}
 \Crefname{algorithm}{Algorytmu}{Algorytmu}
 
-
+% ------------------------ Custom commands ------------------------
+\makeatletter
 \newcommand{\graphfamily}[1]{%
   \vspace{0.8em}%
   \noindent\textbf{#1}\par
+  \vspace{0.3em}%
+  \@afterheading%
 }
 
 \newcommand{\distribution}[1]{%
-  \vspace{0.8em}
-  \noindent\textbf{#1}\\[0.3em]
+  \vspace{0.8em}%
+  \noindent\textbf{#1}\par
+  \vspace{0.3em}%
+  \@afterheading%
 }
+\makeatother
 
+% ------------------------ Algorithm Polish names ------------------
 \makeatletter
 \renewcommand{\ALG@name}{Algorytm}
 \makeatother
 
-\renewcommand{\thefigure}{\arabic{figure}} 
-
-% ------------------------ Chapters without page break ------------------------
-% \usepackage{titlesec}
-% \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
-% \titlespacing*{\chapter}{0pt}{0pt}{1em} % no page break and less spacing
-% \makeatletter
-% \renewcommand{\chapter}{%
-%   \thispagestyle{plain}%
-%   \global\@topnum\z@
-%   \secdef\@chapter\@schapter
-% }
-% \makeatother
+\floatname{algorithm}{Algorytm}
 
 % ------------------------ Document ------------------------
-\title{Probabilistyczne modele propagacji w grafach.}
+\title{Probabilistyczne modele propagacji w grafach}
 \author{Bartosz Łabuz}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\chapter*{Streszczenie}
+\input{abstract.tex}
+
 \tableofcontents
 \newpage
 
 \chapter{Wstęp}
-\input{wstep.tex}
+\input{intro.tex}
 
 \chapter{Podstawy matematyczne}
 \input{math.tex}
 
 \chapter{Modele propagacji losowej}
-\input{modele.tex}
+\input{models.tex}
 
 \chapter{Scenariusz aplikacyjny}
 \input{application.tex}
@@ -111,9 +171,6 @@
 
 \chapter{Analiza modelu SIS}
 \input{SIS.tex}
-
-% \chapter{Extrema Propagation}
-% \input{bep.tex}
 
 \chapter{Podsumowanie}
 \input{conclusion.tex}

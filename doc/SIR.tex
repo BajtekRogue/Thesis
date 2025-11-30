@@ -6,13 +6,9 @@ Oczywiście $X_u=0$.
 Pierwsza runda jest identyczna jak w modelu SI, a więc $\mathbb{P}[X_v=1]=p$. 
 Jeżeli węzeł $v$ nie zostanie poinformowany w rundzie pierwszej, a propagacja nie wygaśnie, to sytuacja się powtórzy. 
 Zachodzi to z prawdopodobieństwem $q\beta$. Aby $X_v=t$, potrzebujemy, by ten cykl nastąpił $t-1$ razy. 
-Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny, 
+Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny:
 \[
-    X_v\sim \mathrm{KGeo}(p,\alpha),
-\]
-a co za tym idzie
-\[
-    \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
+    X_v\sim \mathrm{KGeo}(p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
 \]
 Z założeń modelu $p,\alpha\in(0;1)$, a zatem $\mathbb{P}[X_v=\infty]\ne 0$. 
 Jest cecha kontrastująca SIR względem SI.
@@ -38,11 +34,7 @@ Co oczywiście daje nam natychmiast
 Jeśli chodzi o zmienną $Z$ to propagacja zakończy się gdy wierzchołek $v$ wyzdrowieje lub $u$ zostanie poinformowany.
 Dzieje się to z prawdopodobieństwem $1-q\beta$ a więc 
 \[
-    Z\sim\mathrm{Geo}(1-q\beta).
-\]
-Mamy
-\[
-    \mathbb{E}[Z]=\frac{1}{1-q\beta}.
+    Z\sim\mathrm{Geo}(1-q\beta) \quad \mathbb{E}[Z]=\frac{1}{1-q\beta}.
 \]
 
 
@@ -93,11 +85,7 @@ Podobnie jak w modelu SI propagacja rozchodzi się miedzy kolejnymi wierzchołka
 gdzie jednak $U_2,U_3,\dots,U_n\sim\mathrm{KGeo}(p,\alpha)$ oraz są niezależne.
 Stąd $X_v=U_2+U_3+\cdots+U_v$ a zatem $X_v$ ma rozkład umierający ujemny dwumianowy:
 \[
-    X_v\sim\mathrm{KNegBin}(v-1,p,\alpha),
-\]
-oraz
-\[
-    \mathbb{E}[X_v|X_v<\infty] = \frac{v-1}{1-q\beta}.
+    X_v\sim\mathrm{KNegBin}(v-1,p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty] = \frac{v-1}{1-q\beta}.
 \]
 
 Jeśli chodzi o zmienną $Y_t$ to zauważmy, że
@@ -156,11 +144,7 @@ Natomiast wartość oczekiwana zmiennej $Z$ wynosi
 Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, z źródłem $0$.
 Dla $v\in\{1,2,\dots,n\}$ mamy 
 \[
-    X_v\sim\mathrm{KGeo}(p,\alpha),
-\]
-a co za tym idzie
-\[
-    \mathbb{E}[X_v|X_v<\infty] = \frac{1}{1-q\beta}.
+    X_v\sim\mathrm{KGeo}(p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty] = \frac{1}{1-q\beta}.
 \]
 Zauważmy natomiast, że zmienne $X_1,X_2,\dots,X_n$ sa zależne, bo gdy centralny wierzchołek wyzdrowieje żaden z liści nie może już zostać zainfekowany.
 
@@ -190,11 +174,7 @@ A więc
 \]
 Licząc granice tych wyrażeń dla $t\to\infty$ dostajemy
 \[
-    \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^j)}^k{(q^j)}^{n-k}\beta^j.
-\]
-oraz
-\[
-    \mathbb{E}[W]=1+\frac{np}{1-q\beta}.
+    \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^j)}^k{(q^j)}^{n-k}\beta^j, \quad \mathbb{E}[W]=1+\frac{np}{1-q\beta}.
 \]
 
 Propagacja się zakończy gdy centrum wyzdrowieje lub wszystkie liście zostaną zarażone. 

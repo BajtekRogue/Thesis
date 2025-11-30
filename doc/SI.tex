@@ -121,11 +121,7 @@ X_1 = 0, \quad X_{v} = X_{v-1} + U_v, \quad v\in\{2,3,\dots,n\},
 gdzie $U_2,U_3,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_2,U_3,\dots,U_n$ są niezależne.  
 Widzimy zatem, że $X_v = U_2 + U_3 + \cdots + U_{v}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
 \[
-    X_v\sim \mathrm{NegBin}(v-1, p),
-\]
-oraz
-\[
-    \mathbb{E}[X_v] = \frac{v-1}{p}.
+    X_v\sim \mathrm{NegBin}(v-1, p), \quad \mathbb{E}[X_v] = \frac{v-1}{p}
 \]
 
 Ustalmy $t\in\mathbb{N}$ i przejdźmy do obliczania rozkładu $Y_t$.  
@@ -163,13 +159,9 @@ Jeśli $n\ge 1+t$ to wówczas
 \end{equation*}
 
 Czas całkowitego zainfekowania grafu to $Z = \max\{X_1,\dots,X_n\} = X_n$.  
-Zatem rozkład zmiennej $Z$ jest już nam znany,
+Zatem rozkład zmiennej $Z$ oraz jej wartość oczekiwana są już nam znane i wynoszą
 \[
-    Z\sim\mathrm{NegBin}(n-1,p),
-\]
-a wartość oczekiwana wynosi
-\[
-    \mathbb{E}[Z]=\frac{n-1}{p}.
+    Z\sim\mathrm{NegBin}(n-1,p), \quad \mathbb{E}[Z]=\frac{n-1}{p}.
 \]
 
 
@@ -180,28 +172,19 @@ Niech źródłem będzie centralny wierzchołek grafu, czyli $s = 0$.
 Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie a więc zmienne $X_1,X_2,\dots,X_n$ są niezależne.
 Stąd dla każdego $v \in \{1, 2, \dots, n\}$ mamy
 \[
-    X_v \sim \mathrm{Geo}(p),
+    X_v \sim \mathrm{Geo}(p), \quad \mathbb{E}[X_v] = \frac{1}{p}.
 \] 
-oraz
-\[
-    \mathbb{E}[X_v] = \frac{1}{p}.
-\]
 
 Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ o rozkładzie geometrycznym osiągnie sukces w czasie co najwyżej $t$. 
-Skoro $\mathbb{P}[X_v \le t] = 1 - q^t$ to mamy
+Mamy $\mathbb{P}[X_v \le t] = 1 - q^t$.
+Niech $B_t \sim \mathrm{Bin}(n, 1 - q^t)$.
+Wtedy
 \[
-    Y_t = 1 + B_t, \quad B_t \sim \mathrm{Bin}(n, 1 - q^t).
-\]
-W konsekwencji:
-\[
-    \mathbb{E}[Y_t] = 1 + n \cdot (1 - q^t).
+    Y_t = 1 + B_t, \quad \mathbb{E}[Y_t] = 1 + n \cdot (1 - q^t).
 \]
 
 Przejdźmy teraz do zmiennej $Z$. Mamy $Z = \max\{X_1, \dots, X_n\}$.  
-Ponieważ zmienne te są IID, z \Cref{fact:max_CDF} otrzymujemy:
-\[
-    \mathbb{P}[Z \le t] = {(1 - q^t)}^n.
-\]
+Ponieważ zmienne te są IID, z \Cref{fact:max_CDF} otrzymujemy $\mathbb{P}[Z \le t] = {(1 - q^t)}^n$.
 Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 \begin{equation*}
 \begin{aligned}
@@ -242,7 +225,7 @@ Stąd asymptotyczny czas pełnego zarażenia grafu $\mathrm{S}_n$ wynosi:
 \]
 
 
-\section{Ograniczenia na czas zarażenia}
+\section{Uniwersalne ograniczenia na czas zarażenia}
 
 Po rozważeniu dwóch rodzin grafów dostrzegamy znaczną różnicę w wartościach oczekiwanych zmiennych $Y_t$ oraz $Z$. 
 Dla grafów ścieżkowych minimalna liczba rund potrzebnych do zainfekowania całego grafu wynosi $t = n - 1$, natomiast dla gwiazd jest to zaledwie $t = 1$. 
@@ -595,16 +578,13 @@ Dla $v\in V$ oznaczmy $d_v=\mathrm{d}(s,v)$.
 Ustalmy $v\in V$. 
 Skoro $G$ jest drzewem to istnieje dokładnie jedna ścieżka od $s$ do $v$, powiedzmy $s,v_1,\dots,v_k, v$. 
 Ponieważ infekcja rozprzestrzenia się od korzenia $s$ wzdłuż krawędzi drzewa, każde zakażenie wymaga sukcesu w niezależnym doświadczeniu Bernoulliego o prawdopodobieństwie $p$.
-W konsekwencji, aby infekcja dotarła z $s$ do $v$, musi wystąpić $\mathrm{d}_v$ kolejnych sukcesów. 
+W konsekwencji, aby infekcja dotarła z $s$ do $v$, musi wystąpić $d_v$ kolejnych sukcesów. 
 Zatem rozkład $X_v$ pokrywa się z rozkładem tej zmiennej dla grafu $\mathrm{P}_{d_v+1}$ na wierzchołkach $\{s,v_1,\dots,v_k, v\}$. 
 Stąd 
 \[
-    X_v\sim \mathrm{NegBin}(\mathrm{d}_v,p),
+    X_v\sim \mathrm{NegBin}(d_v,p), \quad \mathbb{E}[X_v] = \frac{d_v}{p}.
 \]
-oraz
-\[
-    \mathbb{E}[X_v] = \frac{\mathrm{d}_v}{p}.
-\]
+
 \begin{lemma}\label{lemma:Formula_EYt}
 Dla dowolnego $t\in\mathbb{N}$ wartość oczekiwana zmiennej $Y_t$ wyraża się wzorem
 \[
@@ -639,11 +619,11 @@ Możemy więc zmniejszyć granice sumowania
 Oszacujmy teraz średni czas całkowity czas propagacji drzewa.
 Niech $L=\{u_1,\dots, u_m\}$ będzie zbiorem liści w $G$. 
 Wtedy mamy $Z = \max_{u\in L} X_{u}$.
-Zauważmy, że $\epsilon(s) = \max_{u\in L} \mathrm{d}_{u}$ i jest to wysokość drzewa. 
+Zauważmy, że $\epsilon(s) = \max_{u\in L} d_{u}$ i jest to wysokość drzewa. 
 Oznaczmy ją przez $h$. 
 Z nierówności Jensena (\ref{inequality:Jensen}) otrzymujemy
 \[
-    \mathbb{E}[Z]=\mathbb{E}[\max_{u\in L} X_{u}] \ge \max_{u\in L} \mathbb{E}[X_{u}] = \max_{u\in L} \frac{\mathrm{d}_{u}}{p} = \frac{h}{p}.
+    \mathbb{E}[Z]=\mathbb{E}[\max_{u\in L} X_{u}] \ge \max_{u\in L} \mathbb{E}[X_{u}] = \max_{u\in L} \frac{d_{u}}{p} = \frac{h}{p}.
 \]
 Aby ograniczyć $\mathbb{E}[Z]$ z góry skorzystamy z \Cref{theorem:upper_bound_on_EZ}:
 \[

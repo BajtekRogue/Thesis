@@ -42,7 +42,7 @@ Formalnie
     X_v = \min \{ t \in \mathbb{N} : v \in \mathcal{I}_t \}.
 \]
 Jeśli taka chwila nie istnieje (tzn.\ w danym przebiegu procesu wierzchołek $v$ nigdy się nie zarazi), to przyjmujemy $X_v = \infty$.  
-Później udowodnimy (\cref{theorem:total_infection}), że w modelu \textbf{SI} mamy $\mathbb{P}[X_v=\infty]=0$. 
+Później udowodnimy (\cref{theorem:total_infection}), że w modelu SI mamy $\mathbb{P}[X_v=\infty]=0$. 
 Wyznaczenie rozkładu $X_v$ jak i $\mathbb{E}[X_v]$ da nam sporo informacji o propagacji na grafie w zależności od jego topologii.
 Następnie dla każdego $t\in\mathbb{N}$ definiujemy zmienną losową $Y_t$ oznaczającą liczbę zainfekowanych wierzchołków w chwili $t$. 
 Zatem
@@ -77,7 +77,7 @@ Wyznacznie rozkładu $Z$ oraz jej wartości oczekiwanej dla konkretnych rodzin g
 
 \section{Model SIR}
 
-Model \textbf{Susceptible—Infected—Recovered (SIR)} rozszerza model \textbf{SI} o dodanie trzeciego stanu.  
+Model \textbf{Susceptible—Infected—Recovered (SIR)} rozszerza model SI o dodanie trzeciego stanu.  
 Stanem tym jest $R$ (Recovered). 
 W tym modelu mamy $\mathcal{Q} = \{S, I, R\}$.  
 Stan $R$ jest pochłaniający — wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić.  
@@ -105,7 +105,7 @@ Tak jak poprzednio rozważmy zmienne
 \[
     X_v=\min\{t\in\mathbb{N}:v\in\mathcal{I}_t\}.
 \]
-W kontraście dla modelu \textbf{SI} zachodzi $\mathbb{P}[X_v=\infty]>0$ (\cref{theorem:infection_dies_out_SIR}).
+W kontraście dla modelu SI zachodzi $\mathbb{P}[X_v=\infty]>0$ (\cref{theorem:infection_dies_out_SIR}).
 Z tego powodu wartość oczekiwana $\mathbb{E}[X_v]=\infty$ niezależnie od struktury grafu.
 Dlatego też poza rozkładem $X_v$ możemy wyznaczyć $\mathbb{E}[X_v|X_v<\infty]$.
 Istnienie stanu $R$ narzuca pomysł rozważania podobnej zmiennej na pierwszy czas wyzdrowienia wierzchołka $v$.
@@ -147,10 +147,10 @@ Rozkłady $Z,W$ jak i ich wartości oczekiwane będą naszym głównym obiektem 
 
 \section{Model SIS}
 
-Model \textbf{Susceptible—Infected—Susceptible (SIS)} rozszerza model \textbf{SI} o powracanie wierzchołków zarażonych do stanu podatnego.  
+Model \textbf{Susceptible—Infected—Susceptible (SIS)} rozszerza model SI o powracanie wierzchołków zarażonych do stanu podatnego.  
 Wierzchołek zainfekowany może powrócić do stanu podatnego z prawdopodobieństwem $\alpha \in (0;1)$.  
 Tutaj mamy również $\mathcal{Q} = \{S, I\}$.  
-W modelu \textbf{SIS} liczba zainfekowanych wierzchołków może oscylować w czasie i nie musi osiągnąć stanu pełnego zakażenia.  
+W modelu SIS liczba zainfekowanych wierzchołków może oscylować w czasie i nie musi osiągnąć stanu pełnego zakażenia.  
 Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.  
 Każda runda składa się z dwóch faz.
 W pierwszej z nich wierzchołki zarażone próbują przekazać infekcje.
@@ -164,7 +164,7 @@ Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące z
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = \alpha, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = \beta.
 \end{align*}
-Zmienne losowe opisujące istotne własności są tutaj podobne jak w modelu \textbf{SI}.  
+Zmienne losowe opisujące istotne własności są tutaj podobne jak w modelu SI.  
 Dla każdego $v \in V$ kładziemy
 \[
 X_v = \min \{ t \in \mathbb{N} : v \in \mathcal{I}_t \},

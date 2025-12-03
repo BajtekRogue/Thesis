@@ -7,7 +7,7 @@ Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n
 Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim\limits_{x\to\pm\infty} f(x)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
-Przez $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$ oznaczamy zbiór sąsiadów dla $v\in V$. 
+Przez $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$ oznaczamy zbiór sąsiadów wierzchołka $v$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
 
@@ -155,7 +155,7 @@ Wartość oczekiwana i wariancja wynoszą:
 \]
 
 \distribution{Rozkład normalny $\mathcal{N}(\mu, \sigma^2)$}
-Zdefiniujmy funkcje
+Dla $t\in\mathbb{R}$ definiujemy funkcje
 \[
     \varphi(t)=\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}, \quad \mathbf{\Phi}(t)=\int_{-\infty}^{t} \varphi(x)\;\mathrm{d}x.
 \]
@@ -172,8 +172,6 @@ Wartość oczekiwana i wariancja wynoszą:
 \[
     \mathbb{E}[X] = \mu, \quad \mathrm{Var}[X] = \sigma^2.
 \]
-Jeśli $\mu = 0$ oraz $\sigma = 1$ to mówimy, że $X$ ma rozkład standardowy normalny.
-$\varphi$ oraz $\mathbf{\Phi}$ są odpowiednio PDF jak i CDF takiego rozkładu.
 
 
 \section{Fakty, sumy i nierówności}
@@ -211,7 +209,7 @@ Niech $X \sim \mathrm{Bin}(n,p)$ oraz $Y \sim \mathrm{Bin}(m,r)$ będą niezale�
 Połóżmy $Z=X+Y$.
 Wtedy dla $k\in \{0,1,\ldots,n+m\}$ zachodzi
 \[
-    \mathbb{P}[X+Y=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
+    \mathbb{P}[Z=k] = \sum_{j=\max\{0,k-m\}}^{\min\{n,k\}} \binom{n}{j}\binom{m}{k-j}p^j{(1-p)}^{n-j}r^{k-j}{(1-r)}^{m-(k-j)}.
 \]
 \end{fact}
 
@@ -330,7 +328,7 @@ Wtedy
 \end{inequality}
 
 \begin{inequality}[Nierówność między średnimi]\label{inequality:AM_GM}
-Niech $x_1,x_2,\dots,x_n\ge 0$. 
+Niech $x_1,\dots,x_n\ge 0$. 
 Wtedy
 \[
     \log(x_1\cdots x_n) \le n\cdot \log\left(\frac{x_1 + \cdots + x_n}{n}\right).
@@ -340,7 +338,7 @@ Równość zachodzi wtedy i tylko wtedy gdy $x_1=\cdots=x_n$.
 
 \begin{inequality}[Nierówność Markova]\label{inequality:Markov}
 Niech $X$ będzie zmienną losową taką, że $X\ge 0$ oraz $\mathbb{E}[X]< \infty$. 
-Wtedy dla dowolnego $t>0$
+Wtedy dla dowolnego $t>0$ zachodzi
 \[
     \mathbb{P}[X\ge t] \le \frac{\mathbb{E}[X]}{t}.
 \]

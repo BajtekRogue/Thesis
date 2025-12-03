@@ -4,37 +4,49 @@ Na samym początku rozważmy najprostszy graf, czyli taki o dwóch wierzchołkac
 Za wierzchołek startowy wybierzmy $u$. 
 Istnieją tylko dwa możliwe stany systemu: $\mathcal{I}_t=\{u\}$ oraz $\mathcal{I}_t=\{u,v\}$. 
 Przejście ze stanu $\mathcal{I}_t=\{u\}$ do $\mathcal{I}_t=\{u,v\}$ następuje z prawdopodobieństwem $p$ w każdej jednostce czasu. 
-Zatem czas zarażenia drugiego wierzchołka $X_v$ ma rozkład geometryczny, $X_v \sim \mathrm{Geo}(p)$.
+Zatem czas zarażenia drugiego wierzchołka $X_v$ ma rozkład geometryczny, $X_v \sim \mathrm{Geo}(p)$, co za tym idzie $\mathbb{E}[X_v]=\frac{1}{p}$.
 
 Rozważmy teraz rozkład $Y_t$. 
 Mamy $\mathbb{P}[Y_t=1]=q^t$, ponieważ próba zarażenia musiałaby nie udać się $t$ razy, oraz $\mathbb{P}[Y_t=2]=1-q^t$. 
-Stąd $\mathbb{E}[Y_t]=1\cdot q^t + 2 \cdot (1-q^t) = 2-q^t$.
+Stąd $\mathbb{E}[Y_t]= 2-q^t$.
 
-Jeśli chodzi o zmienną $Z$, to zachodzi $Z=\max\{X_u,X_v\}=X_v$, a więc również $Z\sim \mathrm{Geo}(p)$ oraz $\mathbb{E}[Z]=\frac{1}{p}$.
+Jeśli chodzi o zmienną $Z$, to mamy $Z=X_v$ a więc również $Z\sim \mathrm{Geo}(p)$ oraz $\mathbb{E}[Z]=\frac{1}{p}$.
 
 
 \section{Trójkąt}
 
 Przyjrzyjmy się teraz nieco większemu grafowi — trójkątowi. 
-Niech jeden z wierzchołków będzie źródłem $s$, a pozostałe $u, v$. 
+Niech jeden z wierzchołków będzie źródłem $s$, a pozostałe oznaczmy $u, v$. 
+Zmienna $X_v$ ma taki sam rozkład jak $X_u$.
 Aby poinformować $u$, musimy uzyskać sukces bezpośrednio od $s$ lub zarazić $v$, a następnie $u$. 
 Zatem zachodzi $X_u = \min\{A,B\}$, gdzie $A\sim \mathrm{Geo}(p)$ oraz $B\sim \mathrm{NegBin}(2,p)$. 
 Wiemy, że $\mathbb{P}[A\le t] =1-q^t$. 
 Z kolei
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[B\le t]
-&= \sum_{k=2}^{t} (k-1)\cdot p^2q^{k-2}
-= \frac{p^2}{q}\cdot \frac{q}{{(1-q)}^2}\cdot((t-1)q^t-tq^{t-1}+1) \\
-&=1-q^t-tpq^{t-1}.
+    \mathbb{P}[B\le t]
+    &= \sum_{k=2}^{t} (k-1)\cdot p^2q^{k-2}
+    = \frac{p^2}{q}\cdot \frac{q}{{(1-q)}^2}\cdot((t-1)q^t-tq^{t-1}+1) \\
+    &=1-q^t-tpq^{t-1}.
 \end{aligned}
 \end{equation*}
 Dalej, z \Cref{fact:min_CDF} mamy
 \[
     \mathbb{P}[X_u\le t] = 1 - (1-(1-q^t))\cdot (1-(1-q^t-tpq^{t-1})) = 1-q^{2t}-tpq^{2t-1}.
 \]
+Policzmy teraz wartość oczekiwaną.
+\begin{equation*}
+\begin{aligned}
+    \mathbb{E}[X_u]
+    &=  \sum_{t=0}^{\infty} \mathbb{P}[X_u>t] 
+    = \sum_{t=0}^{\infty} 1 - \mathbb{P}[X_u\le t] 
+    = \sum_{t=0}^{\infty} q^{2t} + tpq^{2t-1} \\
+    &=\frac{1}{1-q^2} +\frac{p}{q}\frac{q^2}{{(1-q^2)}^2}
+    =\frac{1-q^2+pq}{{(1-q^2)}^2} = \frac{3-2p}{p{(2-p)}^2}.
+\end{aligned}
+\end{equation*}
 
-Jeśli chodzi o liczbę zainfekowanych po $t$ krokach, to skoro mamy trzy wartości do policzenia. 
+Jeśli chodzi o liczbę zainfekowanych po $t$ krokach, to mamy trzy wartości do policzenia. 
 Oczywiście $\mathbb{P}[Y_t=1]=q^{2t}$. 
 Aby po $t$ chwilach tylko dwa węzły były zainfekowane, musimy zarazić któryś z wierzchołków po $1\le k\le t$ rundach z prawdopodobieństwem $2pq\cdot q^{2\cdot(k-1)}$, a następnie uzyskać $t-k$ porażek. Na każdą z nich mamy szansę równą $q^2$. 
 A zatem
@@ -55,20 +67,21 @@ To ostatnie przejście ma prawdopodobieństwo $1-q^2$.
 Podsumowując:
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[Z=t]
-&=p^2q^{2t-2}+\sum_{k=1}^{t-1} (2pq q^{2k-2})\cdot (q^{2t-2k-2}) \cdot (1-q^2) \\
-&=p^2q^{2t-2}+2pq^{2t-3}\cdot(t-1)(1-q^2).
+    \mathbb{P}[Z=t]
+    &=p^2q^{2t-2}+\sum_{k=1}^{t-1} (2pq q^{2k-2})\cdot (q^{2t-2k-2}) \cdot (1-q^2) \\
+    &=p^2q^{2t-2}+2pq^{2t-3}\cdot(t-1)(1-q^2).
 \end{aligned}
 \end{equation*}
 Mamy też $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 3] = q^{2t}+2tpq^{2t-1}$. 
 Wartość oczekiwana wynosi więc:
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Z]
-&=\sum_{t=0}^{\infty} \mathbb{P}[Z>t]=\sum_{t=0}^{\infty} q^{2t}+2tpq^{2t-1} \\
-&=\frac{1}{1-q^2}+\frac{2p}{q}\cdot \frac{q^2}{{(1-q^2)}^2}
-=\frac{-3q^2+2q+1}{{(1-q^2)}^2}
-=\frac{4-3p}{p{(2-p)}^2}.
+    \mathbb{E}[Z]
+    &=\sum_{t=0}^{\infty} \mathbb{P}[Z>t]
+    =\sum_{t=0}^{\infty} q^{2t}+2tpq^{2t-1} \\
+    &=\frac{1}{1-q^2}+\frac{2p}{q}\cdot \frac{q^2}{{(1-q^2)}^2}
+    =\frac{-3q^2+2q+1}{{(1-q^2)}^2}
+    =\frac{4-3p}{p{(2-p)}^2}.
 \end{aligned}
 \end{equation*}
 Wykonaliśmy dość sporo obliczeń jak na tak mały graf. 
@@ -93,11 +106,7 @@ Wtedy zachodzą następujące tożsamości:
 Rozważmy propagacje jako łańcuch Markova.
 W danej chwili stanem jest $\mathcal{I}_t$.
 Stan absorbujący wynosi $V$.
-Jeśli
-\[
-    \ell = \max_{u\in\mathcal{I}_t, \; v\in\mathcal{S}_t} \mathrm{d}(u,v)
-\]
-to po $\ell$ rundach możemy przejść do stanu całkowitej infekcji grafu z dodatnim prawdopodobieństwem.
+Jeśli $\ell = \max\{\mathrm{d}(u,v) : u\in\mathcal{I}_t, \; v\in\mathcal{S}_t\}$ to po $\ell$ rundach możemy przejść do stanu całkowitej infekcji grafu z dodatnim prawdopodobieństwem.
 Zmienna $Z$ to dokładnie czas, w którym propagacja osiągnie ten stan absorbujący.
 A zatem z własności łańcuchów Markova mamy $\mathbb{P}[Z<\infty]=1$.
 Ponadto $\mathbb{P}[\max_{v\in V} X_v = \infty] = \mathbb{P}[Z = \infty] = 0$ a więc dla dowolnego $v\in V$ mamy $\mathbb{P}[X_v=\infty]=0$.
@@ -116,12 +125,12 @@ Załóżmy, że proces zaczyna się w wierzchołku $s=1$.
 Zatem infekcja rozchodzi się po grafie „od lewej do prawej”.  
 Zauważmy, że czasy zarażenia kolejnych wierzchołków tworzą ciąg zmiennych losowych:
 \[
-X_1 = 0, \quad X_{v} = X_{v-1} + U_v, \quad v\in\{2,3,\dots,n\},
+    X_1 = 0, \quad X_{v} = X_{v-1} + G_v, \quad v\in\{2,3,\dots,n\},
 \]
-gdzie $U_2,U_3,\dots,U_n \sim \mathrm{Geo}(p)$ oraz $U_2,U_3,\dots,U_n$ są niezależne.  
-Widzimy zatem, że $X_v = U_2 + U_3 + \cdots + U_{v}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
+gdzie $G_2,G_3,\dots,G_n \sim \mathrm{Geo}(p)$ oraz $G_2,G_3,\dots,G_n$ są niezależne.  
+Widzimy zatem, że $X_v = G_2 + G_3 + \cdots + G_{v}$, a więc z \Cref{fact:sum_of_geo_RV} $X_v$ ma rozkład ujemny dwumianowy:
 \[
-    X_v\sim \mathrm{NegBin}(v-1, p), \quad \mathbb{E}[X_v] = \frac{v-1}{p}
+    X_v\sim \mathrm{NegBin}(v-1, p), \quad \mathbb{E}[X_v] = \frac{v-1}{p}.
 \]
 
 Ustalmy $t\in\mathbb{N}$ i przejdźmy do obliczania rozkładu $Y_t$.  
@@ -143,18 +152,19 @@ oraz dla $k = n$:
 Przejdźmy teraz do obliczania wartości oczekiwanej $Y_t$:
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Y_t] 
-&= \sum_{k=1}^{n-1} k \cdot \mathbb{P}[Y_t=k] + n \cdot \mathbb{P}[Y_t=n] \\
-&= \sum_{k=1}^{n-1} k \cdot \binom{t}{k-1} p^{k-1} q^{t-k+1} 
-   + n \cdot \sum_{j=n-1}^{t} \binom{t}{j} p^j q^{t-j} \\
-&= \sum_{j=0}^{t} \min\{n, 1+j\} \cdot \binom{t}{j} p^j q^{t-j}.
+    \mathbb{E}[Y_t] 
+    &= \sum_{k=1}^{n-1} k \cdot \mathbb{P}[Y_t=k] + n \cdot \mathbb{P}[Y_t=n] \\
+    &= \sum_{k=1}^{n-1} k \cdot \binom{t}{k-1} p^{k-1} q^{t-k+1} + n \cdot \sum_{j=n-1}^{t} \binom{t}{j} p^j q^{t-j} \\
+    &= \sum_{j=0}^{t} \min\{n, 1+j\} \cdot \binom{t}{j} p^j q^{t-j}.
 \end{aligned}
 \end{equation*}
 Jeśli $n\ge 1+t$ to wówczas 
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Y_t] &= \sum_{j=0}^{t} (1+j)\binom{t}{j} p^j q^{t-j} = \sum_{j=0}^{t} \binom{t}{j} p^j q^{t-j} + \sum_{j=0}^{t} j \binom{t}{j} p^j q^{t-j} \\
-    &= {(p+q)}^t + t p {(p+q)}^{t-1} = 1 + t p.
+    \mathbb{E}[Y_t] &= \sum_{j=0}^{t} (1+j)\binom{t}{j} p^j q^{t-j} 
+    = \sum_{j=0}^{t} \binom{t}{j} p^j q^{t-j} + \sum_{j=0}^{t} j \binom{t}{j} p^j q^{t-j} \\
+    &= {(p+q)}^t + t p {(p+q)}^{t-1} 
+    = 1 + t p.
 \end{aligned}
 \end{equation*}
 
@@ -169,14 +179,14 @@ Zatem rozkład zmiennej $Z$ oraz jej wartość oczekiwana są już nam znane i w
 
 Następnie rozpatrzmy rodzinę grafów gwiazd $\mathrm{S}_n$. 
 Niech źródłem będzie centralny wierzchołek grafu, czyli $s = 0$. 
-Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie a więc zmienne $X_1,X_2,\dots,X_n$ są niezależne.
-Stąd dla każdego $v \in \{1, 2, \dots, n\}$ mamy
+Propagacja rozchodzi się tutaj po każdym ramieniu gwiazdy niezależnie a więc zmienne $X_1,\dots,X_n$ są niezależne.
+Stąd dla każdego $v \in \{1, \dots, n\}$ mamy
 \[
     X_v \sim \mathrm{Geo}(p), \quad \mathbb{E}[X_v] = \frac{1}{p}.
 \] 
 
-Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ o rozkładzie geometrycznym osiągnie sukces w czasie co najwyżej $t$. 
-Mamy $\mathbb{P}[X_v \le t] = 1 - q^t$.
+Kwestia zmiennej $Y_t$ jest również prosta. Ponieważ propagacja działa niezależnie na każdym wierzchołku, $Y_t$ odpowiada liczbie sukcesów w $n$ próbach Bernoulliego. Sukcesem pojedynczej próby jest zdarzenie, że zmienna $X_v$ osiągnie sukces w czasie co najwyżej $t$. 
+Mamy $\mathbb{P}[X_v \le t] = 1 - q^t$ a więc prawdopodobieństwo tej próby wynosi $1-q^t$.
 Niech $B_t \sim \mathrm{Bin}(n, 1 - q^t)$.
 Wtedy
 \[
@@ -188,19 +198,22 @@ Ponieważ zmienne te są IID, z \Cref{fact:max_CDF} otrzymujemy $\mathbb{P}[Z \l
 Policzmy wartość oczekiwaną całkowitego zainfekowania grafu:
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Z]
-&= \sum_{k=1}^{\infty} \mathbb{P}[Z \ge k] = \sum_{k=1}^{\infty} 1 - \mathbb{P}[Z \le k-1] = \sum_{k=1}^{\infty} 1 - {(1 - q^{k-1})}^n \\[2mm]
-&= \sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n = \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} {(-1)}^j q^{kj} \Big) \\[2mm]
-&= \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} {(-1)}^{j+1} q^{kj} = \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} {(-1)}^{j+1} {(q^j)}^k \\[2mm]
-&= \sum_{j=1}^{n} \binom{n}{j} \frac{{(-1)}^{j+1}}{1 - q^j}.
+    \mathbb{E}[Z]
+    &= \sum_{k=0}^{\infty} \mathbb{P}[Z > k] 
+    = \sum_{k=0}^{\infty} 1 - \mathbb{P}[Z \le k] 
+    =\sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n  \\[2mm]
+    &= \sum_{k=0}^{\infty} \Big( 1 - \sum_{j=0}^{n} \binom{n}{j} {(-1)}^j q^{kj} \Big) 
+    = \sum_{k=0}^{\infty} \sum_{j=1}^{n} \binom{n}{j} {(-1)}^{j+1} q^{kj} \\[2mm]
+    &= \sum_{j=1}^{n} \sum_{k=0}^{\infty} \binom{n}{j} {(-1)}^{j+1} {(q^j)}^k 
+    = \sum_{j=1}^{n} \binom{n}{j} \frac{{(-1)}^{j+1}}{1 - q^j}.
 \end{aligned}
 \end{equation*}
 Nie jest to jednak szczególnie elegancka forma, więc spróbujmy wyznaczyć asymptotykę $\mathbb{E}[Z]$.  
-Zauważmy, że
+Skoro
 \[
-    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n.
+    \mathbb{E}[Z] = \sum_{k=0}^{\infty} 1 - {(1 - q^k)}^n,
 \]
-Z \Cref{inequality:approximation_of_sum_by_an_integral} możemy przybliżyć tę sumę całką.  
+to z \Cref{inequality:approximation_of_sum_by_an_integral} możemy przybliżyć tę sumę całką.  
 Niech $f(x) = 1 - {(1 - e^{-\lambda x})}^n$, gdzie $\lambda = -\log(q)$.  
 Oczywiście $f(0) = 1$, $f(\infty) = 0$, a funkcja $f$ jest malejąca, więc:
 \[
@@ -212,7 +225,7 @@ Ponadto $u(0) = 0$, $u(\infty) = 1$ (bo $\lambda > 0$).
 Zatem całka ma postać:
 \[
     \frac{1}{\lambda} \int_{0}^{1} \frac{1 - u^n}{1 - u}\, \mathrm{d}u
-    = \frac{1}{\lambda} \sum_{j=0}^{n-1} \frac{1}{j+1}
+    = \frac{1}{\lambda} \int_{0}^{1} \sum_{j=0}^{n-1} u^j \, \mathrm{d}u = \frac{1}{\lambda}\sum_{j=0}^{n-1} \int_{0}^{1} u^j \, \mathrm{d}u = \frac{1}{\lambda} \sum_{j=0}^{n-1} \frac{1}{j+1}
     = \frac{H_n}{\lambda}.
 \]
 Zauważmy, że $-\log(q) = \log\big(\frac{1}{1-p}\big)$, zatem:
@@ -290,21 +303,23 @@ Zgodnie z wcześniejszymi wynikami, jego wartość oczekiwana wynosi co najwyże
 \end{proof}
 
 Wróćmy do dowodu twierdzenia.
-Mamy $T_h = \sum_{j=1}^{h} U_j$ a więc
+Mamy $T_h = U_1 + \cdots +U_h$ oraz $Z=T_h$ a więc
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Z] 
-&= \mathbb{E}[T_h] 
-  = \mathbb{E}\Big[\sum_{j=1}^{h} U_j\Big] 
-  = \sum_{j=1}^{h} \mathbb{E}[U_j] 
-  \le \sum_{j=1}^{h} \frac{H_{a_j}}{\lambda} + 1 \\
-&= h + \frac{1}{\lambda} \sum_{j=1}^{h} H_{a_j} 
-  \le h + \frac{1}{\lambda} \sum_{j=1}^{h} 1 + \log(a_j) \\
-&= h + \frac{h}{\lambda} \cdot \Big(1 + \sum_{j=1}^{h} \log(a_j) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\prod_{j=1}^{h} a_j\Big)\Big)\\
-&\le h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{1}{h} \sum_{j=1}^{h} a_j\Big) \Big) = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{n-1}{h}\Big) \Big), \\
+    \mathbb{E}[Z] 
+    &= \mathbb{E}[T_h] 
+    = \mathbb{E}\Big[\sum_{j=1}^{h} U_j\Big] 
+    = \sum_{j=1}^{h} \mathbb{E}[U_j] 
+    \le \sum_{j=1}^{h} \frac{H_{a_j}}{\lambda} + 1 \\
+    &= h + \frac{1}{\lambda} \sum_{j=1}^{h} H_{a_j} 
+    \le h + \frac{1}{\lambda} \sum_{j=1}^{h} 1 + \log(a_j) \\
+    &= h + \frac{h}{\lambda}  + \frac{1}{\lambda}\sum_{j=1}^{h} \log(a_j) 
+    = h + \frac{h}{\lambda} + \frac{1}{\lambda} \log \Big(\prod_{j=1}^{h} a_j\Big) \\
+    &\le h + \frac{h}{\lambda} + \frac{h}{\lambda} \log \Big(\frac{1}{h} \sum_{j=1}^{h} a_j \Big) 
+    = h + \frac{h}{\lambda} \cdot \Big(1 + \log \Big(\frac{n-1}{h}\Big) \Big), \\
 \end{aligned}
 \end{equation*}
-gdzie w linijce pierwszej wykorzystujemy \cref{lemma:helper_lemma}, w drugiej \cref{inequality:harmonic_upper_bound} a w piątej nierówność między średnimi (\ref{inequality:AM_GM}).
+gdzie w linijce pierwszej wykorzystujemy \cref{lemma:helper_lemma}, w drugiej \cref{inequality:harmonic_upper_bound} a w ostatniej nierówność między średnimi (\ref{inequality:AM_GM}).
 \end{proof}
 
 Porównajmy teraz powyższy wynik z wcześniejszymi obserwacjami.  
@@ -338,7 +353,7 @@ Dla $j\in \{1,2,\dots,n-1\} $ połóżmy $N_j\sim \mathrm{NegBin}(j,p)$.
 Zmienne te są niezależne. 
 Mamy wtedy 
 \[
-    X_v \sim \min\{N_a, N_b\}.
+    X_v = \min\{N_a, N_b\}.
 \]
 Niech $F_j(t)$ będzie dystrybuantą zmiennej $N_j$. 
 Z \Cref{fact:min_CDF} mamy 
@@ -347,14 +362,14 @@ Z \Cref{fact:min_CDF} mamy
 \]
 Nie ma co liczyć na wyznaczenie eleganckiej postaci na PMF czy CDF dla $X_v$. 
 Postaramy się więc przybliżyć wartość oczekiwaną dla dużych $n$. 
-Kładziemy $A\sim \mathcal{N}(\mu_a,\sigma^2_a),\; B \sim \mathcal{N}(\mu_b,\sigma^2_b)$ gdzie 
+Kładziemy $A\sim \mathcal{N}(\mu_a,\sigma^2_a)$, $B \sim \mathcal{N}(\mu_b,\sigma^2_b)$ gdzie 
 \[
     \mu_a=\frac{a}{p},\quad \sigma^2_a=\frac{aq}{p^2}, \quad \mu_b=\frac{b}{p},\quad \sigma^2_b=\frac{bq}{p^2}.
 \]
 Z centralnego twierdzenia granicznego możemy przybliżyć $N_a \approx A,\; N_b \approx B$.
-Zatem mamy $\mathbb{E}[X_v] \approx \mathbb{E}[\min\{A,B\}]$ oraz
+Zatem mamy $X_v \approx \min\{A,B\}$ oraz
 \[
-    \mathbb{E}[\min\{A,B\}]=\mathbb{E}\Big[\frac{A+B-|A-B|}{2}\Big]=\frac{\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|]}{2}.
+    \mathbb{E}[X_v]\approx \mathbb{E}[\min\{A,B\}]=\mathbb{E}\Big[\frac{A+B-|A-B|}{2}\Big]=\frac{\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|]}{2}.
 \]
 Połóżmy $C=A-B$. 
 Korzystając z \Cref{fact:sum_of_normal_RV} mamy $C \sim \mathcal{N}(\mu_a-\mu_b,\sigma_a^2+\sigma_b^2)$. 
@@ -373,46 +388,38 @@ Wtedy
     \mathbb{E}[|X|]= \int_{-\infty}^{\infty} \frac{|x|}{\sigma}\varphi\Big(\frac{x-\mu}{\sigma}\Big) \; \mathrm{d}x = \int_{0}^{\infty} \frac{x}{\sigma}\varphi\Big(\frac{x-\mu}{\sigma}\Big) \; \mathrm{d}x - \int_{-\infty}^{0} \frac{x}{\sigma}\varphi\Big(\frac{x-\mu}{\sigma}\Big) \; \mathrm{d}x.
 \]
 Oznaczmy $c=\frac{\mu}{\sigma}$ oraz podstawmy $z=\frac{x-\mu}{\sigma}$. 
-Zatem $x=\mu+\sigma z$, $\mathrm{d}{x}=\sigma \mathrm{d}{z}$. 
+Wtedy $x=\mu+\sigma z$, $\mathrm{d}{x}=\sigma \mathrm{d}{z}$. 
 Dla $x>0$ mamy $z>-c$ zaś dla $x<0$ mamy $z<-c$. 
 Otrzymujemy więc
 \begin{align*}
-&\int_{-c}^{\infty} (\mu+\sigma z)\varphi(z)\,\mathrm{d}z 
- - \int_{-\infty}^{-c} (\mu+\sigma z)\varphi(z)\,\mathrm{d}z \\[0.3em]
-&= \mu \!\int_{-c}^{\infty} \!\varphi(z)\,\mathrm{d}z
-   + \sigma \!\int_{-c}^{\infty} \!z\varphi(z)\,\mathrm{d}z
-   - \mu \!\int_{-\infty}^{-c} \!\varphi(z)\,\mathrm{d}z
-   - \sigma \!\int_{-\infty}^{-c} \!z\varphi(z)\,\mathrm{d}z \\[0.3em]
-&= \mu\!\Big(\!\int_{-c}^{\infty}\!\varphi(z)\,\mathrm{d}z 
-   - \!\int_{-\infty}^{-c}\!\varphi(z)\,\mathrm{d}z\!\Big)
-   + \sigma\!\Big(\!\int_{-c}^{\infty}\!z\varphi(z)\,\mathrm{d}z 
-   - \!\int_{-\infty}^{-c}\!z\varphi(z)\,\mathrm{d}z\!\Big) \\[0.3em]
-&= \mu\!\Big(\!\int_{-\infty}^{\infty}\!\varphi(z)\,\mathrm{d}z 
-   - 2\!\int_{-\infty}^{-c}\!\varphi(z)\,\mathrm{d}z\!\Big)
-   + \sigma\!\Big(-\varphi(z)\big|_{-c}^{\infty}
-   + \varphi(z)\big|_{-\infty}^{-c}\Big) \\[0.3em]
-&= \mu\cdot\!\Big(1 - 2\mathbf{\Phi}(-c)\Big)
-   + \sigma\cdot\!\Big(-\varphi(\infty)+\varphi(-c)+\varphi(-c)-\varphi(-\infty)\Big) \\[0.3em]
-&= \mu\cdot\!\Big(2\mathbf{\Phi}(c)-1\Big) + 2\sigma\cdot\,\varphi(c).
+    \mathbb{E}[|X|] 
+    &=\int_{-c}^{\infty} (\mu+\sigma z)\varphi(z)\,\mathrm{d}z 
+    - \int_{-\infty}^{-c} (\mu+\sigma z)\varphi(z)\,\mathrm{d}z \\[0.3em]
+    &= \mu \!\int_{-c}^{\infty} \!\varphi(z)\,\mathrm{d}z
+    + \sigma \!\int_{-c}^{\infty} \!z\varphi(z)\,\mathrm{d}z
+    - \mu \!\int_{-\infty}^{-c} \!\varphi(z)\,\mathrm{d}z
+    - \sigma \!\int_{-\infty}^{-c} \!z\varphi(z)\,\mathrm{d}z \\[0.3em]
+    &= \mu\!\Big(\!\int_{-c}^{\infty}\!\varphi(z)\,\mathrm{d}z 
+    - \!\int_{-\infty}^{-c}\!\varphi(z)\,\mathrm{d}z\!\Big)
+    + \sigma\!\Big(\!\int_{-c}^{\infty}\!z\varphi(z)\,\mathrm{d}z 
+    - \!\int_{-\infty}^{-c}\!z\varphi(z)\,\mathrm{d}z\!\Big) \\[0.3em]
+    &= \mu\!\Big(\!\int_{-\infty}^{\infty}\!\varphi(z)\,\mathrm{d}z 
+    - 2\!\int_{-\infty}^{-c}\!\varphi(z)\,\mathrm{d}z\!\Big)
+    + \sigma\!\Big(-\varphi(z)\big|_{-c}^{\infty}
+    + \varphi(z)\big|_{-\infty}^{-c}\Big) \\[0.3em]
+    &= \mu\cdot\!\Big(1 - 2\mathbf{\Phi}(-c)\Big)
+    + \sigma\cdot\!\Big(-\varphi(\infty)+\varphi(-c)+\varphi(-c)-\varphi(-\infty)\Big) \\[0.3em]
+    &= \mu\cdot\!\Big(2\mathbf{\Phi}(c)-1\Big) + 2\sigma\cdot\,\varphi(c).
 \end{align*}
-gdzie skorzystaliśmy z tożsamości $\mathbf{\Phi}(-x)=1-\mathbf{\Phi}(x)$, $\varphi(-x)=\varphi(x)$, \\ $\varphi(\pm\infty)=0$, $\int_{-\infty}^{\infty}\varphi(x) \;\mathrm{d}x = 1$ oraz $\int x\varphi(x)\;\mathrm{d}x=-\varphi(x)$.
+gdzie skorzystaliśmy z tożsamości $\mathbf{\Phi}(-x)=1-\mathbf{\Phi}(x)$, $\varphi(-x)=\varphi(x)$, $\varphi(\pm\infty)=0$, \\ $\int_{-\infty}^{\infty}\varphi(x) \;\mathrm{d}x = 1$ oraz $\int x\varphi(x)\;\mathrm{d}x=-\varphi(x)$.
 \end{proof}
 
 Z \Cref{lemma:abs_normal_E} dostajemy $\mathbb{E}[C]=2\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)+\eta\cdot (2\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-1)$. 
 Ostatecznie 
 \begin{align*}
-\mathbb{E}[X_v] \approx {} &
- \frac{1}{2}\!\Big(\mu_a+\mu_b
- -2\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)
- -\eta\!\Big(2\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-1\Big)\!\Big) \\[0.4em]
-={} &
- \frac{\mu_a+\mu_b}{2}
- -\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)
- -(\mu_a-\mu_b)\!\Big(\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-\frac{1}{2}\Big) \\[0.4em]
-={} &
- \mu_a\!\Big(1-\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)\Big)
- +\mu_b\,\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)
- -\eta\,\varphi\!\Big(\frac{\eta}{\xi}\Big).
+    \mathbb{E}[X_v] \approx {} & \frac{1}{2}\!\Big(\mu_a+\mu_b-2\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)-\eta\!\Big(2\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-1\Big)\!\Big) \\[0.4em]
+    ={} &\frac{\mu_a+\mu_b}{2}-\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)-(\mu_a-\mu_b)\!\Big(\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-\frac{1}{2}\Big) \\[0.4em]
+    ={} &\mu_a\!\Big(1-\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)\Big)+\mu_b\,\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-\eta\,\varphi\!\Big(\frac{\eta}{\xi}\Big).
 \end{align*}
 Przenalizujmy teraz zachowanie asymptotyczne otrzymanego wyrażenia. 
 Skoro $a+b=n$ to niech $a=rn$, $b=(1-r)n$ dla pewnego $r\in(0;1)$. 
@@ -422,11 +429,11 @@ Dalej
 \]
 Musimy rozważyć dwa przypadki.
 Jeśli $a<b$, co za tym idzie $r<\frac{1}{2}$ to $\frac{\eta}{\xi}\to -\infty$ wraz z $n\to \infty$. 
-Wtedy też $\varphi(\frac{\eta}{\xi})\to 0$ oraz $\mathbf{\Phi}(\frac{\eta}{\xi})\to 0$ a więc $\mathbb{E}[X_v] \to \frac{a}{p}$. 
+Wtedy też $\varphi(\frac{\eta}{\xi})\to 0$ oraz $\mathbf{\Phi}(\frac{\eta}{\xi})\to 0$ a więc $\mathbb{E}[X_v] \to \mu_a = \frac{a}{p}$. 
 Zaś gdy $a=b$ to $r=\frac{1}{2}$ jak i  $\frac{\eta}{\xi}=0$. 
 Wiemy, że $\varphi(0)=\frac{1}{\sqrt{2\pi}}$ oraz $\mathbf{\Phi}(0)=\frac{1}{2}$. 
 Wstawiając otrzymamy $\mathbb{E}[X_v] \to \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}$. 
-Podsumowując mamy następujący wynik:
+Podsumowując dla dużych $n$ mamy następujący wynik:
 \[
     \mathbb{E}[X_v] \sim \frac{\min\{v,n-v\}}{p}.
 \]
@@ -462,20 +469,25 @@ W takim razie wartość oczekiwana wynosić będzie
 Mamy
 \begin{equation*}
 \begin{aligned}
-& \sum_{t=0}^{\infty}\binom{2t}{j} q^{2t} = \frac{1}{2} \Big(\sum_{t=0}^{\infty} \binom{t}{j} q^t+ \sum_{t=0}^{\infty}\binom{t}{j} {(-q)}^t \Big) = \\
-&= \frac{1}{2} \Big( \frac{q^j}{{(1-q)}^{j+1}} + \frac{{(-q)}^j}{{(1+q)}^{j+1}} \Big) = \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big).
+    & \sum_{t=0}^{\infty}\binom{2t}{j} q^{2t} 
+    = \frac{1}{2} \Big(\sum_{t=0}^{\infty} \binom{t}{j} q^t+ \sum_{t=0}^{\infty}\binom{t}{j} {(-q)}^t \Big) \\
+    &= \frac{1}{2} \Big( \frac{q^j}{{(1-q)}^{j+1}} + \frac{{(-q)}^j}{{(1+q)}^{j+1}} \Big) 
+    = \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big).
 \end{aligned}
 \end{equation*}
 Dalej
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Z] &= \sum_{j=0}^{n-2} p^j q^{-j} \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big) = \frac{1}{2}\sum_{j=0}^{n-2} \frac{1}{p} + \frac{{(-p)}^j}{{(2-p)}^{j+1}} = \\
-=& \frac{n-1}{2p} + \frac{1}{2(2-p)} \sum_{j=0}^{n-2} {\Big(\frac{-p}{2-p}\Big)}^j = \frac{n-1}{2p} + \frac{1}{2(2-p)} \cdot \frac{1 - {(\frac{-p}{2-p})}^{n-1}}{1 - \frac{-p}{2-p}} = \\
-&= \frac{n-1}{2p}+\frac{1}{4} \cdot \Big(1 +{(-1)}^n \cdot{\Big(\frac{p}{2-p}\Big)}^{n-1}\Big).
+    \mathbb{E}[Z] 
+    &= \sum_{j=0}^{n-2} p^j q^{-j} \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big) 
+    = \frac{1}{2}\sum_{j=0}^{n-2} \frac{1}{p} + \frac{{(-p)}^j}{{(2-p)}^{j+1}} \\
+    &= \frac{n-1}{2p} + \frac{1}{2(2-p)} \sum_{j=0}^{n-2} {\Big(\frac{-p}{2-p}\Big)}^j 
+    = \frac{n-1}{2p} + \frac{1}{2(2-p)} \cdot \frac{1 - {(\frac{-p}{2-p})}^{n-1}}{1 - \frac{-p}{2-p}}\\
+    &= \frac{n-1}{2p}+\frac{1}{4} \cdot \Big(1 +{(-1)}^n \cdot{\Big(\frac{p}{2-p}\Big)}^{n-1}\Big).
 \end{aligned}
 \end{equation*}
 Zauważmy, że $|\frac{p}{2-p}|<1$ a więc $\mathbb{E}[Z] \sim \frac{n-1}{2p}$, również podobnie jak dla grafów ścieżkowych.
-
+Jeśli $n=3$ to wynik ten pokrywa się ze wzorem uzyskanym dla grafu trójkątnego.
 
 \section{Grafy pełne}
 
@@ -484,10 +496,10 @@ Za źródło możemy przyjąć dowolny wierzchołek $s\in V$ ze względu na syme
 Początkowo rozkład $X_v$ pokrywa się z rozkładem gwiazdy natomiast w każdej kolejnej rundzie mocno się komplikuje. 
 Nie mamy co liczyć na jakiekolwiek sensowne wyznaczenie rozkładu $X_v$. 
 Podejdźmy do problemu na razie heurystycznie. 
-Zauważmy, że jeśli $Y_1=a$ to rozkład zmiennej $Y_2$ wynosi $Y_2 = a + B$ dla $B \sim \mathrm{Bin}(n-a, 1-q^n)$. 
+Zauważmy, że jeśli $Y_1=a$ to rozkład zmiennej $Y_2$ wynosi $Y_2 = a + B$ dla $B \sim \mathrm{Bin}(n-a, 1-q^a)$. 
 Zatem 
 \[
-    \mathbb{E}[Y_2\mid Y_1 = a] = n\cdot (1-q^a) + aq^a.
+    \mathbb{E}[Y_2\mid Y_1 = a] =a +(n-a)(1-q^a)= n\cdot (1-q^a) + aq^a.
 \]
 Mamy $Y_1 - 1\sim \mathrm{Bin}(n-1,p)$ oraz $\mathbb{E}[Y_1]=1+(n-1)p$. 
 Możemy również założyć, że również $a \approx \mathbb{E}[Y_1]$ a co za tym idzie 
@@ -502,31 +514,32 @@ Możemy więc wysunąć hipotezę: Dla grafu $\mathrm{K}_n$ mamy:
 \]
 Postarajmy się ją teraz udowodnić. 
 Żeby to zrobić najpierw wyznaczmy asymptotyke $\mathbb{E}[Y_2]$. 
-Oznaczamy $U=Y_1=1+W$ gdzie $W\sim\mathrm{Bin}(n-1,p)$. 
+Oznaczamy $Y_1=1+U$ gdzie $U\sim\mathrm{Bin}(n-1,p)$. 
 Z prawa całkowitej wartości oczekiwanej mamy
 \[
-    \mathbb{E}[Y_2] = n\cdot (1-\mathbb{E}[q^U])+\mathbb{E}[Uq^U].
+    \mathbb{E}[Y_2] = n\cdot (1-\mathbb{E}[q^{Y_1}])+\mathbb{E}[Y_1q^{Y_1}].
 \]
-Musimy wyznaczyć $\mathbb{E}[q^U]$ jak i $\mathbb{E}[Uq^U]$. 
+Musimy wyznaczyć $\mathbb{E}[q^{Y_1}]$ jak i $\mathbb{E}[Y_1q^{Y_1}]$. 
 Korzystając z \Cref{fact:pgf_bin} dostajemy 
 \[
-    \mathbb{E}[q^U]=\mathbb{E}[q^{1+W}]=q\cdot \mathbb{E}[q^W]=q{(q+pq)}^{n-1}=q^n{(1+p)}^{n-1}.
+    \mathbb{E}[q^{Y_1}]=\mathbb{E}[q^{1+U}]=q\cdot \mathbb{E}[q^U]=q{(q+pq)}^{n-1}=q^n{(1+p)}^{n-1}.
 \]
 Dla drugiej wartości mamy zaś
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Uq^U] 
-&= \mathbb{E}[(1+W)q^{1+W}] = q(\mathbb{E}[q^W]+\mathbb{E}[Wq^W]) \\
-& = q(q^{n-1}{(1+p)}^{n-1}+(n-1)pq^{n-1}{(1+p)}^{n-2}) \\
-&= q^n{(1+p)}^{n-2}(1+p+(n-1)p)=q^n{(1+p)}^{n-2}(1+np).
+    \mathbb{E}[Y_1q^{Y_1}] 
+    &= \mathbb{E}[(1+U)q^{1+U}] 
+    = q(\mathbb{E}[q^U]+\mathbb{E}[Uq^U]) \\
+    &= q(q^{n-1}{(1+p)}^{n-1}+(n-1)pq^{n-1}{(1+p)}^{n-2}) \\
+    &= q^n{(1+p)}^{n-2}(1+p+(n-1)p)=q^n{(1+p)}^{n-2}(1+np).
 \end{aligned}
 \end{equation*}
 Podstawiając przed chwilą wyrażenia wzory do wzoru na $\mathbb{E}[Y_2]$ dostaniemy
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Y_2] 
-&= n-nq^n{(1+p)}^{n-1}+q^n{(1+p)}^{n-2}(1+np)= \\
-&= n-(n-1)q^n{(1+p)}^{n-2}=n-(n-1){(1+p)}^{-2}{(1-p^2)}^n.
+    \mathbb{E}[Y_2] 
+    &= n-nq^n{(1+p)}^{n-1}+q^n{(1+p)}^{n-2}(1+np)= \\
+    &= n-(n-1)q^n{(1+p)}^{n-2}=n-(n-1){(1+p)}^{-2}{(1-p^2)}^n.
 \end{aligned}
 \end{equation*}
 Połóżmy $\varepsilon_n=(n-1){(1+p)}^{-2}{(1-p^2)}^n$. 
@@ -544,14 +557,16 @@ Ustalmy jeden z tych podgrafów.
 Niech $Z'$ będzie zmienną losową czasu całkowitego zarażenia dla tego podgrafu. 
 Z \Cref{theorem:montonicity_of_total_infection} mamy $Z\le Z'$ a co za tym idzie $\mathbb{E}[Z^2] \le \mathbb{E}[{(Z')}^2]$. 
 Przypomnijmy, że $Z' \sim \mathrm{NegBin}(n-1,p)$ a więc $\mathbb{E}[{(Z')}^2]=\frac{{(n-1)}^2+(n-1)q}{p^2}$. 
-Wnioskujemy, że
+Mamy zatem
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[Z] 
-&= \sum_{k=1}^{\infty}\mathbb{P}[Z\ge k] = \mathbb{P}[Z\ge 1] + \mathbb{P}[Z\ge 2] + \sum_{k = 3}^{\infty} \mathbb{P}[Z\ge k]  \\
-&= 1 + 1-p^{n-1} + \mathbb{E}[Z \cdot \mathbf{1}_{Z\ge 3}] \le 2 - p^{n-1} + \sqrt{\mathbb{E}[Z^2]}\sqrt{\mathbb{E}[\mathbf{1}_{Z\ge 3}]} \\
-&\le 2 - p^{n-1} + \sqrt{\mathbb{E}[{(Z')}^2]}\sqrt{\mathbb{P}[Z\ge 3]} \\
-&\le 2 - p^{n-1} + \sqrt{\frac{{(n-1)}^2+(n-1)q}{p^2}}\sqrt{\varepsilon_n}.
+    \mathbb{E}[Z] 
+    &= \sum_{k=1}^{\infty}\mathbb{P}[Z\ge k] 
+    = \mathbb{P}[Z\ge 1] + \mathbb{P}[Z\ge 2] + \sum_{k = 3}^{\infty} \mathbb{P}[Z\ge k]  \\
+    &= 1 + 1-p^{n-1} + \mathbb{E}[Z \cdot \mathbf{1}_{Z\ge 3}] 
+    \le 2 - p^{n-1} + \sqrt{\mathbb{E}[Z^2]}\sqrt{\mathbb{E}[\mathbf{1}_{Z\ge 3}]} \\
+    &\le 2 - p^{n-1} + \sqrt{\mathbb{E}[{(Z')}^2]}\sqrt{\mathbb{P}[Z\ge 3]} \\
+    &\le 2 - p^{n-1} + \sqrt{\frac{{(n-1)}^2+(n-1)q}{p^2}}\sqrt{\varepsilon_n}.
 \end{aligned}
 \end{equation*}
 gdzie wykorzystaliśmy nierówność Cauchy’ego-Schwarza (\ref{inequality:Cauchy_Schwarz}). Ostatecznie dostajemy 
@@ -575,7 +590,7 @@ Ograniczenie to zdaje się nie być za dobre czego przyczyną jest zapewne fakt,
 
 Rozważmy drzewo $G = (V, E)$ oraz ustalony wierzchołek początkowy $s \in V$, który traktujemy jako korzeń drzewa. 
 Dla $v\in V$ oznaczmy $d_v=\mathrm{d}(s,v)$. 
-Ustalmy $v\in V$. 
+Ustalmy wierzchołek $v$. 
 Skoro $G$ jest drzewem to istnieje dokładnie jedna ścieżka od $s$ do $v$, powiedzmy $s,v_1,\dots,v_k, v$. 
 Ponieważ infekcja rozprzestrzenia się od korzenia $s$ wzdłuż krawędzi drzewa, każde zakażenie wymaga sukcesu w niezależnym doświadczeniu Bernoulliego o prawdopodobieństwie $p$.
 W konsekwencji, aby infekcja dotarła z $s$ do $v$, musi wystąpić $d_v$ kolejnych sukcesów. 
@@ -593,9 +608,9 @@ Dla dowolnego $t\in\mathbb{N}$ wartość oczekiwana zmiennej $Y_t$ wyraża się 
 \end{lemma}
 
 \begin{proof}
-Mamy $Y_t=|\{v\in V: X_v \le t\}|$ zatem $Y_t=\sum_{v\in V}  \mathbf{1}_{\{X_v\le t\}}$. Nakładając na tą równość operator $\mathbb{E}$ otrzymujemy:
+Mamy $Y_t=|\{v\in V: X_v \le t\}|$ zatem $Y_t=\sum_{v\in V}  \mathbf{1}_{X_v\le t}$. Nakładając na tą równość operator $\mathbb{E}$ otrzymujemy:
 \[
-    \mathbb{E}[Y_t] = \mathbb{E}\Big[ \sum_{v\in V}  \mathbf{1}_{\{X_v\le t\}}\Big]= \sum_{v\in V} \mathbb{E}[\mathbf{1}_{\{X_v\le t\}}] = \sum_{v\in V} \mathbb{P}[X_v \le t].
+    \mathbb{E}[Y_t] = \mathbb{E}\Big[ \sum_{v\in V}  \mathbf{1}_{X_v\le t}\Big]= \sum_{v\in V} \mathbb{E}[\mathbf{1}_{X_v\le t}] = \sum_{v\in V} \mathbb{P}[X_v \le t].
 \]    
 \end{proof}
 
@@ -610,21 +625,21 @@ Wtedy
 \[
     \mathbb{E}[Y_t] = \sum_{j=0}^{h} a_j\cdot F(t; j, p).
 \]
-Ponadto gdy $t<j\le h$ to $F(t; j, p)$, bo żaden wierzchołek w odległości od korzenia większej niż liczba rund nie może zostać zarażony. 
+Ponadto gdy $t<j\le h$ to $F(t; j, p)=0$, bo żaden wierzchołek w odległości od korzenia większej niż liczba rund nie może zostać zarażony. 
 Możemy więc zmniejszyć granice sumowania 
 \[
     \mathbb{E}[Y_t] = \sum_{j=0}^{\min\{h,t\}} a_j\cdot F(t; j, p).
 \]
 
 Oszacujmy teraz średni czas całkowity czas propagacji drzewa.
-Niech $L=\{u_1,\dots, u_m\}$ będzie zbiorem liści w $G$. 
+Niech $L$ będzie zbiorem liści w $G$. 
 Wtedy mamy $Z = \max_{u\in L} X_{u}$.
-Zauważmy, że $\epsilon(s) = \max_{u\in L} d_{u}$ i jest to wysokość drzewa. 
-Oznaczmy ją przez $h$. 
 Z nierówności Jensena (\ref{inequality:Jensen}) otrzymujemy
 \[
     \mathbb{E}[Z]=\mathbb{E}[\max_{u\in L} X_{u}] \ge \max_{u\in L} \mathbb{E}[X_{u}] = \max_{u\in L} \frac{d_{u}}{p} = \frac{h}{p}.
 \]
+Zauważmy, że $\epsilon(s) = \max_{u\in L} d_{u}$ i jest to wysokość drzewa. 
+Oznaczmy ją przez $h$.
 Aby ograniczyć $\mathbb{E}[Z]$ z góry skorzystamy z \Cref{theorem:upper_bound_on_EZ}:
 \[
     \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}.
@@ -648,11 +663,7 @@ Sam lemat daje nierówność, której nie da się poprawić, co wiemy poprzez an
 Lecz dla drzewa będzie ona najmniej luźna, jeżeli każdy wierzchołek w warstwie $A_j$ będzie miał dokładnie jedną krawędź łączącą go z wierzchołkiem w warstwie $A_{j+1}$, gdzie $0\le j\le h-1$. 
 Zatem drzewo składa się z korzenia oraz $b$ rozłącznych ścieżek, każda o długości $h$. 
 I taki graf osiąga ograniczenie górne na $\mathbb{E}[Z]$. 
-Widzimy zatem, że nasze ograniczenia nie są do poprawienia bez dodatkowych parametrów grafu. 
-Podsumowując możemy następująco szacować przewidywany czas całkowitego poinformowania drzewa o wysokości $h$:
-\[
-    \frac{h}{p} \le \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}.
-\]
+Widzimy zatem, że nasze ograniczenia nie są do poprawienia bez dodatkowych parametrów drzewa. 
 
 
 \section{Eksperymenty}
@@ -676,7 +687,7 @@ Nie będziemy zatem go sprawdzać.
 Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
 Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
 Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych.\ (patrz \cref{fig:SI_star_Yt}).
-Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki, to jest $\frac{H_n}{\lambda}, \; \lambda=\log(\frac{1}{1-p})$ (\cref{fig:SI_star_Z}).
+Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki (\cref{fig:SI_star_Z}).
 
 Następnie popatrzmy na grafy cykliczne.
 Skoro zachowują się one podobnie do grafów ścieżkowych to zasymulujemy jedynie wartości oczekiwane zmiennej $Y_t$ dla $t=0.4\frac{n}{p}$ oraz $Z$.

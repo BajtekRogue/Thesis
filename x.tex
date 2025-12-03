@@ -1,6 +1,6 @@
-\documentclass[a4paper,12pt,openright]{book}
+\documentclass[a4paper,12pt]{book}
 
-% Packages 
+% ------------------------ Packages ------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
@@ -11,7 +11,7 @@
 \frenchspacing
 
 \usepackage{titlesec}
-% \usepackage{newtxtext}
+\usepackage{newtxtext}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -30,55 +30,65 @@
 \hypersetup{
 	colorlinks	= true,
 	linkcolor	= blue,
-  citecolor	= blue,
+    citecolor	= blue,
 	urlcolor	= blue
 }
 \urlstyle{same}  
 
 \usepackage[nameinlink,capitalise]{cleveref}  
 
-% Bibliography 
+% ------------------------ Bibliography ------------------------
 \usepackage[backend=biber,style=numeric]{biblatex}
 \addbibresource{../bibliography.bib}
 
-% Counters 
+% ------------------------ Counters ------------------------
 \usepackage{chngcntr}
 \counterwithin{figure}{chapter}
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
-% Margins 
+% ------------------------ Margins ------------------------
 \usepackage[
     a4paper,
     top=25mm,
     bottom=25mm,
-    inner=30mm,    
-    outer=25mm,    
-    bindingoffset=0mm
+    inner=30mm,    % lewy margines (2.5cm + 0.5cm oprawy)
+    outer=25mm,    % prawy margines
+    bindingoffset=0mm  % już uwzględnione w inner
 ]{geometry}
 
-% Page numbering
-\pagestyle{fancy}
-\fancyhf{}  
-\fancyfoot[R]{\thepage}  
-\renewcommand{\headrulewidth}{0pt}  
-\renewcommand{\footrulewidth}{0pt}  
+\titleformat{\chapter}
+  {\normalfont\bfseries\fontsize{14}{16}\selectfont} % pogrubione 14 pkt
+  {\thechapter}{1em}{}
 
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyfoot[R]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
-}
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{13}{15}\selectfont} % pogrubione 13 pkt
+  {\thesection}{1em}{}
 
-%Captions 
+\newcommand{\db}[2]{{\color{red}{#2}}{\color{green}{#1}} {\color{teal}{DB}}} % komentarze Dominik Bojko
+
+% ------------------------ Captions ------------------------
+% Podpisy tabel i rysunków (10pt)
 \captionsetup{
-    font=small,           
-    labelfont=bf,        
-    skip=10pt,          
+    font=small,           % 10pt
+    labelfont=bf,         % pogrubiona etykieta
+    skip=10pt,            % odstęp 10pt
     justification=centering
 }
 
-% Theorems 
+% Odstępy wokół floatów (10pt)
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+% Styl dla pierwszych stron rozdziałów - OPCJONALNE
+\fancypagestyle{chapterBeginStyle}{
+	\fancyhf{}
+	\fancyfoot[C]{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+}
+
+% ------------------------ Theorems ------------------------------
 \newtheorem{fact}{Fakt}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
@@ -101,53 +111,51 @@
 \crefname{algorithm}{Algorytm}{Algorytmu}
 \Crefname{algorithm}{Algorytmu}{Algorytmu}
 
-% Custom commands
+% ------------------------ Custom commands ------------------------
 \makeatletter
 \newcommand{\graphfamily}[1]{%
   \vspace{0.8em}%
   \noindent\textbf{#1}\par
   \vspace{0.3em}%
+  \@afterheading%
 }
 
 \newcommand{\distribution}[1]{%
   \vspace{0.8em}%
   \noindent\textbf{#1}\par
   \vspace{0.3em}%
+  \@afterheading%
 }
 \makeatother
 
-% Floats 
-\setlength{\textfloatsep}{10pt plus 2pt minus 2pt} 
-\setlength{\floatsep}{10pt plus 2pt minus 2pt} 
-\setlength{\intextsep}{10pt plus 2pt minus 2pt}
-
-% Algorithm Polish names
+% ------------------------ Algorithm Polish names ------------------
 \makeatletter
 \renewcommand{\ALG@name}{Algorytm}
 \makeatother
+
 \floatname{algorithm}{Algorytm}
 
-% Document 
+% ------------------------ Document ------------------------
+
+
+% \date{\today}
+
+\author{Bartosz Łabuz}
+\title{Probabilistyczne modele propagacji w grafach}
+% \supervisor{dr Dominik Bojko}
+% \keywords{keywords}
+
+
 \begin{document}
+\textbf{Kierunek: Informatyka Algorytmiczna (INA)}
 
-\begin{titlepage}
-    \centering
-    \vspace*{2cm}
-    {\Large\bfseries Probabilistyczne modele propagacji w grafach\par}
-    \vspace{1.5cm}
-    {\large Bartosz Łabuz\par}
-    \vspace{1cm}
-    {\normalsize Kierunek: Informatyka Algorytmiczna (INA)\par}
-    \vspace{2cm}
-    {\normalsize Promotor: dr Dominik Bojko\par}
-    \vfill
-    {\normalsize Słowa kluczowe: propagacja losowa, modele epidemiologiczne, teoria grafów\par}
-    \vspace{1cm}
-\end{titlepage}
+\maketitle
 
+\chapter*{Streszczenie}
 \input{abstract.tex}
 
 \tableofcontents
+\newpage
 
 \chapter{Wstęp}
 \input{intro.tex}
@@ -164,7 +172,7 @@
 \chapter{Analiza modelu SI}
 \input{SI.tex}
 
-\chapter{Rozkłady umierające}
+\chapter{Rozkłady wymierające}
 \input{k_dist.tex}
 
 \chapter{Analiza modelu SIR}
@@ -175,8 +183,6 @@
 
 \chapter{Podsumowanie}
 \input{conclusion.tex}
-
-\backmatter
 
 \nocite{*}
 \printbibliography[heading=bibintoc,title={Bibliografia}]

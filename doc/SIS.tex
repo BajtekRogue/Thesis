@@ -11,7 +11,7 @@ Wtedy zachodzą następujące tożsamości:
 \end{theorem}
 
 \begin{proof}
-Dowód $\mathbb{P}[X_v = \infty] > 0$ oraz $\mathbb{P}[Z < \infty] = 1$ wynika z \Cref{theorem:infection_dies_out_SIR}.
+Tożsamości $\mathbb{P}[X_v = \infty] > 0$ oraz $\mathbb{P}[Z < \infty] = 1$ wynikają z \Cref{theorem:infection_dies_out_SIR}.
 Skoro infekcja prawie na pewno wymrze to $\mathbf{1}_{Y_t} \xrightarrow{\text{a.s}} 0$ a więc i $Y_t \xrightarrow{\text{a.s}} 0$.
 Zauważmy, że $0\le Y_t \le |V|$ dla każdego $t$.
 Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
@@ -23,7 +23,8 @@ Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
 
 \section{Dwa wierzchołki, jedna krawędź}
 
-Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ oraz krawędziach $E=\{\{u,v\}\}$ oraz wierzchołku początkowym $u$.
+Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ i jednej krawędzi między nimi.
+Za wierzchołek początkowy przyjmijmy $u$.
 Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
@@ -37,15 +38,15 @@ Zauważmy, że $Y_t\in\{0,1,2\}$.
 Prawdopodobieństwa przejść są następujące:
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[Y_{t+1} = 0 | Y_t = 0 ] &= 1,\\
-\mathbb{P}[Y_{t+1} = 0 | Y_t = 1 ] &= q\alpha,\\
-\mathbb{P}[Y_{t+1} = 0 | Y_t = 2 ] &= \alpha^2,\\
-\mathbb{P}[Y_{t+1} = 1 | Y_t = 0 ] &= 0,\\
-\mathbb{P}[Y_{t+1} = 1 | Y_t = 1 ] &= p\alpha+q\beta,\\
-\mathbb{P}[Y_{t+1} = 1 | Y_t = 2 ] &= 2\alpha\beta,\\
-\mathbb{P}[Y_{t+1} = 2 | Y_t = 0 ] &= 0,\\
-\mathbb{P}[Y_{t+1} = 2 | Y_t = 1 ] &= p\beta,\\
-\mathbb{P}[Y_{t+1} = 2 | Y_t = 2 ] &= \beta^2.
+    \mathbb{P}[Y_{t+1} = 0 | Y_t = 0 ] &= 1,\\
+    \mathbb{P}[Y_{t+1} = 0 | Y_t = 1 ] &= q\alpha,\\
+    \mathbb{P}[Y_{t+1} = 0 | Y_t = 2 ] &= \alpha^2,\\
+    \mathbb{P}[Y_{t+1} = 1 | Y_t = 0 ] &= 0,\\
+    \mathbb{P}[Y_{t+1} = 1 | Y_t = 1 ] &= p\alpha+q\beta,\\
+    \mathbb{P}[Y_{t+1} = 1 | Y_t = 2 ] &= 2\alpha\beta,\\
+    \mathbb{P}[Y_{t+1} = 2 | Y_t = 0 ] &= 0,\\
+    \mathbb{P}[Y_{t+1} = 2 | Y_t = 1 ] &= p\beta,\\
+    \mathbb{P}[Y_{t+1} = 2 | Y_t = 2 ] &= \beta^2.
 \end{aligned}
 \end{equation*}
 Z wzoru na prawdopodobieństwo całkowite dla $k\in \{0,1,2\}$ mamy:
@@ -66,13 +67,13 @@ Połóżmy
 \[
 \mathbf{P} = 
 \begin{bmatrix}
-1 & q\alpha & \alpha^2 \\
-0 & p\alpha+q\beta  & 2\alpha\beta \\
-0 & p\beta & \beta^2
-\end{bmatrix}, \quad \mathbf{y}_t = \begin{bmatrix}
-a_t \\
-b_t \\
-c_t
+    1 & q\alpha & \alpha^2 \\
+    0 & p\alpha+q\beta  & 2\alpha\beta \\
+    0 & p\beta & \beta^2
+    \end{bmatrix}, \quad \mathbf{y}_t = \begin{bmatrix}
+    a_t \\
+    b_t \\
+    c_t
 \end{bmatrix}.
 \]
 Wtedy $\mathbf{y}_{t+1}=\mathbf{P}\mathbf{y}_t$, a więc $\mathbf{y}_{t}=\mathbf{P}^t\mathbf{y}_0$. 
@@ -86,16 +87,16 @@ Przyjrzyjmy się teraz zmiennej $Z$.
 Mamy $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 0] = b_t + c_t$. Oznaczmy
 \[
 \mathbf{Q} = 
-\begin{bmatrix}
-p\alpha+q\beta  & 2\alpha\beta \\p\beta & \beta^2
-\end{bmatrix}, 
-\quad \mathbf{z}_t = \begin{bmatrix}
-b_t \\
-c_t
-\end{bmatrix},
-\quad \mathbf{1} = \begin{bmatrix}
-1 \\
-1
+    \begin{bmatrix}
+    p\alpha+q\beta  & 2\alpha\beta \\p\beta & \beta^2
+    \end{bmatrix}, 
+    \quad \mathbf{z}_t = \begin{bmatrix}
+    b_t \\
+    c_t
+    \end{bmatrix},
+    \quad \mathbf{1} = \begin{bmatrix}
+    1 \\
+    1
 \end{bmatrix}.
 \]
 Wtedy $\mathbb{P}[Z>t] = \mathbf{1}^\top \mathbf{z}_t = \mathbf{1}^\top \mathbf{Q}^t \mathbf{z}_0$. 
@@ -126,13 +127,13 @@ gdzie $\Delta=\det(\mathbf{I} - \mathbf{Q})$.
 Obliczmy teraz ten wyznacznik:
 \begin{equation*}
 \begin{aligned}
-\Delta &=(1 - p\alpha-q\beta)(1 -\beta^2) - (-2\alpha\beta)(-p\beta) \\
-&= 1-p\alpha-q\beta-\beta^2+p\alpha\beta^2+q\beta^3-2p\alpha\beta \\
-&=(1-\beta^2)(1-q\beta)-p\alpha(1+\beta^2)\\
-&= (1-{(1-\alpha)}^2)(1-(1-p)(1-\alpha))-p\alpha(1+{(1-\alpha)}^2) \\
-&=\alpha(2-\alpha)(p+\alpha-p\alpha)-p\alpha(2-2\alpha+\alpha^2) \\
-&=\alpha(2p+2\alpha-2p\alpha-\alpha p-\alpha^2+p\alpha^2-2p+2\alpha p-p\alpha^2) \\
-&=\alpha^2(2-p-\alpha)=\alpha^2(q+\beta).
+    \Delta &=(1 - p\alpha-q\beta)(1 -\beta^2) - (-2\alpha\beta)(-p\beta) \\
+    &= 1-p\alpha-q\beta-\beta^2+p\alpha\beta^2+q\beta^3-2p\alpha\beta \\
+    &=(1-\beta^2)(1-q\beta)-p\alpha(1+\beta^2)\\
+    &= (1-{(1-\alpha)}^2)(1-(1-p)(1-\alpha))-p\alpha(1+{(1-\alpha)}^2) \\
+    &=\alpha(2-\alpha)(p+\alpha-p\alpha)-p\alpha(2-2\alpha+\alpha^2) \\
+    &=\alpha(2p+2\alpha-2p\alpha-\alpha p-\alpha^2+p\alpha^2-2p+2\alpha p-p\alpha^2) \\
+    &=\alpha^2(2-p-\alpha)=\alpha^2(q+\beta).
 \end{aligned}
 \end{equation*}
 Ostatecznie otrzymujemy:
@@ -145,7 +146,6 @@ Ostatecznie otrzymujemy:
 
 Po analizie dla $\mathrm{K}_2$ postarajmy się ją uogólnić dla $\mathrm{K}_n$.
 Ze względu na symetrie dowolny stan z taką samą liczbą zainfekowanych wierzchołków jest izomorficzny.
-Z \Cref{theorem:infection_dies_out_SIS} wiemy, że $\mathbb{E}[Y_t]\to 0$.
 Ustalmy $t\in\mathbb{N}$.
 Niech $A_t$ będzie zmienną losową oznaczająca liczbę wierzchołków, które przetrwają rundę $t$ oraz $B_t$ liczbę nowo zainfekowanych wierzchołków w tej rundzie.
 Formalnie 
@@ -231,16 +231,11 @@ Licząc wartość oczekiwaną dostajemy
 
 Dla modelu SIS przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
 Na nasze potrzeby wystarczy nam $n=10$.
-Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\Cref{fig:SIS_p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\Cref{fig:SIS_p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\Cref{fig:SIS_p0.5_a0.9}).
+Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\cref{fig:SIS_p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\cref{fig:SIS_p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\cref{fig:SIS_p0.5_a0.9}).
 Połóżmy $\tau=\max\{20, \mathbb{E}[Z]\}$.
 Dalej wyznaczymy rozkład $Y_t$ dla $t\in\{0.2\tau, 0.4\tau, 0.6\tau, 0.8\tau\}$.
 Wartość oczekiwaną obliczmy dla $t\in\{1,2,\dots,\tau\}$ oraz $t\in\{1,2,\dots,10\tau\}$.
 Przeprowadzimy teraz serie symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
-Dla wszystkich symulacji ustalmy $p=0.2$.
-Rozkłady zmiennej $Y_t$ oraz $Z$ będziemy ustalać dla grafów mających $100$ wierzchołków.
-Dla $Y_t$ będziemy wybierać $t$ zależne od konkretnej rodziny.
-Wartość oczekiwaną $Z$ będziemy wyznaczać dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
-Wreszcie zasymulujemy rozkład $Z$ a potem $\mathbb{E}[Z]$ dla $n\in\{1,2,\dots,10\}$.
 Symulacje dokonujemy korzystając z \Cref{algo:SIS}.
 
 Dla parametrów $p=0.1,\;\alpha=0.9$ widzimy, że infekcja dość szybko wymiera, większość masy prawdopodobieństwa $Y_t$ jest w $0$.

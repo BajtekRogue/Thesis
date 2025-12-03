@@ -1,4 +1,3 @@
-
 Dany jest graf spójny nieskierowany $G = (V, E)$. 
 Propagacja na takim grafie jest procesem stochastycznym. 
 Zakładamy, że czas dla tego procesu jest dyskretny i mierzony w jednostkach naturalnych, zatem za zbiór chwil przyjmujemy $\mathbb{N}$.  
@@ -7,6 +6,7 @@ W każdej chwili $t \in \mathbb{N}$ każdy wierzchołek $v \in V$ znajduje się 
 Nie będzie nas interesować przestrzeń zdarzeń elementarnych tego procesu.
 Definiujemy realizacje zmiennej losową $\mathbf{X} : \mathbb{N}\times V \to \mathcal{Q}$ określającą stany wierzchołków grafu w czasie.
 Mamy $\mathbf{X}_t(v) = Q$ wtedy i tylko wtedy, gdy wierzchołek $v$ w chwili $t$ znajduje się w stanie $Q$.  
+
 
 \section{Model SI}
 
@@ -23,7 +23,7 @@ S, & \text{jeśli } v \neq s.
 \]
 W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$.  
 Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.  
-W modelu \textbf{SI} liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
+W modelu SI liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
 Dla uproszczenia notacji kładziemy 
 \[
     q=1-p,\quad \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}, \quad i_v=|\mathrm{N}(v) \cap \mathcal{I}_t|.
@@ -57,12 +57,12 @@ Dodatkowo definiujemy zmienną $Z$ opisującą czas całkowitego zarażenia graf
     Z = \min \{ t \in \mathbb{N} : \mathcal{I}_t = V\}.
 \]
 Jeśli ta sytuacją nigdy nie nastąpi to $Z=\infty$.
-Dla propagacji \textbf{SI} zainfekowanie całego grafu jest jednakże zdarzeniem pewnym.
-Alternatywnie możemy zapisać $Z = \max_{v \in V} X_v$.  
+Dla propagacji SI zainfekowanie całego grafu jest jednakże zdarzeniem pewnym. 
 Wyznacznie rozkładu $Z$ oraz jej wartości oczekiwanej dla konkretnych rodzin grafów będzie głównym celem w tym modelu.
 
+
 \begin{figure}[ht]
-\begin{center}
+\centering 
 \begin{tikzpicture}[scale=1.5, node distance=3cm]
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
@@ -71,7 +71,6 @@ Wyznacznie rozkładu $Z$ oraz jej wartości oczekiwanej dla konkretnych rodzin g
     \draw[->, thick] (S) to node[above] {$1-q^{i_v}$} (I);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SI.}
-\end{center}
 \end{figure}
 
 
@@ -109,16 +108,16 @@ W kontraście dla modelu SI zachodzi $\mathbb{P}[X_v=\infty]>0$ (\cref{theorem:i
 Z tego powodu wartość oczekiwana $\mathbb{E}[X_v]=\infty$ niezależnie od struktury grafu.
 Dlatego też poza rozkładem $X_v$ możemy wyznaczyć $\mathbb{E}[X_v|X_v<\infty]$.
 Istnienie stanu $R$ narzuca pomysł rozważania podobnej zmiennej na pierwszy czas wyzdrowienia wierzchołka $v$.
-Ale transmisja ze stanu $I$ do $R$ na pojedynczym wierzchołku jest rozkładem $\mathrm{Geo}(\alpha)$, a więc zmienna ta była by po prostu sumą rozkładu geometrycznego z $X_v$.
+Ale transmisja ze stanu $I$ do $R$ na pojedynczym wierzchołku jest rozkładem $\mathrm{Geo}(\alpha)$, a więc zmienna ta była by po prostu sumą rozkładu geometrycznego oraz $X_v$.
 Z tego powodu tego nie będziemy jej rozważać. 
 Zamiast rozważać liczbę tylko zainfekowanych lub tylko wyzdrowiałych wierzchołków będziemy rozważać liczbe niepodatnych wierzchołków po $t$ krokach.
 Kładziemy więc
 \[
     Y_t=|\mathcal{I}_t\cup\mathcal{R}_t|.
 \]
-Zdarzenie $\mathbb{P}[\mathcal{I}_t=\varnothing]\to1$ wraz z $t\to\infty$ a więc możemy zdefiniować zmienną $Z$ oznaczającą czas wygaśnięcia infekcji.
+Mamy $\mathbb{P}[\mathcal{I}_t=\varnothing]\to1$ wraz z $t\to\infty$ (\cref{theorem:infection_dies_out_SIR}) a więc możemy zdefiniować zmienną $Z$ oznaczającą czas wygaśnięcia infekcji.
 Dla uproszczenia będziemy rozważać moment w którym żaden nowy wierzchołek nie może być zarażony.
-A więc 
+Zatem
 \[
     Z = \min\{t\in\mathbb{N}: \forall v\in\mathcal{I}_t \quad \mathcal{S}_t\cap\mathrm{N}(v)=\varnothing\}.
 \]
@@ -129,7 +128,7 @@ Dodatkowo definiujemy zmienną $W$ będącą liczba finalnie wyzdrowiałych wier
 Rozkłady $Z,W$ jak i ich wartości oczekiwane będą naszym głównym obiektem zainteresowań w tym modelu.
 
 \begin{figure}[ht]
-\begin{center}
+\centering 
 \begin{tikzpicture}[scale=1.5, node distance=3cm]
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
@@ -141,7 +140,6 @@ Rozkłady $Z,W$ jak i ich wartości oczekiwane będą naszym głównym obiektem 
     \draw[->, thick] (I) to node[above] {$\alpha$} (R);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SIR.}
-\end{center}
 \end{figure}
 
 
@@ -149,7 +147,7 @@ Rozkłady $Z,W$ jak i ich wartości oczekiwane będą naszym głównym obiektem 
 
 Model \textbf{Susceptible—Infected—Susceptible (SIS)} rozszerza model SI o powracanie wierzchołków zarażonych do stanu podatnego.  
 Wierzchołek zainfekowany może powrócić do stanu podatnego z prawdopodobieństwem $\alpha \in (0;1)$.  
-Tutaj mamy również $\mathcal{Q} = \{S, I\}$.  
+Tutaj tak jak w SI mamy $\mathcal{Q} = \{S, I\}$.  
 W modelu SIS liczba zainfekowanych wierzchołków może oscylować w czasie i nie musi osiągnąć stanu pełnego zakażenia.  
 Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.  
 Każda runda składa się z dwóch faz.
@@ -173,18 +171,19 @@ oraz dla $t\in\mathbb{N}$ definiujemy
 \[
     Y_t = |\mathcal{I}_t|.
 \]
-Dodatkowo definiujemy zmienną losową opisującą czas wygaśnięcia infekcji:
+Wygaśnięcie infekcji zachodzi z prawdopodobieństwem $1$ (\cref{theorem:infection_dies_out_SIS}).
+A więc definiujemy zmienną losową opisującą czas wygaśnięcia infekcji:
 \[
     Z = \min \{ t \in \mathbb{N} : \mathcal{I}_t = \varnothing\}.
 \]
-Wygaśnięcie infekcji zachodzi z prawdopodobieństwem $1$ (patrz \cref{theorem:infection_dies_out_SIS}).
-Mamy $\mathbb{P}[X_v=\infty] > 0$ a więc interesować nas będzie $\mathbb{E}[X_v|X_v<\infty]$.
-Dalej wykażemy, że $\mathbb{E}[Y_t]$ dążą do $0$, a więc także nie będą nas interesować.
+Mamy $\mathbb{P}[X_v=\infty] > 0$ a zatem interesować nas będzie $\mathbb{E}[X_v|X_v<\infty]$.
+Dalej wykażemy, że $\mathbb{E}[Y_t]$ dążą do $0$. (\cref{theorem:infection_dies_out_SIS})
+Dlatego też także nie będą nas interesować.
 Skupimy się tylko na rozkładzie $Y_t$.
 Jeśli chodzi o zmienną $Z$ to przyjrzyjmy się zarówno jej rozkładowi jak i wartości oczekiwanej.
 
 \begin{figure}[ht]
-\begin{center}
+\centering 
 \begin{tikzpicture}[scale=1.5, node distance=3.5cm]
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
@@ -194,5 +193,4 @@ Jeśli chodzi o zmienną $Z$ to przyjrzyjmy się zarówno jej rozkładowi jak i 
     \draw[->, thick, bend left=30] (I) to node[below] {$\alpha$} (S);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SIS.}
-\end{center}
 \end{figure}

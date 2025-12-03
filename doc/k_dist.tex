@@ -1,12 +1,15 @@
 W celu ułatwienia analizy modeli SIR oraz SIS wprowadzimy nowe rozkłady prawdopodobieństwa uwzgledniajace możliwość przerwania propagacji.
-Te zmienne losowe będą przyjmować wartość nieskończoność w sytuacji, w której nastąpi przerwanie przed pożądanym rezultatem.
+Zmienne losowe mające te rozkłady będą przyjmować wartość nieskończoność w sytuacji, w której nastąpi przerwanie przed pożądanym rezultatem.
 Jako że nastepuje to z dodatnim prawdopodobieństwem, $\mathbb{P}[X=\infty]>0$, to ich wartości oczekiwane wynosić będą nieskończoność, $\mathbb{E}[X]=\infty$.
 Interesować nas więc bedzie wartość oczekiwana warunkowa przy warunku, że wartość zmiennej losowej jest skończona a więc $\mathbb{E}[X|X<\infty]$.
 
+
 \section{Rozkład umierający geometryczny}
+
 Rozkład umierający geometryczny jest wariantem rozkładu geometrycznego, w którym proces może zostać przerwany z prawdopodobieństwem $\alpha\in(0;1)$ po każdej próbie.
 Zmienna $X$ ma rozkład umierający geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu w przypadku, w którym sukces nastąpi przed przerwaniem eksperymentu.
-Jeśli natomiast proces zostanie zabity szybciej niż pierwsza porażka to wtedy $X=\infty$.
+Jeśli natomiast proces zostanie zabity szybciej niż pierwszy sukces to wtedy $X=\infty$.
+Oznaczamy $X \sim \mathrm{KGeo}(p,\alpha)$.
 Dla wygody oznaczmy $q=1-p, \; \beta=1-\alpha$.
 Aby sukces nastąpił po $k$ rundach to potrzebujemy $k-1$ niepowodzeń próby jak i jej przerwania a następnie sukcesu.
 A zatem
@@ -19,10 +22,9 @@ Dystrybuanta jest więc równa:
 \]
 Ponadto
 \[
-    \mathbb{P}[X < \infty] = \sum_{k=0}^{\infty} \mathbb{P}[X=k] = \sum_{k=0}^{\infty} p{(q\beta)}^{k-1} = \frac{p}{1-q\beta}. 
+    \mathbb{P}[X < \infty] = \sum_{k=0}^{\infty} \mathbb{P}[X=k] = \sum_{k=0}^{\infty} p{(q\beta)}^{k-1} = \frac{p}{1-q\beta}, 
 \]
-Suma wszystkich prawdopodobieństw wynosi $1$.
-A więc
+oraz
 \[
     \mathbb{P}[X=\infty] = 1 - \frac{p}{1-q\beta} = \frac{q\alpha}{1-q\beta}.
 \]
@@ -30,27 +32,33 @@ Wartość oczekiwana wynosi nieskończoność.
 Natomiast
 \begin{equation*}
 \begin{aligned}
-\mathbb{E}[X| X < \infty]
-&= \frac{1}{\mathbb{P}[X<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X_v=t] = \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p\\
-& = (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
+    \mathbb{E}[X| X < \infty]
+    &= \frac{1}{\mathbb{P}[X<\infty]}\sum_{t=1}^{\infty} t \cdot \mathbb{P}[X=t] 
+    = \frac{1-q\beta}{p} \sum_{t=1}^{\infty} t {(q\beta)}^{t-1}p\\
+    &= (1-q\beta)\cdot \frac{1}{{(1-q\beta)}^2}=\frac{1}{1-q\beta}.
 \end{aligned}
 \end{equation*}
-Oznaczamy $X \sim \mathrm{KGeo}(p,\alpha)$.
 
 
 \section{Rozkład umierający ujemny dwumianowy}
+
 Rozkład umierający ujemny dwumianowy jest wariantem rozkładu ujemnego dwumianowego, w którym doświadczenia mogą zostać przerwane z prawdopodobieństwem $\alpha\in(0;1)$ po każdej próbie.
 Zmienna $X$ ma rozkład umierający ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów próbach Bernoulliego, gdzie po każdej próbie proces może się zakończyć.
 Jeśli proces zostanie zabity szybciej niż zajdzie $m$ sukcesów to przyjmujemy $X=\infty$.
+Oznaczamy $X\sim\mathrm{KNegBin}(m,p,\alpha)$.
 Dla wygody oznaczmy $q=1-p, \; \beta=1-\alpha$.
-Alternatywnie istnieją niezależne zmienne $Y_1,Y_2,\dots,Y_m\sim\mathrm{KGeo}(p,\alpha)$ takie, że $X=Y_1+Y_2+\dots Y_m$.
+Alternatywnie istnieją niezależne zmienne $Y_1,\dots,Y_m\sim\mathrm{KGeo}(p,\alpha)$ takie, że $X=Y_1+\dots Y_m$.
 Aby wyznaczyć rozkład $X$ ustalmy $k\ge m$ i niech $K=\{\mathbf{y}\in\mathbb{N}_+^m:y_1+\cdots+y_m=k\}$.
 Wtedy
 \begin{equation*}
 \begin{aligned}
-    \mathbb{P}[X=k] &=\sum_{\mathbf{y}\in K} \mathbb{P}[Y_1=y_1,\dots,Y_m=y_m]=\sum_{\mathbf{y}\in K} \prod_{j=1}^{m}\mathbb{P}[Y_j=y_j] \\
-    &= \sum_{\mathbf{y}\in K} \prod_{j=1}^{m} p{(q\beta)}^{y_j-1}=\sum_{\mathbf{y}\in K} p^m{(q\beta)}^{y_1+\cdots +y_m-m}  \\
-    &=\sum_{\mathbf{y}\in K}p^m{(q\beta)}^{k-m} = |K|\cdot p^m{(q\beta)}^{k-m}.
+    \mathbb{P}[X=k] 
+    &=\sum_{\mathbf{y}\in K} \mathbb{P}[Y_1=y_1,\dots,Y_m=y_m]
+    =\sum_{\mathbf{y}\in K} \prod_{j=1}^{m}\mathbb{P}[Y_j=y_j] 
+    = \sum_{\mathbf{y}\in K} \prod_{j=1}^{m} p{(q\beta)}^{y_j-1} \\
+    &=\sum_{\mathbf{y}\in K} p^m{(q\beta)}^{y_1+\cdots +y_m-m}  
+    =\sum_{\mathbf{y}\in K}p^m{(q\beta)}^{k-m} 
+    = |K|\cdot p^m{(q\beta)}^{k-m}.
 \end{aligned}    
 \end{equation*}
 Łatwym kombinatorycznym argumentem można pokazać, że $|K|=\binom{k-1}{m-1}$.
@@ -61,9 +69,12 @@ Zatem
 Dalej mamy
 \begin{equation*}
 \begin{aligned}
-    \mathbb{P}[X<\infty] &=\sum_{k=m}^{\infty} \mathbb{P}[X=k] = \sum_{k=m}^{\infty} \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} =\\
-    &= p^m{(q\beta)}^{-m} \sum_{k=m}^{\infty} \binom{k-1}{m-1} {(q\beta)}^k =p^m {(q\beta)}^{-m} \frac{{(q\beta)}^m}{{(1-q\beta)}^m} \\
-    &= \frac{p^m}{{(1-q\beta)}^m}.
+    \mathbb{P}[X<\infty] 
+    &=\sum_{k=m}^{\infty} \mathbb{P}[X=k] 
+    = \sum_{k=m}^{\infty} \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} 
+    = p^m{(q\beta)}^{-m} \sum_{k=m}^{\infty} \binom{k-1}{m-1} {(q\beta)}^k \\
+    &=p^m {(q\beta)}^{-m} \frac{{(q\beta)}^m}{{(1-q\beta)}^m} 
+    = \frac{p^m}{{(1-q\beta)}^m}.
 \end{aligned}    
 \end{equation*}
 co daje nam
@@ -73,10 +84,11 @@ co daje nam
 Jeśli chodzi o wartość oczekiwaną to
 \begin{equation*}
 \begin{aligned}
-    &\mathbb{E}[X|X<\infty]=\frac{1}{\mathbb{P}[X<\infty]}\sum_{k=m}^{\infty} k\cdot \mathbb{P}[X=k]\\
-    &=\frac{{(1-q\beta)}^m}{p^m}\sum_{k=m}^{\infty} k \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} = \\
-    &=\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \sum_{k=m}^{\infty} k \binom{k-1}{m-1} {(q\beta)}^k = \\
-    &=\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \cdot \frac{m{(q\beta)}^m}{{(1-q\beta)}^{m+1}}=\frac{m}{1-q\beta}. 
+    \mathbb{E}[X|X<\infty]
+    &=\frac{1}{\mathbb{P}[X<\infty]}\sum_{k=m}^{\infty} k\cdot \mathbb{P}[X=k]
+    =\frac{{(1-q\beta)}^m}{p^m}\sum_{k=m}^{\infty} k \binom{k-1}{m-1} p^m {(q\beta)}^{k-m}\\  
+    &=\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \sum_{k=m}^{\infty} k \binom{k-1}{m-1} {(q\beta)}^k 
+    =\frac{{(1-q\beta)}^m}{{(q\beta)}^m} \cdot \frac{m{(q\beta)}^m}{{(1-q\beta)}^{m+1}}
+    =\frac{m}{1-q\beta}. 
 \end{aligned}    
 \end{equation*}
-Oznaczamy $X\sim\mathrm{KNegBin}(m,p,\alpha)$.

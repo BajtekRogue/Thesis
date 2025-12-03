@@ -1,35 +1,40 @@
 \section{Wnioski}
 
-W niniejszej pracy przeprowadziliśmy kompleksową analizę trzech klasycznych modeli propagacji stochastycznej w grafach: SI, SIR oraz SIS. 
-Wyznaczenie rozkładów prawdopodobieństwa i wartości oczekiwanych kluczowych zmiennych losowych ($X_v$, $Y_t$, $Z$, $W$) dla różnych topologii sieciowych pozwoliło na głębokie zrozumienie wpływu struktury grafu na dynamikę propagacji.
+W niniejszej pracy przeprowadziliśmy kompleksową analizę trzech klasycznych modeli propagacji w grafach: SI, SIR oraz SIS. 
+Wyznaczenie rozkładów prawdopodobieństwa i wartości oczekiwanych kluczowych zmiennych losowych ($X_v$, $Y_t$, $Z$, $W$) dla różnych topologii grafów pozwoliło na głębokie zrozumienie wpływu struktury grafu na dynamikę propagacji.
 
 \paragraph{Model SI.}
 Dla modelu SI udowodniliśmy, że całkowita infekcja grafu jest zdarzeniem pewnym oraz wyznaczyliśmy dokładne rozkłady dla wszystkich badanych rodzin grafów.
-Kluczowe wyniki obejmują:
+Kluczowe wyniki obejmują wartości $\mathbb{E}[Z]$:
 \begin{itemize}
-\item Dla grafów ścieżkowych $\mathrm{P}_n$: czas całkowitej infekcji $Z \sim \mathrm{NegBin}(n-1, p)$ z wartością oczekiwaną $\mathbb{E}[Z] = \frac{n-1}{p}$, co czyni je najbardziej odpornymi na szybką propagację.
-\item Dla grafów gwiazdowych $\mathrm{S}_n$: asymptotyczny czas infekcji $\mathbb{E}[Z] \sim \frac{H_n}{\log(\frac{1}{1-p})}$.
-\item Dla grafów cyklicznych $\mathrm{C}_n$: czas infekcji $\mathbb{E}[Z] \sim \frac{n-1}{2p}$, czyli w przybliżeniu połowa czasu dla grafów ścieżkowych dzięki dwukierunkowej propagacji.
-\item Dla grafów pełnych $\mathrm{K}_n$: udowodniliśmy, że $\lim\limits_{n \to \infty} \mathbb{E}[Z] = 2$, co oznacza, że gęste sieci są ekstremalnie podatne na szybką propagację.
+    \item Dla grafów ścieżkowych $\mathrm{P}_n$: $\mathbb{E}[Z] = \displaystyle\frac{n-1}{p}$.
+    \item Dla grafów gwiazdowych $\mathrm{S}_n$: $\mathbb{E}[Z] \sim \displaystyle\frac{H_n}{\log(\frac{1}{1-p})}$.
+    \item Dla grafów cyklicznych $\mathrm{C}_n$: $\mathbb{E}[Z] = \displaystyle\frac{n-1}{2p}+\frac{1}{4} + o(1)$.
+    \item Dla grafów pełnych $\mathrm{K}_n$: $\lim\limits_{n \to \infty} \mathbb{E}[Z] = 2$.
 \end{itemize}
-Wyprowadzone ogólne ograniczenie $\mathbb{E}[Z] \le h + \frac{h}{\lambda}(\log(\frac{n-1}{h}) + 1)$, gdzie $h$ jest ekscentrycznością źródła, dostarcza uniwersalnego narzędzia do oszacowania czasu propagacji w dowolnym grafie spójnym.
+Wyprowadzone ogólne ograniczenie $\mathbb{E}[Z] \le h + \displaystyle\frac{h}{\lambda}\cdot(\log(\frac{n-1}{h}) + 1)$, gdzie $h$ jest ekscentrycznością źródła a $\lambda=\log(\frac{1}{1-p})$, pozwala na oszacowanie czasu propagacji w dowolnym grafie.
 
 \paragraph{Model SIR.}
-Wprowadzenie stanu wyzdrowiałego ($R$) fundamentalnie zmienia dynamikę propagacji. 
+Wprowadzone rozkłady wymierające (KGeo, KNegBin) w celu ułatwienia analizy modelu SIR ale też SIS.
 Udowodniliśmy, że wygaśnięcie infekcji jest zdarzeniem pewnym oraz $\mathbb{P}[X_v = \infty] > 0$ dla każdego wierzchołka $v \neq s$.
-Dla grafów ścieżkowych i gwiazdowych wyznaczyliśmy rozkłady zmiennych $W$ (liczba finalnie zarażonych) oraz $Z$ (czas wygaśnięcia).
-Kluczowe obserwacje to:
+Dla grafów ścieżkowych i gwiazdowych wyznaczyliśmy rozkłady zmiennych $W$ oraz $Z$.
+Wartości oczekiwane $Z$ wynoszą:
 \begin{itemize}
-\item Parametr wyzdrowienia $\alpha$ ma kluczowy wpływ na zasięg epidemii — większe $\alpha$ prowadzi do mniejszego $\mathbb{E}[W]$.
-\item Dla grafów ścieżkowych: $\mathbb{E}[W] = \frac{1-\theta^n}{1-\theta}$ gdzie $\theta = \frac{p}{1-q\beta}$, co pokazuje wykładniczy spadek zasięgu dla małych wartości $p$ lub dużych $\alpha$.
-\item Wprowadzone rozkłady wymierające (KGeo, KNegBin) okazały się niezbędnym narzędziem do precyzyjnej analizy modeli z możliwością przerwania propagacji.
+    \item Dla grafów ścieżkowych $\mathrm{P}_n$: $\mathbb{E}[Z]=\displaystyle\frac{1-\theta^{n-1}}{q\alpha}$ gdzie $\theta = \displaystyle\frac{p}{1-q\beta}$.
+    \item Dla grafów gwiazdowych $\mathrm{S}_n$: $\mathbb{E}[Z]\approx \displaystyle\frac{1}{\log(\beta)} \cdot \frac{n!}{{\big(\frac{\log(\beta)}{\log(q)}+1\big)}_n} - \frac{1}{\log(\beta)}$.
 \end{itemize}
+a zmiennej $W$:
+\begin{itemize}
+    \item Dla grafów ścieżkowych $\mathrm{P}_n$: $\mathbb{E}[W]=\displaystyle\frac{1-\theta^n}{1-\theta}$ gdzie $\theta = \displaystyle\frac{p}{1-q\beta}$.
+    \item Dla grafów gwiazdowych $\mathrm{S}_n$: $\mathbb{E}[W]=1+\displaystyle\frac{np}{1-q\beta}$.
+\end{itemize}
+
 
 \paragraph{Model SIS.}
 Analiza modelu SIS dla grafu pełnego $\mathrm{K}_n$ ujawniła najbardziej złożoną dynamikę spośród trzech modeli.
 Wykorzystanie formalizmu łańcuchów Markova pozwoliło na wyznaczenie rozkładów $Y_t$ i $Z$ poprzez macierze przejść.
-Udowodniliśmy, że mimo możliwości wielokrotnej reinfekacji, wygaśnięcie infekcji jest zdarzeniem pewnym oraz $\lim\limits_{t\to\infty} \mathbb{E}[Y_t] = 0$.
-Symulacje pokazały, że dla różnych wartości parametrów $p$ i $\alpha$ rozkłady $Y_t$ wykazują zarówno szybkie wygasanie (wysokie $\alpha$, niskie $p$) jak i długotrwałą oscylację z wieloma falami infekcji (wysokie $p$, wysokie $\alpha$).
+Udowodniliśmy, że  wygaśnięcie infekcji jest zdarzeniem pewnym mimo możliwości niezależnie od wartości parametrów $p$ i $\alpha$.
+Symulacje pokazały, że rozkłady $Y_t$ wykazują zarówno szybkie wygasanie jak i długotrwałą oscylację.
 
 \paragraph{Weryfikacja eksperymentalna.}
 Przeprowadzone symulacje komputerowe potwierdziły teoretyczne przewidywania dla wszystkich badanych modeli i topologii.
@@ -39,9 +44,9 @@ Szczególnie istotne było potwierdzenie, że dla grafu pełnego w modelu SI war
 \paragraph{Scenariusz aplikacyjny.}
 Przedstawiony scenariusz rozprzestrzeniania się wirusa komputerowego ilustruje praktyczną użyteczność modeli:
 \begin{itemize}
-\item Model SI odpowiada infrastrukturze bez zabezpieczeń (systemy legacy, SCADA).
+\item Model SI odpowiada infrastrukturze bez zabezpieczeń.
 \item Model SIR modeluje nowoczesne środowiska z automatycznymi łatkami bezpieczeństwa.
-\item Model SIS opisuje systemy z tymczasowymi mechanizmami oczyszczania (kontenery, IoT).
+\item Model SIS opisuje systemy z tymczasowymi mechanizmami oczyszczania.
 \end{itemize}
 
 
@@ -50,7 +55,7 @@ Przedstawiony scenariusz rozprzestrzeniania się wirusa komputerowego ilustruje 
 Przeprowadzona analiza otwiera kilka interesujących kierunków kontynuacji badań:
 
 \paragraph{Rozszerzenie na inne rodziny grafów.}
-Analiza ograniczyła się do czterech klasycznych rodzin grafów oraz drzew. 
+Analiza ograniczyła się do klasycznych rodzin grafów. 
 Naturalne rozszerzenie obejmowałoby:
 \begin{itemize}
 \item Grafy dwudzielne pełne $\mathrm{K}_{m,n}$, modelujące sieci z wyraźnym podziałem na dwie grupy (np. serwery i klienci).

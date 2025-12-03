@@ -1,6 +1,6 @@
 \section{Dwa wierzchołki, jedna krawędź}
 
-W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest SIR, przeanalizujmy graf o jednej krawędzi. 
+W celu oswojenia się z bardziej skomplikowanym modelem, jakim jest SIR, przeanalizujmy na początku graf o jednej krawędzi. 
 Niech $V=\{u,v\}$ oraz niech $u$ będzie wierzchołkiem startowym. 
 Oczywiście $X_u=0$. 
 Pierwsza runda jest identyczna jak w modelu SI, a więc $\mathbb{P}[X_v=1]=p$. 
@@ -10,8 +10,6 @@ Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny:
 \[
     X_v\sim \mathrm{KGeo}(p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
 \]
-Z założeń modelu $p,\alpha\in(0;1)$, a zatem $\mathbb{P}[X_v=\infty]\ne 0$. 
-Jest cecha kontrastująca SIR względem SI.
 
 Przyjrzyjmy się teraz zmiennej $Y_t$.
 Zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
@@ -24,17 +22,18 @@ Stąd
 \]
 Przechodząc w granicę $t\to\infty$ dostajemy
 \[
-    \mathbb{P}[W=1]=1-\frac{p}{1-q\beta}, \quad \mathbb{P}[W=2] = \frac{p}{1-q\beta}.
+    \mathbb{P}[W=1]=1-\frac{p}{1-q\beta}, \quad \mathbb{P}[W=2] = \frac{p}{1-q\beta},
 \]
-Co oczywiście daje nam natychmiast
+co oczywiście daje nam natychmiast
 \[
     \mathbb{E}[W] = 1 + \frac{p}{1-q\beta}.
 \]
 
 Jeśli chodzi o zmienną $Z$ to propagacja zakończy się gdy wierzchołek $v$ wyzdrowieje lub $u$ zostanie poinformowany.
-Dzieje się to z prawdopodobieństwem $1-q\beta$ a więc 
+Sytuacja ta zachodzi z prawdopodobieństwem $1-q\beta$.
+Czekamy na pierwszą taką chwile, a więc 
 \[
-    Z\sim\mathrm{Geo}(1-q\beta) \quad \mathbb{E}[Z]=\frac{1}{1-q\beta}.
+    Z\sim\mathrm{Geo}(1-q\beta), \quad \mathbb{E}[Z]=\frac{1}{1-q\beta}.
 \]
 
 
@@ -58,7 +57,7 @@ Ponadto dla $k\in\mathbb{N}$ zachodzi
 \begin{proof}
 Ustalmy $v\in V\setminus\{s\}$. 
 Jeśli po pierwszej rundzie źródło wyzdrowieje i nie przekaże dalej infekcji to $X_v=\infty$.
-Zatem $\mathbb{P}[X_v=\infty]\ge \alpha q > 0$.
+Zatem $\mathbb{P}[X_v=\infty]\ge \alpha q^{i_s} > 0$.
 Jeśli rozważamy propagacje jako łańcuch Markova to prawdopodobieństwo przejścia do stanu absorbującego, czyli $\mathcal{I}_t=\varnothing$, w czasie $t$ wynosi
 \[
     \alpha^{|\mathcal{I}_t|}\prod_{u\in \mathcal{I}_t} q^{|\mathrm{N}(u)\cap\mathcal{S}_t|}.
@@ -82,21 +81,22 @@ Podobnie jak w modelu SI propagacja rozchodzi się miedzy kolejnymi wierzchołka
 \[
     X_1=0, \quad X_v=X_{v-1}+U_v, \quad v\in\{2,3,\dots,n\},
 \]
-gdzie jednak $U_2,U_3,\dots,U_n\sim\mathrm{KGeo}(p,\alpha)$ oraz są niezależne.
-Stąd $X_v=U_2+U_3+\cdots+U_v$ a zatem $X_v$ ma rozkład umierający ujemny dwumianowy:
+gdzie jednak $U_2,U_3,\dots,U_n\sim\mathrm{KGeo}(p,\alpha)$.
+Zmienne te są niezależne.
+Mamy $X_v=U_2+U_3+\cdots+U_v$ a zatem $X_v$ ma rozkład umierający ujemny dwumianowy:
 \[
     X_v\sim\mathrm{KNegBin}(v-1,p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty] = \frac{v-1}{1-q\beta}.
 \]
 
 Jeśli chodzi o zmienną $Y_t$ to zauważmy, że
 \[
-    Y_t=\max\{j\in\{1,2,\dots,n\}: X_j\le t\}.
+    Y_t=\max\{j\in\{1,\dots,n\}: X_j\le t\}.
 \]
-A więc dla $k\in\{1,2,\dots,n\}$ mamy
+A więc dla $k\in\{1,\dots,n\}$ mamy
 \[
     \mathbb{P}[Y_t\ge k+1] = \mathbb{P}[X_{k+1}\le t] = \sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k}.
 \]
-Dalej mamy
+Dalej
 \[
     \mathbb{E}[Y_t] = \sum_{k=0}^{n-1} \mathbb{P}[Y_t\ge k+1] = 1+\sum_{k=1}^{n-1}\sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k}.
 \]
@@ -106,9 +106,9 @@ Przejdźmy teraz do zmiennej $W$.
     \mathbb{P}[W\ge k+1] = \lim_{t\to\infty} \sum_{j=k}^{t} \binom{j-1}{k-1}p^k {(q\beta)}^{j-k} = \Big{(\frac{p}{1-q\beta}\Big)}^k.
 \]
 Oznaczmy $\theta = \frac{p}{1-q\beta}$.
-Wtedy
+Wtedy dla $k\in\{1,\dots,n-1\}$ mamy
 \[
-    \mathbb{P}[W=k]=(1-\theta)\theta^{k-1}, \quad k\in\{1,2,\dots,n-1\}, \quad \mathbb{P}[W=n]=\theta^{n-1}.
+    \mathbb{P}[W=k]=(1-\theta)\theta^{k-1}, \quad \mathbb{P}[W=n]=\theta^{n-1}.
 \]
 Ponadto
 \[
@@ -126,7 +126,7 @@ Możemy zapisać $Q=W-\mathbf{1}_{W=n}$ a wtedy
 \[
     \mathbb{E}[Q]=\mathbb{E}[W]-\mathbb{P}[W=n]=\frac{1-\theta^n}{1-\theta}-\theta^{n-1}=\frac{1-\theta^{n-1}}{1-\theta}.
 \]
-Dalej $\mathbb{P}[Q=k]=\mathbb{P}[W=k]=(1-\theta)\theta^{k-1}$ dla $k\in\{1,2,\dots,n-2\}$ oraz $\mathbb{P}[Q=n-1]=\mathbb{P}[W\ge n-1] = \theta^{n-2}$.
+Dalej $\mathbb{P}[Q=k]=\mathbb{P}[W=k]=(1-\theta)\theta^{k-1}$ dla $k\in\{1,\dots,n-2\}$ oraz $\mathbb{P}[Q=n-1]=\mathbb{P}[W\ge n-1] = \theta^{n-2}$.
 Zachodzi zatem $\mathbb{P}[Z=t|Q=m]=\mathbb{P}[T_1+\cdots+T_m=t]$ ale $T_1+\cdots+T_m\sim\mathrm{NegBin}(m,1-q\beta)$ (\cref{fact:sum_of_geo_RV}).
 Daje nam to $\mathbb{P}[Z=t|Q=m]=\binom{t-1}{m-1} {(1-q\beta)}^m {(q\beta)}^{t-m}$.
 Z prawdopodobieństwa całkowitego dostajemy
@@ -142,11 +142,11 @@ Natomiast wartość oczekiwana zmiennej $Z$ wynosi
 \section{Grafy gwiezdne}
 
 Rozpatrzmy propagacje na rodzinie $\mathrm{S}_n$, z źródłem $0$.
-Dla $v\in\{1,2,\dots,n\}$ mamy 
+Dla $v\in\{1,\dots,n\}$ mamy 
 \[
     X_v\sim\mathrm{KGeo}(p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty] = \frac{1}{1-q\beta}.
 \]
-Zauważmy natomiast, że zmienne $X_1,X_2,\dots,X_n$ sa zależne, bo gdy centralny wierzchołek wyzdrowieje żaden z liści nie może już zostać zainfekowany.
+Zauważmy natomiast, że zmienne $X_1,\dots,X_n$ sa zależne, bo gdy centralny wierzchołek wyzdrowieje żaden z liści nie może już zostać zainfekowany.
 
 Przyjrzyjmy się teraz zmiennej $Y_t$. 
 Połóżmy $C=\min\{\tau\in\mathbb{N}:0\in\mathcal{R}_\tau\}$.
@@ -161,9 +161,10 @@ Ponadto $C\sim\mathrm{Geo}(\alpha)$ a więc $\mathbb{P}[C=j]=\alpha\beta^{j-1}$.
 Z prawdopodobieństwa całkowitego dostajemy
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[Y_t=k+1] &=\sum_{j=1}^\infty \mathbb{P}[Y_t=k+1|C=j]\cdot\mathbb{P}[C=j] = \\
-&=\sum_{j=1}^\infty \binom{n}{k}{(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\alpha\beta^{j-1} = \\
-&= \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\beta^j.
+    \mathbb{P}[Y_t=k+1] 
+    &=\sum_{j=1}^\infty \mathbb{P}[Y_t=k+1|C=j]\cdot\mathbb{P}[C=j] \\
+    &=\sum_{j=1}^\infty \binom{n}{k}{(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\alpha\beta^{j-1} \\
+    &= \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^{\min\{j,t\}})}^k{(q^{\min\{j,t\}})}^{n-k}\beta^j.
 \end{aligned}
 \end{equation*}
 Aby obliczyć wartość oczekiwana skorzystamy z \Cref{lemma:Formula_EYt}.
@@ -177,12 +178,14 @@ Licząc granice tych wyrażeń dla $t\to\infty$ dostajemy
     \mathbb{P}[W=k+1] = \frac{\alpha}{\beta}\binom{n}{k} \sum_{j=1}^\infty {(1-q^j)}^k{(q^j)}^{n-k}\beta^j, \quad \mathbb{E}[W]=1+\frac{np}{1-q\beta}.
 \]
 
-Propagacja się zakończy gdy centrum wyzdrowieje lub wszystkie liście zostaną zarażone. 
+Propagacja zakończy się gdy centrum wyzdrowieje lub wszystkie liście zostaną zarażone. 
 Stąd mamy
 \begin{equation*}
 \begin{aligned}
-\mathbb{P}[Z>t] &=\mathbb{P}[C>t]\cdot\mathbb{P}[Y_t<n+1|C>t]= \\
-&=\beta^t(1-\mathbb{P}[Y_t=n+1|C>t]) = \beta^t(1-{(1-q^t)}^n).
+    \mathbb{P}[Z>t] 
+    &=\mathbb{P}[C>t]\cdot\mathbb{P}[Y_t<n+1|C>t] \\
+    &=\beta^t(1-\mathbb{P}[Y_t=n+1|C>t]) 
+    = \beta^t(1-{(1-q^t)}^n).
 \end{aligned}
 \end{equation*}
 Bezpośrednie liczenie wartości oczekiwanej zmiennej $Z$ nie da nam zwiezłej postaci.
@@ -203,8 +206,11 @@ Wtedy też $x=-\frac{1}{a}\log(1-u)$ oraz $\mathrm{d}x=\frac{1}{a}e^{ax}\mathrm{
 Mamy zatem $e^{-bx}={(1-u)}^{\frac{b}{a}}, \; e^{ax}=\frac{1}{1-u}$.
 A więc całka wynosi
 \begin{align*}
-&\frac{1}{a}\int_{0}^{1} u^n {(1-u)}^{\frac{b}{a}-1} \;\mathrm{d}u = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
-&=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} = \frac{n!}{b} \cdot \frac{1}{{(\frac{b}{a}+1)}_n}.
+    &\frac{1}{a}\int_{0}^{1} u^n {(1-u)}^{\frac{b}{a}-1} \;\mathrm{d}u
+    = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) 
+    = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
+    &=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} 
+    = \frac{n!}{b} \cdot \frac{1}{{(\frac{b}{a}+1)}_n}.
 \end{align*}
 gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz ${(x)}_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammer'a.
 Ostatecznie otrzymujemy
@@ -217,7 +223,7 @@ Ostatecznie otrzymujemy
 
 W modelu SIR symulować będziemy rozkłady zmiennych $W,Z$ oraz ich wartości oczekiwane.
 Ustalmy $p=0.2$ oraz $\alpha=0.05$.
-Do przeprowadzenia eksperymentu używamy \cref{algo:SIR}.
+Do przeprowadzenia eksperymentu posłuży nam \cref{algo:SIR}.
 Rozkłady wyznaczymy na na grafach o $n=100$ wierzchołkach natomiast wartości oczekiwane dla $n\in\{1,2,\dots,300\}$.
 
 Jeśli chodzi o rodzinę $\mathrm{P}_n$ to rozkład $W$ pokrywa się idealnie z przewidywaniami.

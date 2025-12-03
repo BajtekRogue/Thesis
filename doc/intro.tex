@@ -26,36 +26,31 @@ Konkretnie, praca ma na celu:
 Praca składa się z następujących części:
 
 \textbf{Rozdział 2: Podstawy matematyczne.}
-Zawiera notację używaną w całej pracy, definicje badanych rodzin grafów, podstawowe rozkłady prawdopodobieństwa wraz z ich własnościami, oraz zbiór faktów, sum i nierówności wykorzystywanych w dowodach i obliczeniach.
+Zawiera notację używaną w całej pracy, definicje badanych rodzin grafów, wykorzystywane rozkłady prawdopodobieństwa wraz z ich własnościami, oraz zbiór faktów, sum i nierówności stosowane w dowodach i obliczeniach.
 
 \textbf{Rozdział 3: Modele propagacji losowej.}
 Wprowadza formalne definicje trzech badanych modeli: SI, SIR i SIS.
-Dla każdego modelu definiujemy zmienne losowe opisujące kluczowe aspekty propagacji.
-Przedstawiamy również diagramy przejść między stanami dla każdego modelu.
+Dla każdego modelu definiujemy zmienne losowe opisujące kluczowe aspekty propagacji oraz diagramy przejść między stanami.
 
 \textbf{Rozdział 4: Scenariusz aplikacyjny.}
 Ilustruje praktyczne zastosowanie modeli na przykładzie rozprzestrzeniania się wirusa komputerowego w różnych topologiach sieciowych.
-Pokazujemy, jak zmienne losowe zdefiniowane w Rozdziale 3 pozwalają na analizę ryzyka, planowanie zasobów i projektowanie odpornych architektur.
 
 \textbf{Rozdział 5: Analiza modelu SI.}
-Przeprowadzamy szczegółową analizę teoretyczną modelu SI dla wszystkich rodzin grafów ścieżkowych, gwiezdnych, cyklicznych, pełnych oraz drzew.
+Przeprowadzamy szczegółową analizę teoretyczną modelu SI dla rodzin grafów ścieżkowych, gwiezdnych, cyklicznych, pełnych oraz drzew.
 Wyznaczamy rozkłady prawdopodobieństwa i wartości oczekiwane zmiennych zdefiniowanych dla tego modelu.
 Wyprowadzamy ogólne ograniczenia na czas zarażenia. 
 Prezentujemy wyniki symulacji potwierdzające teoretyczne przewidywania.
 
-\textbf{Rozdział 6: Rozkłady wymierające.}
+\textbf{Rozdział 6: Rozkłady umierające.}
 Wprowadzamy rozkłady umierający geometryczny i umierający ujemny dwumianowy, które modelują propagację z możliwością przerwania procesu. 
-Rozkłady te są fundamentem analizy modeli SIR i SIS, gdzie infekcja może wygasnąć z dodatnim prawdopodobieństwem.
+Rozkłady te są potrzebne do analizy modeli SIR i SIS, gdzie infekcja może wygasnąć.
 
 \textbf{Rozdział 7: Analiza modelu SIR.}
-Koncentruje się na modelach SIR dla grafów ścieżkowych i gwiazdowych.
+Koncentruje się na modelu SIR dla grafów ścieżkowych i gwiazdowych.
 Wyznaczamy rozkłady i wartości oczekiwane odpowiednich zmiennych losowych.
 Wyniki weryfikujemy symulacjami.
 
 \textbf{Rozdział 8: Analiza modelu SIS.}
-W modelu SIS ograniczamy się do grafu pełnego, gdzie możliwość ponownej infekcji prowadzi do złożonej dynamiki oscylacyjnej.
+W modelu SIS ograniczamy się do grafu pełnego.
 Wykorzystujemy formalizm łańcuchów Markova do wyznaczenia interesujących nas rozkładów.
 Przeprowadzamy symulacje dla różnych wartości parametrów pokazujące oscylacyjny charakter propagacji.
-
-% \textbf{Rozdział 9: Extrema Propagation.}
-% Przedstawia zastosowanie wyników z modelu SI do analizy algorytmu Basic Extrema Propagation, który wykorzystuje mechanizm propagacji do efektywnego obliczania wartości ekstremalnych w sieciach rozproszonych.

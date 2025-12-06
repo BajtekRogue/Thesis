@@ -12,7 +12,7 @@ Wtedy zachodzą następujące tożsamości:
 
 \begin{proof}
 Tożsamości $\mathbb{P}[X_v = \infty] > 0$ oraz $\mathbb{P}[Z < \infty] = 1$ wynikają z \Cref{theorem:infection_dies_out_SIR}.
-Skoro infekcja prawie na pewno wymrze to $\mathbf{1}_{Y_t} \xrightarrow{\text{a.s}} 0$ a więc i $Y_t \xrightarrow{\text{a.s}} 0$.
+Skoro infekcja prawie na pewno wymrze, to $\mathbf{1}_{Y_t} \xrightarrow{\text{a.s}} 0$ a więc i $Y_t \xrightarrow{\text{a.s}} 0$.
 Zauważmy, że $0\le Y_t \le |V|$ dla każdego $t$.
 Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
 \[
@@ -21,14 +21,14 @@ Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
 \end{proof}
 
 
-\section{Dwa wierzchołki, jedna krawędź}
+\section{Dwa wierzchołki, jedna krawędź $\mathrm{P}_2$}
 
 Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ i jednej krawędzi między nimi.
 Za wierzchołek początkowy przyjmijmy $u$.
-Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
+Istnieją cztery możliwe stany: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
-Rozkład $X_v$ będzie tutaj taki sam jak dla modelu SIR a więc
+Rozkład $X_v$ będzie tutaj taki sam jak dla modelu SIR, a więc
 \[
     X_v\sim \mathrm{KGeo}(p,\alpha), \quad \mathbb{E}[X_v|X_v<\infty]=\frac{1}{1-q\beta}.
 \]
@@ -145,18 +145,15 @@ Ostatecznie otrzymujemy:
 \section{Grafy pełne}
 
 Po analizie dla $\mathrm{K}_2$ postarajmy się ją uogólnić dla $\mathrm{K}_n$.
-Ze względu na symetrie dowolny stan z taką samą liczbą zainfekowanych wierzchołków jest izomorficzny.
+Ze względu na symetrię dowolny stan z taką samą liczbą zainfekowanych wierzchołków jest izomorficzny.
 Ustalmy $t\in\mathbb{N}$.
-Niech $A_t$ będzie zmienną losową oznaczająca liczbę wierzchołków, które przetrwają rundę $t$ oraz $B_t$ liczbę nowo zainfekowanych wierzchołków w tej rundzie.
-Formalnie 
-\[
-    A_t=|\{v\in V: v \in \mathcal{S}_t \cap \mathcal{S}_{t+1}\}|, \quad B_t=|\{v\in V: v\in\mathcal{S}_t\cap \mathcal{I}_{t+1}\}|.
-\]
+Niech $A_t$ będzie zmienną losową oznaczająca liczbę wierzchołków, które przetrwają rundę $t$ oraz $B_t$ liczbą nowo zainfekowanych wierzchołków w tej rundzie.
+Formalnie $A_t=|\{v\in V: v \in \mathcal{S}_t \cap \mathcal{S}_{t+1}\}|, \, B_t=|\{v\in V: v\in\mathcal{S}_t\cap \mathcal{I}_{t+1}\}|$.
 Oznaczmy $i=Y_t$ oraz $j=Y_{t+1}$. 
 Każdy zarażony wierzchołek może przetrwać niezależnie od siebie w formacie próby Bernoulliego.
 A więc $A_t\sim \mathrm{Bin}(i,\beta)$.
 Dalej każdy podatny wierzchołek może zostać zarażony niezależnie przez $n-i$ sąsiadów.
-Szansa, że któremuś z nich się uda wynosi $1-q^i$.
+Szansa, że któremuś z nich się uda, wynosi $1-q^i$.
 Stąd $B_t\sim\mathrm{Bin}(n-i,1-q^i)$.
 Ponadto $Y_{t+1}=A_t+B_t$.
 Możemy policzyć warunkową liczbę oczekiwanych zarażeń w $t+1$ kroku:
@@ -168,7 +165,7 @@ Wtedy korzystając z \Cref{fact:sum_of_bin_RV_2} mamy
 \[
     P_{i\to j} = \sum_{\ell=\max\{0,j-(n-i)\}}^{\min\{i,j\}} \binom{i}{\ell}\binom{n-i}{j-\ell}\beta^\ell\alpha^{i-\ell}{(1-q^i)}^{j-\ell}{(q^i)}^{n-i-(j-\ell)}.
 \]
-Jest to uogólnienie prawdopodobieństw przejść, które wyznaczyliśmy wcześniej dla $n=2$.
+Jest to uogólnienie prawdopodobieństw przejść, które wcześniej zostały wyznaczone dla $n=2$.
 Ponownie z prawdopodobieństwa całkowitego dla $j\in\{0,1,\dots,n\}$ mamy
 \[
     \mathbb{P}[Y_{t+1}=j]=\sum_{i=0}^{n}\mathbb{P}[Y_{t+1}=j|Y_t=i]\cdot\mathbb{P}[Y_t=i].
@@ -197,7 +194,7 @@ Wartość oczekiwaną zmiennej $Y_t$ możemy obliczyć ze wzoru
 \[
     \mathbb{E}[Y_t] = \sum_{k=0}^{n} k\cdot \mathbf{y}_t^{(k)}.
 \]
-Macierz $\mathbf{P}$ jest kolumnowo stochastyczna a więc
+Macierz $\mathbf{P}$ jest kolumnowo stochastyczna, a więc
 \[
     \lim_{t\to\infty} \mathbf{P}^t = 
     \begin{bmatrix}
@@ -216,7 +213,7 @@ a co za tym idzie
     \end{bmatrix}^\top.
 \]
 
-Jeśli chodzi o zmienną $Z$ to mamy $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 0]$.
+Jeśli chodzi o zmienną $Z$, to mamy $\mathbb{P}[Z>t]=\mathbb{P}[Y_t\ne 0]$.
 Kładziemy
 \[
     \mathbf{Q}=\begin{bmatrix}P_{i\to j}\end{bmatrix}_{1\le i,j\le n}, \quad \mathbf{z}_t=\begin{bmatrix}\mathbb{P}[Y_t]=k\end{bmatrix}_{1\le k \le n}, \quad \mathbf{1} = \begin{bmatrix} 1 \end{bmatrix}_{1\le k \le n}.
@@ -231,16 +228,16 @@ Licząc wartość oczekiwaną dostajemy
 
 Dla modelu SIS przeprowadzimy symulacje na grafie $\mathrm{K_n}$.
 Na nasze potrzeby wystarczy nam $n=10$.
-Aby mieć pewność, że infekcji umrze w sensownym czasie będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\cref{fig:SIS_p0.1_a0.9}), $p=0.2,\;\alpha=0.8$ (\cref{fig:SIS_p0.2_a0.8}) oraz $p=0.5,\;\alpha=0.9$ (\cref{fig:SIS_p0.5_a0.9}).
+Aby mieć pewność, że infekcji umrze w sensownym czasie, będziemy badać propagacje dla parametrów $p=0.1,\;\alpha=0.9$ (\cref{fig:SIS_p0.1_a0.9}) oraz $p=0.2,\;\alpha=0.8$ (\cref{fig:SIS_p0.2_a0.8}), a także $p=0.5,\;\alpha=0.9$ (\cref{fig:SIS_p0.5_a0.9}).
 Połóżmy $\tau=\max\{20, \mathbb{E}[Z]\}$.
 Dalej wyznaczymy rozkład $Y_t$ dla $t\in\{0.2\tau, 0.4\tau, 0.6\tau, 0.8\tau\}$.
 Wartość oczekiwaną obliczmy dla $t\in\{1,2,\dots,\tau\}$ oraz $t\in\{1,2,\dots,10\tau\}$.
-Przeprowadzimy teraz serie symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
+Przeprowadzimy teraz serię symulacji w celu sprawdzenia, czy rzeczywiście wyniki teoretyczne pokrywają się z praktycznymi.
 Symulacje dokonujemy korzystając z \Cref{algo:SIS}.
 
 Dla parametrów $p=0.1,\;\alpha=0.9$ widzimy, że infekcja dość szybko wymiera, większość masy prawdopodobieństwa $Y_t$ jest w $0$.
 Podobnie zachowuje się rozkład $Z$.
-Dalej dla $p=0.2,\;\alpha=0.8$ nadal spora część rozkładu jest w $0$ ale spora cześć zbiera się w kształt rozkładu normalnego dla dodatnich wartości.
+Dalej dla $p=0.2,\;\alpha=0.8$ nadal spora część rozkładu jest w $0$, ale spora cześć zbiera się w kształt rozkładu normalnego dla dodatnich wartości.
 Podobnie ma się sytuacja dla $p=0.5,\;\alpha=0.9$.
 Warto również zauważyć, że w tym przypadku $\mathbb{E}[Z]$ jest gigantycznie duża, rzędu kilkudziesięciu tysięcy.
 

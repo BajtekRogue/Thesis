@@ -46,15 +46,15 @@ W modelu SIR zmienna $X_v$ nadal określa czas pierwszego zarażenia komputera $
 Jednak w przeciwieństwie do modelu SI, nie każdy komputer musi zostać kiedykolwiek zainfekowany — istnieje możliwość, że wirus wygaśnie zanim dotrze do wszystkich węzłów.
 Zachodzi bowiem $\mathbb{P}[X_v = \infty] > 0$, co oznacza, że część komputerów może uniknąć infekcji całkowicie.
 Z tego powodu interesujące jest warunkowe oczekiwanie $\mathbb{E}[X_v | X_v < \infty]$ — średni czas zarażenia dla tych komputerów, które rzeczywiście zostały zainfekowane.
-Rozkład $X_v$ pozwala na identyfikację komputerów w strefie największego ryzyka.
+Rozkład ~$X_v$ pozwala na identyfikację komputerów w strefie największego ryzyka.
 
 W modelu SIR definiujemy $Y_t$ jako liczbę komputerów, które nie są już w stanie podatnym.
 Pokazuje to postęp epidemii z innej perspektywy — ile systemów zostało już „dotkniętych" (zarażonych lub załatanych).
-Wraz z czasem $Y_t$ stabilizuje się, osiągając wartość równą $W$.
+Wraz z czasem $Y_t$ stabilizuje się, osiągając wartość równą ~$W$.
 
 Zmienna $W$ określa całkowitą liczbę komputerów, które zostały zainfekowane w trakcie całej epidemii.
 To kluczowa metryka dla oceny skali incydentu bezpieczeństwa.
-Rozkład $W$ pokazuje możliwe scenariusze zasięgu ataku — czy zainfekowane zostaną tylko nieliczne komputery w pobliżu źródła, czy znaczna część sieci.
+Rozkład ~$W$ pokazuje możliwe scenariusze zasięgu ataku — czy zainfekowane zostaną tylko nieliczne komputery w pobliżu źródła, czy znaczna część sieci.
 Wartość oczekiwana $\mathbb{E}[W]$ daje średnią liczbę skompromitowanych systemów, co bezpośrednio przekłada się na szacowanie kosztów naprawy i przywrócenia systemów, ocenę potencjalnego wycieku danych lub szkód biznesowych, planowanie zasobów zespołu reagowania na incydenty.
 
 Zmienna $Z$ określa moment, w którym epidemia wygasa — żaden nowy komputer nie może już zostać zainfekowany, ponieważ wszystkie zainfekowane komputery albo wyzdrowiały, albo nie mają podatnych sąsiadów.

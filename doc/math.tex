@@ -4,17 +4,17 @@ Przez $\mathbb{N}$ oznaczamy zbiór $\{0,1,2,\dots\}$, a przez $\mathbb{N}_+ = \
 Moc zbioru $A$ oznaczamy $|A|$. 
 Logarytm naturalny z $x$ oznaczamy $\log(x)$. 
 Dla $n\in\mathbb{N}_+$ przez $H_n=1+\frac{1}{2}+\cdots+\frac{1}{n}$ oznaczamy $n$-tą liczbę harmoniczną. 
-Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją to przez $f(\pm\infty)$ oznaczamy $\lim\limits_{x\to\pm\infty} f(x)$.
+Jeśli $f:\mathbb{R}\to\mathbb{R}$ jest funkcją, to przez $f(\pm\infty)$ oznaczamy $\lim\limits_{x\to\pm\infty} f(x)$.
 
 Niech $G=(V,E)$ będzie grafem prostym nieskierowanym. 
 Przez $\mathrm{N}(v)=\{u\in V: \{u,v\}\in E\}$ oznaczamy zbiór sąsiadów wierzchołka $v$. 
 Odległość między $u$ i $v$ oznaczamy $\mathrm{d}(u,v)$ dla $u,v\in V$. 
 Ekscentryczność $v\in V$ oznaczamy $\epsilon(v) = \max_{u\in V} \mathrm{d}(u,v)$. 
 
-Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$ to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
-Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$ a jej wariancje $\mathrm{Var}[X]$. 
-Funkcję masy prawdopodobieństwa (w skrócie PMF) oznaczamy $\mathbb{P}[X=t]$ a dystrybuante (w skrócie CDF) oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
-Mówimy, że zmienne losowe $X_1,\dots,X_n$ są IDD (independent and identically distributed) jeżeli są one niezależne oraz $F_{X_1}=\cdots=F_{X_n}$.
+Jeśli $\mathbb{P}$ jest miarą prawdopodobieństwa na przestrzeni $\Omega$, to prawdopodobieństwo zdarzenia $A$ oznaczamy $\mathbb{P}[A]$. 
+Dla zmiennej losowej $X:\Omega\to\mathbb{R}$ jej wartość oczekiwaną oznaczamy $\mathbb{E}[X]$, a jej wariancje $\mathrm{Var}[X]$. 
+Funkcję masy prawdopodobieństwa (w skrócie PMF) oznaczamy $\mathbb{P}[X=t]$, a dystrybuantę (w skrócie CDF) oznaczamy $F_X(t)=\mathbb{P}[X\le t]$ dla $t\in\mathbb{R}$. 
+Mówimy, że zmienne losowe $X_1,\dots,X_n$ są IDD (independent and identically distributed), jeżeli są one niezależne oraz $F_{X_1}=\cdots=F_{X_n}$.
 
 
 \section{Rodziny grafów}
@@ -106,8 +106,8 @@ Dodatkowo opisy te zawierają wizualizacje reprezentanta rodziny dla $n=5$.
 Przedstawiamy specyfikacje klasycznych rozkładów prawdopodobieństwa obejmującą ich funkcje masy, wartości oczekiwane i wariancje. 
 
 \distribution{Rozkład Bernoulliego $\mathrm{Ber}(p)$}
-Próba Bernoulliego to doświadczenie losowe, którego wynik może być jednym z dwóch: sukces z prawdopodobieństwem $p \in (0;1)$ albo porażka z prawdopodobieństwem $1 - p$.
-Zmienna losowa $X$ ma rozkład Bernoulliego jeżeli przyjmuje wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki próby Bernoulliego.
+Próba Bernoulliego to doświadczenie losowe, którego wynikiem może być sukces z prawdopodobieństwem $p \in (0;1)$ albo porażka z prawdopodobieństwem $1 - p$.
+Zmienna losowa $X$ ma rozkład Bernoulliego, jeżeli przyjmuje wartość $1$ w przypadku sukcesu i $0$ w przypadku porażki próby Bernoulliego.
 Wtedy:
 \[
 \mathbb{P}[X = 0] = 1-p, \quad \mathbb{P}[X = 1] = p.
@@ -118,7 +118,7 @@ Wartość oczekiwana i wariancja wynoszą:
 \]
 
 \distribution{Rozkład dwumianowy $\mathrm{Bin}(n,p)$}
-Zmienna losowa $X$ ma rozkład dwumianowy, jeżeli opisuję liczbę sukcesów w $n$ próbach Bernoulliego gdzie $n\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+Zmienna losowa $X$ ma rozkład dwumianowy, jeżeli opisuje liczbę sukcesów w $n$ próbach Bernoulliego, gdzie $n\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{n}{k}p^k{(1-p)}^{n-k}, \quad k \in \{0,1,\dots,n\}.
@@ -129,7 +129,7 @@ Wartość oczekiwana i wariancja wynoszą:
 \]
 
 \distribution{Rozkład geometryczny $\mathrm{Geo}(p)$}
-Zmienna losowa $X$ ma rozkład geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu gdzie każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
+Zmienna losowa $X$ ma rozkład geometryczny, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania pierwszego sukcesu, gdzie każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.  
 Wtedy:
 \[
     \mathbb{P}[X = k] = p{(1 - p)}^{k-1}, \quad k \in \mathbb{N}_+.
@@ -144,7 +144,7 @@ Wartość oczekiwana i wariancja wynoszą:
 \]
 
 \distribution{Rozkład ujemny dwumianowy $\mathrm{NegBin}(m, p)$}
-Zmienna losowa $X$ ma rozkład ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów gdzie $m\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.
+Zmienna losowa $X$ ma rozkład ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów, gdzie $m\in\mathbb{N}_+$, a każda próba ma prawdopodobieństwo sukcesu $p \in (0;1)$.
 Wtedy:
 \[
 \mathbb{P}[X = k] = \binom{k-1}{m-1} p^m {(1 - p)}^{k - m}, \quad k \ge m.
@@ -155,7 +155,7 @@ Wartość oczekiwana i wariancja wynoszą:
 \]
 
 \distribution{Rozkład normalny $\mathcal{N}(\mu, \sigma^2)$}
-Dla $t\in\mathbb{R}$ definiujemy funkcje
+Dla $t\in\mathbb{R}$ definiujemy funkcje:
 \[
     \varphi(t)=\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}, \quad \mathbf{\Phi}(t)=\int_{-\infty}^{t} \varphi(x)\;\mathrm{d}x.
 \]
@@ -333,7 +333,7 @@ Wtedy
 \[
     \log(x_1\cdots x_n) \le n\cdot \log\left(\frac{x_1 + \cdots + x_n}{n}\right).
 \]
-Równość zachodzi wtedy i tylko wtedy gdy $x_1=\cdots=x_n$.
+Równość zachodzi wtedy i tylko wtedy, gdy $x_1=\cdots=x_n$.
 \end{inequality}
 
 \begin{inequality}[Nierówność Markova]\label{inequality:Markov}

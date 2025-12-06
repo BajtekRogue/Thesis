@@ -1,56 +1,58 @@
-\section{Motywacja i zastosowania}
+\section{Motywacja}
 
-Propagację zjawisk w sieciach ludzkość obserwuje od starożytności — od epidemii chorób zakaźnych, przez rozprzestrzenianie się plotek i pogłosek, aż po współczesne wirusy komputerowe i kampanie marketingowe w mediach społecznościowych. 
-Zrozumienie mechanizmów tej propagacji ma kluczowe znaczenie praktyczne: pozwala przewidywać rozwój epidemii, projektować skuteczne kampanie informacyjne, zabezpieczać infrastrukturę cyfrową przed atakami czy optymalizować algorytmy w sieciach rozproszonych.
-Najbardziej naturalną reprezentacją matematyczną sieci relacji są grafy: wierzchołki reprezentują jednostki (ludzi, komputery, węzły sieci), a krawędzie określają połączenia między nimi (kontakty społeczne, łącza sieciowe, kanały komunikacji).
-Połączenie teorii grafów z rachunkiem prawdopodobieństwa pozwala stworzyć precyzyjne modele stochastyczne, które uwzględniają losowy charakter propagacji — nie każdy kontakt prowadzi do transmisji, a różne jednostki mogą różnić się podatnością na zarażenie.
-Modele propagacji znajdą zastosowanie w epidemiologii (modelowanie rozprzestrzeniania się chorób zakaźnych), cyberbezpieczeństwie (analiza rozprzestrzeniania się wirusów komputerowych), marketingu (viralowe kampanie reklamowe), teorii algorytmów (propagacja wartości ekstremalnych w sieciach rozproszonych) oraz naukach społecznych (dyfuzja innowacji, rozprzestrzenianie się opinii).
+Propagację zjawisk w skupiskach ludzkich można zauważyć od zamierzchłych czasów.
+Rozpowszechniały się przede wszystkim epidemie chorób zakaźnych, ale także wiadomości i
+pogłoski. 
+Współcześnie transmitowane są wirusy komputerowe oraz treści reklamowe i treści plotkarskie.
+Zrozumienie mechanizmów działania propagacji ma podstawowe znaczenie w jej zastosowaniu. 
+Pozwala przewidzieć rozwój epidemii, wprowadzać skuteczne działania: prowadzić szeroką kampanię informacyjną, zabezpieczać sieć cyfrową przed wirusami, czy wreszcie optymalizować algorytmy wspomagające działania.
+Najbardziej obrazową metodą matematyczną do przedstawienia rozprzestrzeniania się relacji są grafy, w których wierzchołki reprezentują jednostki, czyli ludzi lub komputery, a krawędzie określają kontakty społeczne lub połączenia sieciowe.
+Zastosowanie teorii grafów i rachunku prawdopodobieństwa pozwala stworzyć najlepsze modele stochastyczne, które uwzględniają losowy charakter propagacji. 
+W przypadku epidemii należy pamiętać, że nie każdy kontakt prowadzi do transmisji, a poszczególne jednostki mają różną podatnością na zarażenie.
+Modele propagacji znajdą zastosowanie przede wszystkim w epidemiologii, cyberbezpieczeństwie, marketingu, teorii algorytmów oraz w naukach społecznych.
+Szczególną uwagę przyciąga ostatnia pandemia koronawirusa, kiedy to zwrócono się w stronę modeli matematycznych, celem prognozy zakażeń.
 
 
 \section{Cel pracy}
 
-Celem niniejszej pracy jest kompleksowa analiza probabilistycznych modeli propagacji w grafach, ze szczególnym uwzględnieniem wpływu topologii sieci na dynamikę procesów stochastycznych.
-Konkretnie, praca ma na celu: 
+Celem niniejszej pracy jest szeroka analiza probabilistycznych modeli propagacji przy użyciu grafów, ze szczególnym uwzględnieniem wpływu topologii sieci na dynamikę propagacji.
+Szczegółowe cele pracy:
 \begin{itemize}
     \item zamodelowanie rozprzestrzeniania się informacji w sieciach przy użyciu procesów grafowych,
-    \item teoretyczna analiza procesów losowej propagacji w grafach,
-    \item teoretyczne wyznaczenie rozkładów prawdopodobieństwa i wartości oczekiwanych kluczowych zmiennych losowych dla wybranych rodzin grafów,
-    \item przeprowadzenie symulacji komputerowych w celu weryfikacji wyników teoretycznych,
+    \item wyznaczenie rozkładów prawdopodobieństwa i wartości oczekiwanych kluczowych zmiennych losowych dla wybranych rodzin grafów,
+    \item przeprowadzenie symulacji komputerowych w Pythonie metodą Monte Carlo w celu weryfikacji wyników teoretycznych,
     \item zbadanie, jak topologia grafu wpływa na tempo i zasięg propagacji,
-    \item przedstawienie praktycznego scenariusza aplikacyjnego ilustrującego użyteczność modeli.
+    \item omówienie praktycznego scenariusza ilustrującego użyteczność wprowadzonych modeli.
 \end{itemize}
 
 
 \section{Zakres pracy}
 
-Praca składa się z następujących części:
+Praca składa się z $9$ rozdziałów.
 
-\textbf{Rozdział 2: Podstawy matematyczne.}
-Zawiera notację używaną w całej pracy, definicje badanych rodzin grafów, wykorzystywane rozkłady prawdopodobieństwa wraz z ich własnościami, oraz zbiór faktów, sum i nierówności stosowane w dowodach i obliczeniach.
+\textbf{Rozdział 1.}
+Omawia motywację i cele pracy.
 
-\textbf{Rozdział 3: Modele propagacji losowej.}
+\textbf{Rozdział 2.}
+Zawiera notację używaną w całej pracy, definicje analizowanych rodzin grafów, wykorzystywane rozkłady prawdopodobieństwa wraz z ich własnościami oraz zbiór faktów, sum i nierówności stosowanych w dowodach i obliczeniach.
+
+\textbf{Rozdział 3.}
 Wprowadza formalne definicje trzech badanych modeli: SI, SIR i SIS.
-Dla każdego modelu definiujemy zmienne losowe opisujące kluczowe aspekty propagacji oraz diagramy przejść między stanami.
+Ponadto dla każdego modelu zawiera opisy kluczowych zmiennych losowych.
 
-\textbf{Rozdział 4: Scenariusz aplikacyjny.}
-Ilustruje praktyczne zastosowanie modeli na przykładzie rozprzestrzeniania się wirusa komputerowego w różnych topologiach sieciowych.
+\textbf{Rozdział 4.}
+Ilustruje praktyczne zastosowanie modeli na przykładzie rozprzestrzeniania się wirusa komputerowego.
 
-\textbf{Rozdział 5: Analiza modelu SI.}
-Przeprowadzamy szczegółową analizę teoretyczną modelu SI dla rodzin grafów ścieżkowych, gwiezdnych, cyklicznych, pełnych oraz drzew.
-Wyznaczamy rozkłady prawdopodobieństwa i wartości oczekiwane zmiennych zdefiniowanych dla tego modelu.
-Wyprowadzamy ogólne ograniczenia na czas zarażenia. 
-Prezentujemy wyniki symulacji potwierdzające teoretyczne przewidywania.
+\textbf{Rozdział 5.}
+Prezentuje szczegółową analizę modelu SI dla rodzin grafów ścieżkowych, gwiezdnych, cyklicznych, pełnych oraz drzew.
+Wyprowadza ogólne ograniczenia na czas całkowitego zarażenia. 
+Dodatkowo zawiera wyniki symulacji komputerowej.
 
-\textbf{Rozdział 6: Rozkłady umierające.}
-Wprowadzamy rozkłady umierający geometryczny i umierający ujemny dwumianowy, które modelują propagację z możliwością przerwania procesu. 
-Rozkłady te są potrzebne do analizy modeli SIR i SIS, gdzie infekcja może wygasnąć.
+\textbf{Rozdział 6.}
+Wprowadza rozkłady ułatwiające modelowanie propagacji z możliwością jej przerwania, potrzebne do analizy modeli SIR oraz SIS.
 
-\textbf{Rozdział 7: Analiza modelu SIR.}
-Koncentruje się na modelu SIR dla grafów ścieżkowych i gwiazdowych.
-Wyznaczamy rozkłady i wartości oczekiwane odpowiednich zmiennych losowych.
-Wyniki weryfikujemy symulacjami.
+\textbf{Rozdział 7.}
+Przedstawia analizę modelu SIR dla rodzin grafów ścieżkowych i gwiezdnych oraz wyniki symulacji komputerowej.
 
-\textbf{Rozdział 8: Analiza modelu SIS.}
-W modelu SIS ograniczamy się do grafu pełnego.
-Wykorzystujemy formalizm łańcuchów Markova do wyznaczenia interesujących nas rozkładów.
-Przeprowadzamy symulacje dla różnych wartości parametrów pokazujące oscylacyjny charakter propagacji.
+\textbf{Rozdział 8.}
+Przedstawia analizę modelu SIS dla grafów pełnych oraz wyniki symulacji komputerowej.

@@ -1,88 +1,57 @@
-
-Modele propagacji SI, SIR i SIS mają szerokie zastosowanie w analizie rozprzestrzeniania się zjawisk w sieciach.
-Jednym z naturalnych zastosowań jest modelowanie rozprzestrzeniania się wirusa komputerowego w sieci.
-W tym rozdziale przedstawimy szczegółowy scenariusz aplikacyjny dla każdego z trzech modeli, pokazując jak zmienne losowe zdefiniowane wcześniej pozwalają na analizę różnych aspektów epidemii cyfrowej.
-Rozważamy sieć komputerową reprezentowaną przez graf $G = (V, E)$, gdzie wierzchołki odpowiadają poszczególnym komputerom, a krawędzie reprezentują bezpośrednie połączenia sieciowe (np.\ w sieci lokalnej, klastrze serwerów lub infrastrukturze chmurowej).
-Wirus rozpoczyna swoje rozprzestrzenianie od pojedynczego zainfekowanego komputera $s \in V$.
-W każdym cyklu czasowym zainfekowane komputery próbują zarazić bezpośrednio połączone z nimi komputery z prawdopodobieństwem $p$, które modeluje skuteczność transmisji wirusa przez połączenie sieciowe.
+Konkretne modele propagacji znajdują zastosowania w analizie rozprzestrzeniania się licznych zjawisk w sieciach.
+Aby to zilustrować, przyjrzymy się bliżej rozprzestrzenianiu się wirusa komputerowego w sieci.
+Postaramy się wskazać użyteczność każdego z modeli omawianych w tej pracy.
+Rozważmy sieć komputerową reprezentowaną przez graf nieskierowany $G=(V,E)$.
+Wierzchołki w $G$ odpowiadają komputerom, a krawędzie oznaczają bezpośrednie połączenie sieciowe między urządzeniami np. w sieci lokalnej, klastrze serwerów lub infrastrukturze chmurowej.
+Załóżmy, że pojedynczy komputer $s\in V$ zostaje zainfekowany przez wirusa.
+Ponadto zakładamy, że co pewien ustalony cykl czasu zarażone komputery próbują zarazić sąsiedni sprzęt z prawdopodobieństwem równym $p$.
+Wartość $p$ określa skuteczność transmisji wirusa przez istniejące połączenia sieciowe.
 
 
 \section{Model SI — Sieć bez zabezpieczeń}
 
 Rozważmy starszą infrastrukturę IT, która nie posiada żadnych aktywnych zabezpieczeń antywirusowych ani mechanizmów automatycznego wykrywania zagrożeń.
-Może to być na przykład sieć przemysłowych systemów SCADA, które często działają na przestarzałym oprogramowaniu bez regularnych aktualizacji bezpieczeństwa, lub izolowana sieć wewnętrzna firmy z przestarzałymi systemami operacyjnymi.
-W takim środowisku, gdy komputer zostanie raz zainfekowany, pozostaje w tym stanie permanentnie — nie ma mechanizmu samoczynnego usunięcia wirusa.
-Model SI doskonale opisuje tę sytuację, gdzie $S$ reprezentuje komputery podatne na infekcję, a $I$ komputery już zainfekowane.
+W takim środowisku, gdy komputer zostanie raz zainfekowany, pozostaje w tym stanie permanentnie.
+Ten stan rzeczy może zostać opisany modelem SI.
+Stan $S$ reprezentuje urządzenia podatne na infekcję, a $I$ te już zainfekowane.
 
-Dla każdego komputera $v \in V$ zmienna $X_v$ określa, w której godzinie cyklu ten konkretny komputer zostanie zainfekowany.
-Jest to kluczowa informacja dla administratora sieci próbującego zrozumieć dynamikę ataku.
-Rozkład prawdopodobieństwa $X_v$ pozwala odpowiedzieć na pytanie: jakie jest prawdopodobieństwo, że dany komputer zostanie zarażony w określonym czasie?
-Wartość oczekiwana $\mathbb{E}[X_v]$ wskazuje średni czas, po którym można spodziewać się infekcji tego komputera.
-W kontekście praktycznym, znajomość rozkładu $X_v$ pozwala na odpowiednią priorytetyzacje działań obronnych — komputery o małym $\mathbb{E}[X_v]$ powinny być zabezpieczone jako pierwsze, planowanie harmonogramu ręcznej interwencji technicznej a także oszacowanie okna czasowego na izolację krytycznych systemów.
-
+Dla komputera $v \in V$ zmienna $X_v$ określa po jakim czasie zostanie on zainfekowany.
+W kontekście działań obronnych można priorytetyzować te urządzenia o mniejszej wartości $\mathbb{E}[X_v]$.
 Zmienna $Y_t$ określa, ile komputerów jest zainfekowanych w chwili $t$.
-Rozkład $Y_t$ pokazuje możliwe scenariusze rozwoju epidemii — czy atak rozwija się szybko, czy powoli.
-Wartość oczekiwana $\mathbb{E}[Y_t]$ daje średnią liczbę zainfekowanych komputerów po czasie $t$.
-Z punktu widzenia zarządzania infrastrukturą, $Y_t$ pozwala na monitorowanie tempa rozprzestrzeniania się wirusa czy ocenę skuteczności częściowych działań obronnych.
-
-Zmienna $Z$ opisuje, po ilu cyklach czasowych wszystkie komputery w sieci zostaną zainfekowane.
-Jest to moment, w którym cała infrastruktura zostaje skompromitowana.
-Rozkład $Z$ określa prawdopodobieństwo różnych scenariuszy czasowych dla całkowitego przejęcia sieci.
-Wartość oczekiwana $\mathbb{E}[Z]$ wskazuje średni czas, jaki administrator ma na reakcję zanim stracimy kontrolę nad całą siecią.
-Znajomość $Z$ jest krytyczna dla określenia maksymalnego czasu reakcji zespołu bezpieczeństwa czy też oceny ryzyka związanego z konkretną architekturą sieci.
-Pozwala to na projektowania topologii sieci odpornej na szybkie rozprzestrzenianie się zagrożeń.
+Jej rozkład pokazuje, czy atak rozwija się szybko, czy powoli.
+Wartość $Z$ to moment, w którym cała infrastruktura zostaje skompromitowana.
+Wartość oczekiwana $\mathbb{E}[Z]$ wskazuje średni czas, jaki administrator ma na reakcję, zanim straci kontrolę nad całą siecią.
+Znajomość rozkładu tych zmiennych pozwala na projektowania topologii sieci odpornej na szybkie rozprzestrzenianie się zagrożeń.
 
 
 \section{Model SIR — Sieć z automatycznymi łatkami bezpieczeństwa}
 
-Rozważmy nowoczesną infrastrukturę korporacyjną z aktywnym systemem zarządzania aktualizacjami i automatycznymi mechanizmami odpowiedzi na incydenty.
-Gdy komputer zostaje zainfekowany, system bezpieczeństwa może wykryć zagrożenie i zastosować łatkę zabezpieczającą, przenosząc komputer do stanu odpornego ($R$).
-Prawdopodobieństwo $\alpha$ modeluje skuteczność systemu automatycznych łatek — im większe $\alpha$, tym szybciej komputery są naprawiane.
-W modelu SIR komputer przechodzi przez stany: podatny ($S$) $\to$ zainfekowany ($I$) $\to$ odporny ($R$).
-Stan $R$ jest absorpcyjny — załatany komputer nie może być ponownie zainfekowany tym samym wariantem wirusa.
-To realistyczne założenie w kontekście nowoczesnych systemów, gdzie zaktualizowane oprogramowanie jest odporne na znane exploity.
+Rozważmy nowoczesną infrastrukturę korporacyjną z aktywnym systemem zarządzania aktualizacjami i automatycznymi mechanizmami odpowiedzi na zachodzące w niej incydenty.
+Gdy komputer zostaje zainfekowany, system bezpieczeństwa może wykryć zagrożenie i zastosować łatkę zabezpieczającą, przenosząc tym samym komputer do stanu odpornego ($R$).
+Prawdopodobieństwo $\alpha$ modeluje skuteczność systemu automatycznych łatek.
+To bardziej realistyczne założenie w kontekście nowoczesnych systemów, gdzie zaktualizowane oprogramowanie jest odporne na znane exploity.
+Istnieje możliwość, że wirus wygaśnie zanim dotrze do wszystkich węzłów.
 
-W modelu SIR zmienna $X_v$ nadal określa czas pierwszego zarażenia komputera $v$.
-Jednak w przeciwieństwie do modelu SI, nie każdy komputer musi zostać kiedykolwiek zainfekowany — istnieje możliwość, że wirus wygaśnie zanim dotrze do wszystkich węzłów.
-Zachodzi bowiem $\mathbb{P}[X_v = \infty] > 0$, co oznacza, że część komputerów może uniknąć infekcji całkowicie.
-Z tego powodu interesujące jest warunkowe oczekiwanie $\mathbb{E}[X_v | X_v < \infty]$ — średni czas zarażenia dla tych komputerów, które rzeczywiście zostały zainfekowane.
-Rozkład ~$X_v$ pozwala na identyfikację komputerów w strefie największego ryzyka.
-
-W modelu SIR definiujemy $Y_t$ jako liczbę komputerów, które nie są już w stanie podatnym.
-Pokazuje to postęp epidemii z innej perspektywy — ile systemów zostało już „dotkniętych" (zarażonych lub załatanych).
-Wraz z czasem $Y_t$ stabilizuje się, osiągając wartość równą ~$W$.
-
+Zmienna $X_v$ nadal określa czas zarażenia $v$.
+Do strefy dużego ryzyka należą urządzenia z dużą wartością $\mathbb{P}[X_v=\infty]$.
+W tym modelu $Y_t$ jest zdefiniowana jako liczba komputerów, które nie są już w stanie podatnym.
+Wraz z czasem zmienna ta stabilizuje się, osiągając wartość równą $W$.
 Zmienna $W$ określa całkowitą liczbę komputerów, które zostały zainfekowane w trakcie całej epidemii.
-To kluczowa metryka dla oceny skali incydentu bezpieczeństwa.
-Rozkład ~$W$ pokazuje możliwe scenariusze zasięgu ataku — czy zainfekowane zostaną tylko nieliczne komputery w pobliżu źródła, czy znaczna część sieci.
-Wartość oczekiwana $\mathbb{E}[W]$ daje średnią liczbę skompromitowanych systemów, co bezpośrednio przekłada się na szacowanie kosztów naprawy i przywrócenia systemów, ocenę potencjalnego wycieku danych lub szkód biznesowych, planowanie zasobów zespołu reagowania na incydenty.
-
-Zmienna $Z$ określa moment, w którym epidemia wygasa — żaden nowy komputer nie może już zostać zainfekowany, ponieważ wszystkie zainfekowane komputery albo wyzdrowiały, albo nie mają podatnych sąsiadów.
-To moment, w którym incydent bezpieczeństwa można uznać za opanowany.
-Rozkład $Z$ i wartość $\mathbb{E}[Z]$ są krytyczne dla planowania czasu trwania trybu kryzysowego w organizacji, oszacowania czasu, przez który zespół bezpieczeństwa musi działać w trybie podwyższonej gotowości. 
-Warto jest też dokonać oceny, jak parametry $p$ (skuteczność transmisji) i $\alpha$ (skuteczność łatek) wpływają na czas trwania incydentu.
+Wartość oczekiwana $\mathbb{E}[W]$ daje średnią liczbę skompromitowanych systemów, co bezpośrednio przekłada się na szacowanie kosztów naprawy i przywrócenia systemów.
+Zmienna $Z$ określa moment, w którym epidemia wygasa i można uznać sytuację za opanowaną.
+Wartość $\mathbb{E}[Z]$ jest istotna dla planowania czasu trwania trybu kryzysowego w organizacji.
 
 
 \section{Model SIS — Sieć z tymczasowymi zabezpieczeniami}
 
-Rozważmy sieć z mechanizmami tymczasowego oczyszczania, takimi jak regularne restarty systemów, okresowe czyszczenie pamięci podręcznej, lub rotacyjne odświeżanie obrazów systemowych.
-W takim środowisku zainfekowany komputer może wrócić do stanu podatnego z prawdopodobieństwem $\alpha$ w każdym cyklu.
-Model ten jest szczególnie odpowiedni dla serwerów z krótkotrwałymi sesjami czy z automatycznymi resetami.
-W modelu SIS komputer może być zarażany wielokrotnie, a wirus może krążyć w sieci przez długi czas, powodując powtarzające się fale infekcji.
-W przeciwieństwie do modeli SI i SIR, tutaj nie ma stanu końcowego — sieć może oscylować między różnymi stanami zarażenia.
+Rozważmy sieć z mechanizmami tymczasowego oczyszczania, takimi jak regularne restarty systemów, czy okresowe czyszczenie pamięci podręcznej.
+W takim środowisku zainfekowany komputer może wrócić do stanu podatnego z prawdopodobieństwem $\alpha$ w każdej jednostce czasu.
+Model ten jest szczególnie odpowiedni dla serwerów z krótkotrwałymi sesjami, czy z automatycznymi resetami.
 
-Podobnie jak w modelu SIR, nie każdy komputer musi zostać kiedykolwiek zainfekowany — wirus może wygasnąć zanim dotrze do odległych węzłów.
-Zachodzi $\mathbb{P}[X_v = \infty] > 0$.
-Interesuje nas $\mathbb{E}[X_v | X_v < \infty]$ — średni czas do pierwszego zarażenia, jeśli do niego dojdzie.
+Zmienna $X_v$ określa czas pierwszego zarażenia komputera $v$.
 W kontekście praktycznym, $X_v$ pozwala zrozumieć, które komputery są najbardziej narażone na początkową falę ataku.
-
-W modelu SIS zmienna $Y_t$ ma szczególne znaczenie, ponieważ liczba zainfekowanych komputerów może oscylować w czasie.
-Rozkład $Y_t$ pokazuje możliwe stany sieci w różnych momentach — ile komputerów może być jednocześnie skompromitowanych.
+$Y_t$ ma szczególne znaczenie, ponieważ liczba zainfekowanych komputerów oscyluje w czasie.
 To pozwala na oszacowanie średniego obciążenia zespołu IT obsługą incydentów albo
 planowanie pojemności systemów monitoringu bezpieczeństwa.
-Warto zauważyć, że $\mathbb{E}[Y_t] \to 0$ wraz z $t \to \infty$ — średnio liczba zarażonych komputerów dąży do zera, co oznacza, że wirus ostatecznie wygasa.
-Jednak rozkład $Y_t$ dla skończonych $t$ może wykazywać znaczną wariancję.
-
-Zmienna $Z$ określa moment, w którym wirus całkowicie znika z sieci — wszystkie komputery są w stanie podatnym i żaden nie jest zainfekowany.
-W przeciwieństwie do modelu SIR, gdzie epidemia wygasa z braku podatnych celów, w modelu SIS wirus wygasa losowo z powodu równoczesnego „wyleczenia" wszystkich zainfekowanych komputerów.
-Rozkład $Z$ i wartość $\mathbb{E}[Z]$ informują o średnim czasie, przez który wirus będzie krążył w sieci czy skuteczności strategii „poczekaj aż wirus sam wygaśnie" w porównaniu z aktywną interwencją.
+Zmienna $Z$ określa moment, w którym wirus całkowicie znika z sieci.
+Jej rozkład i wartość $\mathbb{E}[Z]$ informują o średnim czasie, przez który wirus będzie krążył w sieci bez aktywnej interwencji.

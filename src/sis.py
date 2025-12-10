@@ -1,5 +1,4 @@
 import numpy as np
-from tqdm import tqdm
 from utils import *
 from simulations import simulate_final_infection_SIS, simulate_extinction_time_SIS
 from plotting import plot_Yt_distribution_SIS, plot_Yt_expectation_SIS, plot_Z_distribution_SIS, plot_Z_expectation_SIS
@@ -15,7 +14,7 @@ def compute_Yt_expectation_SIS(graph_family, n, p, a, source, t_values, trials):
     graph = graph_constructor(graph_family, n)
     total_infection_count = np.zeros(len(t_values), dtype=float)
 
-    for idx, t in enumerate(tqdm(t_values)):
+    for idx, t in enumerate(t_values):
         result = simulate_final_infection_SIS(graph, p, a, source, t, trials)
         total_infection_count[idx] = np.mean(result)
 
@@ -58,7 +57,7 @@ def main():
 
         theoretical = [theoretical_expectation_Z_SIS(n_val, Q_matrix_SIS(n_val, p, a)) for n_val in n_values]
         means_full_infection = []
-        for n_val in tqdm(n_values):
+        for n_val in n_values:
             _, mean_full_infection = compute_Z_data_SIS("complete", n_val, p, a, source, trials=100)
             means_full_infection.append(mean_full_infection)
         plot_Z_expectation_SIS(n_values, means_full_infection, theoretical, folder,  "Z_expectation")

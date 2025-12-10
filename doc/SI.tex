@@ -2,7 +2,7 @@
 
 Na samym początku rozważmy najprostszy graf, czyli taki o dwóch wierzchołkach $u, v$ połączonych krawędzią. 
 Za wierzchołek startowy wybierzmy $u$. 
-Istnieją tylko dwa możliwe stany: $\mathcal{I}_t=\{u\}$ oraz $\mathcal{I}_t=\{u,v\}$. 
+Istnieją tylko dwa możliwe stany systemu: $\mathcal{I}_t=\{u\}$ oraz $\mathcal{I}_t=\{u,v\}$. 
 Przejście ze stanu $\mathcal{I}_t=\{u\}$ do $\mathcal{I}_{t+1}=\{u,v\}$ następuje z prawdopodobieństwem $p$ w każdej jednostce czasu. 
 Zatem czas zarażenia drugiego wierzchołka $X_v$ ma rozkład geometryczny, $X_v \sim \mathrm{Geo}(p)$, co za tym idzie $\mathbb{E}[X_v]=\frac{1}{p}$.
 
@@ -16,7 +16,7 @@ Jeśli chodzi o zmienną $Z$, to mamy $Z=X_v$, a więc również $Z\sim \mathrm{
 
 \section{Trójkąt}
 
-Przyjrzyjmy się teraz nieco większemu grafowi —  trójkątowi. 
+Przyjrzyjmy się teraz nieco większemu grafowi — trójkątowi. 
 Niech jeden z wierzchołków będzie źródłem $s$, a pozostałe oznaczmy $u, v$. 
 Zmienna $X_v$ ma taki sam rozkład jak $X_u$.
 Aby poinformować $u$, musimy uzyskać sukces bezpośrednio od $s$ lub zarazić $v$, a następnie $u$. 
@@ -120,7 +120,7 @@ Z Twierdzenia Lebesgue'a o zbieżności ograniczonej mamy
 \end{proof}
 
 
-\section{Grafy ścieżkowe}
+\section{Grafy ścieżkowe}\label{sec:path}
 
 Jako pierwszą rodzinę grafów rozważmy grafy ścieżkowe $\mathrm{P}_n$, jako uogólnienie pierwszego przypadku, który analizowaliśmy na samym początku.
 Załóżmy, że proces zaczyna się w wierzchołku $s=1$.  
@@ -136,7 +136,7 @@ Widzimy zatem, że $X_v = G_2 + G_3 + \cdots + G_{v}$, a więc z \Cref{fact:sum_
 \]
 
 Ustalmy $t\in\mathbb{N}$ i przejdźmy do obliczania rozkładu $Y_t$.  
-Zauważmy, że liczba dodatkowych zakażeń, poza startowym wierzchołkiem, do czasu $t$ to po prostu liczba sukcesów w $t$ niezależnych prób Bernoulliego.  
+Zauważmy, że liczba dodatkowych zakażeń, poza startowym wierzchołkiem, do czasu $t$ to po prostu liczba sukcesów w $t$ niezależnych próbach Bernoulliego.  
 Musimy jednak pamiętać, że $Y_t$ nie może przekroczyć $n$.  
 Zatem mamy dokładnie:
 \[
@@ -350,30 +350,34 @@ Niech $a=\min\{v,n-v\}$ oraz $b=\max\{v,n-v\}$.
 Oczywiście $a\le b$. 
 Od źródła do tego wierzchołka są dwie ścieżki: jedna o długości $a$, druga o długości $b$. 
 Propagacja rozchodzi się po nich równolegle i niezależnie. 
-Dla $j\in \{1,2,\dots,n-1\} $ połóżmy $N_j\sim \mathrm{NegBin}(j,p)$. 
+Dla $j\in \{1,2,\dots,n-1\} $ połóżmy $U_j\sim \mathrm{NegBin}(j,p)$. 
 Zmienne te są niezależne. 
 Mamy wtedy 
 \[
-    X_v = \min\{N_a, N_b\}.
+    X_v = \min\{U_a, U_b\}.
 \]
-Niech $F_j(t)$ będzie dystrybuantą zmiennej $N_j$. 
+Niech $F_j(t)$ będzie dystrybuantą zmiennej $U_j$. 
 Z \Cref{fact:min_CDF} mamy 
 \[
     \mathbb{P}[X_v\le t] = 1 - (1-F_a(t))\cdot(1-F_b(t)).
 \]
 Nie ma co liczyć na wyznaczenie eleganckiej postaci na PMF, czy CDF dla $X_v$. 
 Postaramy się więc przybliżyć wartość oczekiwaną dla dużych $n$. 
-Kładziemy $A\sim \mathcal{N}(\mu_a,\sigma^2_a)$, $B \sim \mathcal{N}(\mu_b,\sigma^2_b)$, gdzie 
-\[
-    \mu_a=\frac{a}{p},\quad \sigma^2_a=\frac{aq}{p^2}, \quad \mu_b=\frac{b}{p},\quad \sigma^2_b=\frac{bq}{p^2}.
-\]
-Z centralnego twierdzenia granicznego możemy aproksymować $N_a \approx A,\; N_b \approx B$.
-Zatem mamy $X_v \approx \min\{A,B\}$ oraz
-\[
-    \mathbb{E}[X_v]\approx \mathbb{E}[\min\{A,B\}]=\mathbb{E}\Big[\frac{A+B-|A-B|}{2}\Big]=\frac{\mathbb{E}[A]+\mathbb{E}[B]-\mathbb{E}[|A-B|]}{2}.
-\]
-Połóżmy $C=A-B$. 
-Korzystając z \Cref{fact:sum_of_normal_RV} mamy $C \sim \mathcal{N}(\mu_a-\mu_b,\sigma_a^2+\sigma_b^2)$. 
+Przypomnijmy, że $\mathbb{E}[U_j]=\frac{j}{p},\; \mathrm{Var}[U_j]=\frac{jq}{p^2}$.
+Z centralnego twierdzenia granicznego możemy aproksymować (\cref{fact:CLT}) $U_j \approx N_j$ gdzie $N_j\sim \mathcal{N}(\frac{j}{p},\frac{jq}{p^2})$.
+Kładziemy $\mu_a=\frac{a}{p},\;\sigma^2_a=\frac{aq}{p^2}, \; \mu_b=\frac{b}{p},\; \sigma^2_b=\frac{bq}{p^2}$.
+Zatem mamy $X_v \approx \min\{N_a,N_b\}$ oraz
+\begin{equation*}
+\begin{aligned}
+    \mathbb{E}[X_v]
+    &\approx \mathbb{E}[\min\{N_a,N_b\}]
+    =\mathbb{E}\left[\frac{N_a+N_b-|N_a-N_b|}{2}\right] \\ 
+    &=\frac{\mathbb{E}[N_a]+\mathbb{E}[N_b]-\mathbb{E}[|N_a-N_b|]}{2}
+    =\frac{1}{2}\cdot(\mu_a+\mu_b-\mathbb{E}[D]),
+\end{aligned}
+\end{equation*}
+gdzie $D=N_a-N_b$. 
+Korzystając z \Cref{fact:sum_of_normal_RV} mamy $D \sim \mathcal{N}(\mu_a-\mu_b,\sigma_a^2+\sigma_b^2)$. 
 Oznaczmy $\eta=\mu_a-\mu_b$ oraz $\xi=\sqrt{\sigma_a^2+\sigma_b^2}$. 
 Potrzebujemy teraz następującego lematu:
 
@@ -381,7 +385,7 @@ Potrzebujemy teraz następującego lematu:
 Niech $X \sim \mathcal{N}(\mu,\sigma^2)$. 
 Wtedy
 \[
-    \mathbb{E}[|X|] = 2\sigma\cdot \varphi\Big(\frac{\mu}{\sigma}\Big)+\mu\cdot (2\mathbf{\Phi}\Big(\frac{\mu}{\sigma}\Big)-1).
+    \mathbb{E}[|X|] = 2\sigma\cdot \varphi\Big(\frac{\mu}{\sigma}\Big)+\mu\cdot \Big(2\mathbf{\Phi}\Big(\frac{\mu}{\sigma}\Big)-1\Big).
 \]    
 \end{lemma}
 \begin{proof}
@@ -415,7 +419,7 @@ Otrzymujemy więc
 gdzie skorzystaliśmy z tożsamości $\mathbf{\Phi}(-x)=1-\mathbf{\Phi}(x)$, $\varphi(-x)=\varphi(x)$, $\varphi(\pm\infty)=0$, \\ $\int_{-\infty}^{\infty}\varphi(x) \;\mathrm{d}x = 1$ oraz $\int x\varphi(x)\;\mathrm{d}x=-\varphi(x)$.
 \end{proof}
 
-Z \Cref{lemma:abs_normal_E} dostajemy $\mathbb{E}[C]=2\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)+\eta\cdot (2\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-1)$. 
+Z \Cref{lemma:abs_normal_E} dostajemy $\mathbb{E}[D]=2\xi\cdot \varphi\Big(\frac{\eta}{\xi}\Big)+\eta\cdot (2\mathbf{\Phi}\Big(\frac{\eta}{\xi}\Big)-1)$. 
 Ostatecznie 
 \begin{align*}
     \mathbb{E}[X_v] \approx {} & \frac{1}{2}\!\Big(\mu_a+\mu_b-2\xi\,\varphi\!\Big(\frac{\eta}{\xi}\Big)-\eta\!\Big(2\mathbf{\Phi}\!\Big(\frac{\eta}{\xi}\Big)-1\Big)\!\Big) \\[0.4em]
@@ -433,7 +437,7 @@ Jeśli $a<b$, co za tym idzie $r<\frac{1}{2}$ to $\frac{\eta}{\xi}\to -\infty$ w
 Wtedy też $\varphi(\frac{\eta}{\xi})\to 0$ oraz $\mathbf{\Phi}(\frac{\eta}{\xi})\to 0$, a więc $\mathbb{E}[X_v] \to \mu_a = \frac{a}{p}$. 
 Natomiast gdy $a=b$, to $r=\frac{1}{2}$ i $\frac{\eta}{\xi}=0$. 
 Wiemy, że $\varphi(0)=\frac{1}{\sqrt{2\pi}}$ oraz $\mathbf{\Phi}(0)=\frac{1}{2}$. 
-Podstawiając otrzymamy $\mathbb{E}[X_v] \to \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}$. 
+Podstawiając, otrzymamy $\mathbb{E}[X_v] \to \frac{n}{2p}-\frac{\sqrt{np}}{p\sqrt{2\pi}}$. 
 Podsumowując — dla dużych $n$ mamy następujący wynik:
 \[
     \mathbb{E}[X_v] \sim \frac{\min\{v,n-v\}}{p}.
@@ -449,7 +453,7 @@ Możemy zapisać zatem
 \] 
 Z \Cref{fact:sum_of_bin_RV} mamy $L_t+R_t\sim\mathrm{Bin}(2t,p)$. 
 Widzimy zatem, że rozkład $Y_t$ dla grafu $\mathrm{C}_n$ pokrywa się ze zmienną $Y_{2t}$ dla grafów typu $\mathrm{P}_n$.
-Z wcześniejszego wyniku dla grafów ścieżek dostajemy
+Z wcześniejszego wyniku dla grafów ścieżek (\ref{sec:path}) dostajemy
 \[
     \mathbb{E}[Y_t]=\sum_{j=0}^{2t} \min\{n,1+j\}\cdot\binom{2t}{j}p^j q^{2t-j},
 \]
@@ -471,16 +475,16 @@ Mamy
 \begin{equation*}
 \begin{aligned}
     & \sum_{t=0}^{\infty}\binom{2t}{j} q^{2t} 
-    = \frac{1}{2} \Big(\sum_{t=0}^{\infty} \binom{t}{j} q^t+ \sum_{t=0}^{\infty}\binom{t}{j} {(-q)}^t \Big) \\
-    &= \frac{1}{2} \Big( \frac{q^j}{{(1-q)}^{j+1}} + \frac{{(-q)}^j}{{(1+q)}^{j+1}} \Big) 
-    = \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big).
+    = \frac{1}{2} \left(\sum_{t=0}^{\infty} \binom{t}{j} q^t+ \sum_{t=0}^{\infty}\binom{t}{j} {(-q)}^t \right) \\
+    &= \frac{1}{2} \left( \frac{q^j}{{(1-q)}^{j+1}} + \frac{{(-q)}^j}{{(1+q)}^{j+1}} \right) 
+    = \frac{q^j}{2} \cdot \left(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\right).
 \end{aligned}
 \end{equation*}
 Dalej
 \begin{equation*}
 \begin{aligned}
     \mathbb{E}[Z] 
-    &= \sum_{j=0}^{n-2} p^j q^{-j} \frac{q^j}{2} \cdot \Big(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\Big) 
+    &= \sum_{j=0}^{n-2} p^j q^{-j} \frac{q^j}{2} \cdot \left(p^{-(j+1)}+\frac{{(-1)}^j}{{(2-p)}^{j+1}}\right) 
     = \frac{1}{2}\sum_{j=0}^{n-2} \frac{1}{p} + \frac{{(-p)}^j}{{(2-p)}^{j+1}} \\
     &= \frac{n-1}{2p} + \frac{1}{2(2-p)} \sum_{j=0}^{n-2} {\Big(\frac{-p}{2-p}\Big)}^j 
     = \frac{n-1}{2p} + \frac{1}{2(2-p)} \cdot \frac{1 - {(\frac{-p}{2-p})}^{n-1}}{1 - \frac{-p}{2-p}}\\
@@ -493,10 +497,9 @@ Jeśli $n=3$, to wynik ten pokrywa się ze wzorem uzyskanym dla grafu trójkątn
 
 \section{Grafy pełne}
 
-Graf pełny $\mathrm{K}_n$ intuicyjnie powinien mieć najszybszą propagację bo przecież posiada maksymalną liczbę krawędzi. 
+Graf pełny $\mathrm{K}_n$ intuicyjnie powinien mieć najszybszą propagację, bo przecież posiada maksymalną liczbę krawędzi. 
 Za źródło możemy przyjąć dowolny wierzchołek $s\in V$ ze względu na symetrię grafu. 
 Początkowo rozkład $X_v$ pokrywa się z rozkładem gwiazdy, natomiast w każdej kolejnej rundzie mocno się komplikuje. 
-Nie mamy co liczyć na jakiekolwiek sensowne wyznaczenie rozkładu $X_v$. 
 Podejdźmy do problemu na razie heurystycznie. 
 Zauważmy, że jeśli $Y_1=a$, to rozkład zmiennej $Y_2$ wynosi $Y_2 = a + B$ dla $B \sim \mathrm{Bin}(n-a, 1-q^a)$. 
 Zatem 
@@ -522,7 +525,7 @@ Z prawa całkowitej wartości oczekiwanej mamy
     \mathbb{E}[Y_2] = n\cdot (1-\mathbb{E}[q^{Y_1}])+\mathbb{E}[Y_1q^{Y_1}].
 \]
 Musimy wyznaczyć $\mathbb{E}[q^{Y_1}]$ jak i $\mathbb{E}[Y_1q^{Y_1}]$. 
-Korzystając z \Cref{fact:pgf_bin} dostajemy 
+Korzystając z \Cref{fact:pgf_bin}, dostajemy 
 \[
     \mathbb{E}[q^{Y_1}]=\mathbb{E}[q^{1+U}]=q\cdot \mathbb{E}[q^U]=q{(q+pq)}^{n-1}=q^n{(1+p)}^{n-1}.
 \]
@@ -546,7 +549,7 @@ Podstawiając uzyskane przed chwilą wyrażenia do wzoru na $\mathbb{E}[Y_2]$ do
 \end{equation*}
 Połóżmy $\varepsilon_n=(n-1){(1+p)}^{-2}{(1-p^2)}^n$. 
 Wtedy $\mathbb{E}[Y_2]=n-\varepsilon_n$. 
-Z nierówności Markova (\ref{inequality:Markov}) otrzymujemy $\mathbb{P}[Z\ge 3]=\mathbb{P}[n-Y_2\ge 1]\le \mathbb{E}[n-Y_2]=\varepsilon_n$. 
+Korzystając z nierówności Markova (\ref{inequality:Markov}) otrzymujemy $\mathbb{P}[Z\ge 3]=\mathbb{P}[n-Y_2\ge 1]\le \mathbb{E}[n-Y_2]=\varepsilon_n$. 
 Dalej zauważmy, że $\mathbb{P}[Z=1]=p^{n-1}$, bo wszystkie próby zarażenia w rundzie pierwszej musiałby się powieść. 
 Ograniczmy teraz z dwóch stron $\mathbb{E}[Z]$. 
 Z dołu mamy
@@ -592,6 +595,7 @@ Ograniczenie to zdaje się nie być za dobre, czego przyczyną jest zapewne fakt
 
 Rozważmy drzewo $G = (V, E)$ oraz ustalony wierzchołek początkowy $s \in V$, który traktujemy jako korzeń drzewa. 
 Dla $v\in V$ oznaczmy $d_v=\mathrm{d}(s,v)$. 
+Niech $h$ będzie wysokością drzewa.
 Ustalmy wierzchołek $v$. 
 Skoro $G$ jest drzewem, to istnieje dokładnie jedna ścieżka od $s$ do $v$, powiedzmy $s,v_1,\dots,v_k, v$. 
 Ponieważ infekcja rozprzestrzenia się od korzenia $s$ wzdłuż krawędzi drzewa, każde zakażenie wymaga sukcesu w niezależnym doświadczeniu Bernoulliego o prawdopodobieństwie $p$.
@@ -636,12 +640,11 @@ Możemy zatem zmniejszyć granice sumowania:
 Oszacujmy teraz średni czas całkowity czas propagacji drzewa.
 Niech $L$ będzie zbiorem liści w $G$. 
 Wtedy mamy $Z = \max_{u\in L} X_{u}$.
+Zauważmy, że $h = \max_{u\in L} d_{u}$. 
 Z nierówności Jensena (\ref{inequality:Jensen}) otrzymujemy
 \[
-    \mathbb{E}[Z]=\mathbb{E}[\max_{u\in L} X_{u}] \ge \max_{u\in L} \mathbb{E}[X_{u}] = \max_{u\in L} \frac{d_{u}}{p} = \frac{h}{p}.
+    \mathbb{E}[Z]=\mathbb{E}\Big[\max_{u\in L} X_{u}\Big] \ge \max_{u\in L} \mathbb{E}[X_{u}] = \max_{u\in L} \frac{d_{u}}{p} = \frac{h}{p}.
 \]
-Zauważmy, że $\epsilon(s) = \max_{u\in L} d_{u}$ i jest to wysokość drzewa. 
-Oznaczmy ją przez $h$.
 Aby ograniczyć $\mathbb{E}[Z]$ z góry skorzystamy z \Cref{theorem:upper_bound_on_EZ}:
 \[
     \mathbb{E}[Z] \le h  + h \cdot \frac{\log(\frac{n-1}{h}) + 1}{\log(\frac{1}{1-p})}.
@@ -675,30 +678,7 @@ Dla wszystkich symulacji ustalmy $p=0.2$.
 Rozkłady zmiennej $Y_t$ oraz $Z$ będziemy ustalać dla grafów mających $100$ wierzchołków.
 Dla $Y_t$ będziemy wybierać $t$ zależne od konkretnej rodziny.
 Wartość oczekiwaną $Z$ będziemy wyznaczać dla liczby wierzchołków należących do $\{1,2,\dots,1000\}$.
-Korzystamy z \cref{algo:SI}
-
-Na początku oczywiście analizujemy grafy ścieżkowe.
-Dla tej rodziny zmienna $Y_t$ zachowuje się inaczej, jeśli $t<n$, a inaczej gdy $t\ge n$.
-Przewidywany czas całkowitej infekcji to $\frac{n}{p}$.
-Wyznaczmy rozkład dla wartości $t=r\cdot\frac{n}{p}$ dla $r\in\{0.1, 0.5, 0.8, 0.9\}$.
-Widzimy, że rozkłady są coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:SI_path_Yt}).
-Nie będziemy już wyznaczać wartości oczekiwanej $Y_t$.
-Rozkład $Z$ jest rozkładem ujemnym dwumianowym i jest dość dobrze znany.
-Nie będziemy zatem go sprawdzać.
-
-Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
-Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
-Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych (patrz \cref{fig:SI_star_Yt}).
-Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki (\cref{fig:SI_star_Z}).
-
-Następnie popatrzmy na grafy cykliczne.
-Skoro zachowują się one podobnie do grafów ścieżkowych, to zasymulujemy jedynie wartości oczekiwane zmiennej $Y_t$ dla $t=0.4\frac{n}{p}$ oraz $Z$.
-Wyniki te przedstawiono na \Cref{fig:SI_cycle_Z}.
-
-Na sam koniec popatrzmy na grafy pełnie.
-Wartość $\mathbb{E}[Z]$ powinna wraz z rozmiarem grafu zbiegać do liczby $2$.
-Aby się upewnić, że rzeczywiście tak jest, sprawdźmy to dla $p\in\{0.2, 0.1\}$.
-Jak widać na \Cref{fig:SI_complete_Z}, dla większych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
+Korzystamy z \Cref{algo:SI}.
 
 \begin{algorithm}
 \caption{Propagacja SI}
@@ -726,6 +706,29 @@ Jak widać na \Cref{fig:SI_complete_Z}, dla większych $n$ czas całkowitego poi
 \end{algorithmic}%
 \label{algo:SI}
 \end{algorithm}
+
+Na początku oczywiście analizujemy grafy ścieżkowe.
+Dla tej rodziny zmienna $Y_t$ zachowuje się inaczej, jeśli $t<n$, a inaczej gdy $t\ge n$.
+Przewidywany czas całkowitej infekcji to $\frac{n}{p}$.
+Wyznaczmy rozkład dla wartości $t=r\cdot\frac{n}{p}$ dla $r\in\{0.1, 0.5, 0.8, 0.9\}$.
+Widzimy, że rozkłady są coraz bardziej skoncentrowane na lewo, zgodnie z przewidywaniami (patrz \cref{fig:SI_path_Yt}).
+Nie będziemy już wyznaczać wartości oczekiwanej $Y_t$.
+Rozkład $Z$ jest rozkładem ujemnym dwumianowym i jest dość dobrze znany.
+Nie będziemy zatem go sprawdzać.
+
+Teraz przyjrzyjmy się grafom $\mathrm{S}_n$.
+Dla rozkładu $Y_t$ ustalmy $t=\lfloor \frac{\log(n)}{2p} \rfloor$.
+Widzimy, że wyniki niemal idealnie pokrywają się z oczekiwaniami teoretycznymi dla grafów gwiezdnych (patrz \cref{fig:SI_star_Yt}).
+Również wartości $\mathbb{E}[Z]$ są zbliżone to teoretycznej asymptotyki (\cref{fig:SI_star_Z}).
+
+Następnie popatrzmy na grafy cykliczne.
+Skoro zachowują się one podobnie do grafów ścieżkowych, to zasymulujemy jedynie wartości oczekiwane zmiennej $Y_t$ dla $t=0.4\frac{n}{p}$ oraz $Z$.
+Wyniki te przedstawiono na \Cref{fig:SI_cycle_Z}.
+
+Na sam koniec popatrzmy na grafy pełnie.
+Wartość $\mathbb{E}[Z]$ powinna wraz z rozmiarem grafu zbiegać do liczby $2$.
+Aby się upewnić, że rzeczywiście tak jest, sprawdźmy to dla $p\in\{0.2, 0.1\}$.
+Jak widać na \Cref{fig:SI_complete_Z}, dla większych $n$ czas całkowitego poinformowania grafu zbiega do $2$.
 
 \begin{figure}[ht!]
     \centering

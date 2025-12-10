@@ -12,7 +12,7 @@ Widzimy zatem, że $X_v$ ma rozkład umierający geometryczny:
 \]
 
 Przyjrzyjmy się teraz zmiennej $Y_t$.
-Zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$ a więc
+Zauważmy, że $\mathbb{P}[Y_t=2]=\mathbb{P}[X_v\le t]$, a więc
 \[
     \mathbb{P}[Y_t=2] = p\frac{1-q^t\beta^t}{1-q\beta}, \quad \mathbb{P}[Y_t=1]=1-p\frac{1-q^t\beta^t}{1-q\beta}.
 \]
@@ -20,9 +20,10 @@ Stąd
 \[
     \mathbb{E}[Y_t] = 1 + p\frac{1-q^t\beta^t}{1-q\beta}.
 \]
-Przechodząc w granicę $t\to\infty$ dostajemy
+Mamy $W=2$ jeśli wierzchołek $v$ zostanie kiedykolwiek zainfekowany.
+Stąd
 \[
-    \mathbb{P}[W=1]=1-\frac{p}{1-q\beta}, \quad \mathbb{P}[W=2] = \frac{p}{1-q\beta},
+    \mathbb{P}[W=2] = \mathbb{P}[X_v<\infty]=\frac{p}{1-q\beta}, \quad \mathbb{P}[W=1]=1-\frac{p}{1-q\beta},
 \]
 co oczywiście daje nam natychmiast
 \[
@@ -57,7 +58,7 @@ Ponadto dla $k\in\mathbb{N}$ zachodzi
 \begin{proof}
 Ustalmy $v\in V\setminus\{s\}$. 
 Jeśli po pierwszej rundzie źródło wyzdrowieje i nie przekaże dalej infekcji, to $X_v=\infty$.
-Zatem $\mathbb{P}[X_v=\infty]\ge \alpha q^{i_s} > 0$.
+Zatem $\mathbb{P}[X_v=\infty]\ge \alpha q^{n} > 0$.
 Jeśli rozważamy propagacje jako łańcuch Markova, to prawdopodobieństwo przejścia do stanu absorbującego, czyli $\mathcal{I}_t=\varnothing$, w czasie $t$ wynosi
 \[
     \alpha^{|\mathcal{I}_t|}\prod_{u\in \mathcal{I}_t} q^{|\mathrm{N}(u)\cap\mathcal{S}_t|}.
@@ -69,7 +70,7 @@ Zauważmy, że
     \lim_{t\to\infty} \mathbf{1}_{v\in\mathcal{I}_t\cup\mathcal{R}_t} \xrightarrow{\text{a.s}} \mathbf{1}_{X_v<\infty}.
 \]
 Ponadto $Y_t\le Y_{t+1}$ oraz $Y_t\le |V|$.
-A więc z Twierdzenia Lebesgue'a dostajemy wzory na rozkład i wartość oczekiwaną zmiennej $W$.
+A więc z Twierdzenia Lebesgue'a o zbieżności monotonicznej dostajemy wzory na rozkład i wartość oczekiwaną zmiennej $W$.
 \end{proof}
 
 
@@ -120,7 +121,7 @@ Niech $T_j$ oznacza czas przejścia ze stanu, w którym wierzchołek $j$ został
 Formalnie $T_j=\min\{t\in\mathbb{N}:i=X_j\land \neg (j\in\mathcal{I}_{t+i} \land j+1\in\mathcal{S}_{t+i})\}$.
 Wtedy $T_j\sim \mathrm{Geo}(1-q\beta)$, a ponadto $T_1,T_2,\dots$ są niezależne.
 Zauważmy, że jeśli $W<n$, to $Z=T_1+\cdots+T_W$, a gdy zaś $W=n$, to $Z=T_1+\cdots+T_{n-1}$.
-Zatem $Z=T_1+T_2+\cdots+T_{Q}$, gdzie $Q=\min\{W,n-1\}$.
+Zatem $Z=T_1+\cdots+T_{Q}$, gdzie $Q=\min\{W,n-1\}$.
 Będziemy potrzebować rozkładu i wartości oczekiwanej zmiennej $Q$.
 Możemy zapisać $Q=W-\mathbf{1}_{W=n}$, a wtedy
 \[
@@ -210,9 +211,9 @@ A więc całka wynosi
     = \frac{1}{a} \mathrm{B}\Big(n+1,\frac{b}{a}\Big) 
     = \frac{1}{a} \frac{\Gamma(n+1)\Gamma(\frac{b}{a})}{\Gamma(n+1+\frac{b}{a})} \\[0.3em]
     &=\frac{n!}{a} \cdot\frac{\Gamma(\frac{b}{a})}{(n+\frac{b}{a})(n-1+\frac{b}{a})\dots(\frac{b}{a})\Gamma(\frac{b}{a})} 
-    = \frac{n!}{b} \cdot \frac{1}{{(\frac{b}{a}+1)}_n}.
+    = \frac{n!}{b} \cdot \frac{1}{{(\frac{b}{a}+1)}_n},
 \end{align*}
-gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz ${(x)}_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammer'a.
+gdzie $\Gamma(x)$ jest funkcją Gamma, $\mathrm{B}(x,y)$ jest funkcją Beta oraz ${(x)}_n=x(x+1)\dots(x+n-1)$ jest symbolem Pochhammera.
 Ostatecznie otrzymujemy
 \[
     \mathbb{E}[Z] \approx \frac{1}{b} \cdot \Big(1 - \frac{n!}{{(\frac{b}{a}+1)}_n}\Big) = \frac{1}{\log(\beta)} \cdot \frac{n!}{{\big(\frac{\log(\beta)}{\log(q)}+1\big)}_n} - \frac{1}{\log(\beta)}.
@@ -226,13 +227,13 @@ Ustalmy $p=0.2$ oraz $\alpha=0.05$.
 Do przeprowadzenia eksperymentu posłuży nam \cref{algo:SIR}.
 Rozkłady wyznaczymy na grafach o $n=100$ wierzchołkach, natomiast wartości oczekiwane dla $n\in\{1,2,\dots,300\}$.
 
-Jeśli chodzi o rodzinę $\mathrm{P}_n$, to rozkład $W$ pokrywa się idealnie z przewidywaniami.
+Jeśli chodzi o rodzinę $\mathrm{P}_n$, to rozkład $W$ pokrywa się idealnie z przewidywaniami (\cref{fig:SIR_path_W}).
 Wartości oczekiwane zbiegają zgodnie z wyznaczonym wzorem.
-Podobnie mamy dla zmiennej losowej $Z$.
+Podobnie mamy dla zmiennej losowej $Z$ (\cref{fig:SIR_path_Z}).
 
-Dla grafów gwiazd rozkłady zarówno $W$ jak i $Z$ są dobrze przybliżone.
+Dla grafów gwiazd rozkłady zarówno $W$ jak i $Z$ są dobrze przybliżone (\cref{fig:SIR_star_W} oraz \cref{fig:SIR_star_Z}).
 Wartości oczekiwane $W$ są niemal idealnie dopasowane.
-Możemy zauważyć dobre przybliżenie na $\mathbb{E}[W]$.
+Możemy zauważyć dobre przybliżenie na $\mathbb{E}[Z]$.
 
 
 \begin{algorithm}

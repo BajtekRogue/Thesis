@@ -43,7 +43,7 @@ Natomiast
 \section{Rozkład umierający ujemny dwumianowy}
 
 Rozkład umierający ujemny dwumianowy jest wariantem rozkładu ujemnego dwumianowego, w którym doświadczenia mogą zostać przerwane z prawdopodobieństwem $\alpha\in(0;1)$ po każdej próbie.
-Zmienna $X$ ma rozkład umierający ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów próbach Bernoulliego, gdzie po każdej próbie proces może się zakończyć.
+Zmienna $X$ ma rozkład umierający ujemny dwumianowy, jeżeli opisuje liczbę prób Bernoulliego potrzebnych do uzyskania $m$ sukcesów w próbach Bernoulliego, gdzie po każdej próbie proces może się zakończyć.
 Jeśli proces zostanie zabity szybciej, niż zajdzie $m$ sukcesów, to przyjmujemy $X=\infty$.
 Oznaczamy $X\sim\mathrm{KNegBin}(m,p,\alpha)$.
 Dla wygody oznaczmy $q=1-p, \; \beta=1-\alpha$.
@@ -74,7 +74,7 @@ Dalej mamy
     = \sum_{k=m}^{\infty} \binom{k-1}{m-1} p^m {(q\beta)}^{k-m} 
     = p^m{(q\beta)}^{-m} \sum_{k=m}^{\infty} \binom{k-1}{m-1} {(q\beta)}^k \\
     &=p^m {(q\beta)}^{-m} \frac{{(q\beta)}^m}{{(1-q\beta)}^m} 
-    = \frac{p^m}{{(1-q\beta)}^m}.
+    = \frac{p^m}{{(1-q\beta)}^m},
 \end{aligned}    
 \end{equation*}
 co daje nam

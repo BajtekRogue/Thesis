@@ -1,5 +1,4 @@
 import numpy as np
-from tqdm import tqdm
 from utils import *
 from simulations import simulate_final_infection_SI, simulate_full_infection_time_SI
 from plotting import plot_Yt_distribution_SI, plot_Yt_expectation_SI, plot_Z_distribution_SI, plot_Z_expectation_SI
@@ -14,7 +13,7 @@ def compute_Yt_expectation_SI(graph_family, n, p, source, t_values, trials):
     graph = graph_constructor(graph_family, n)
     total_infection_count = np.zeros(len(t_values), dtype=float)
 
-    for idx, t in enumerate(tqdm(t_values)):
+    for idx, t in enumerate(t_values):
         result = simulate_final_infection_SI(graph, p, source, t, trials)
         total_infection_count[idx] = np.mean(result)
 
@@ -48,7 +47,7 @@ def main():
 
     theoretical = [theoretical_expectation_Z_SI("path", n_val, p) for n_val in n_values]
     means_full_infection = []
-    for n_val in tqdm(n_values):
+    for n_val in n_values:
         _, mean_full_infection = compute_Z_data_SI("path", n_val, p, source, trials=1000)
         means_full_infection.append(mean_full_infection)
     plot_Z_expectation_SI("path", n_values, means_full_infection, theoretical, "Z_expectation")
@@ -68,7 +67,7 @@ def main():
 
     theoretical = [theoretical_expectation_Z_SI("star", n_val, p) for n_val in n_values]
     means_full_infection = []
-    for n_val in tqdm(n_values):
+    for n_val in n_values:
         _, mean_full_infection = compute_Z_data_SI("star", n_val, p, source, trials=1000)
         means_full_infection.append(mean_full_infection)
     plot_Z_expectation_SI("star", n_values, means_full_infection, theoretical, "Z_expectation")
@@ -82,7 +81,7 @@ def main():
 
     theoretical = [theoretical_expectation_Z_SI("cycle", n_val, p) for n_val in n_values]
     means_full_infection = []
-    for n_val in tqdm(n_values):
+    for n_val in n_values:
         _, mean_full_infection = compute_Z_data_SI("cycle", n_val, p, source, trials=1000)
         means_full_infection.append(mean_full_infection)
     plot_Z_expectation_SI("cycle", n_values, means_full_infection, theoretical, "Z_expectation")
@@ -93,7 +92,7 @@ def main():
         print(f"p={p}")
         theoretical = [theoretical_expectation_Z_SI("complete", n_val, p) for n_val in n_values]
         means_full_infection = []
-        for n_val in tqdm(n_values):
+        for n_val in n_values:
             _, mean_full_infection = compute_Z_data_SI("complete", n_val, p, source, trials=100)
             means_full_infection.append(mean_full_infection)
         plot_Z_expectation_SI("complete", n_values, means_full_infection, theoretical, f"Z_expectation_p{p}")

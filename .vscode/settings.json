@@ -13,6 +13,9 @@
         "kolumnowo",
         "koronawirusa",
         "labelfont",
+        "matplotlib",
+        "networkx",
+        "numpy",
         "Pochhammer'a",
         "podgraf",
         "podgrafem",
@@ -25,11 +28,16 @@
         "ścieżkowego",
         "ścieżkowy",
         "ścieżkowych",
+        "scipy",
         "SEIR",
+        "SIRD",
+        "sympy",
+        "venv",
         "viralowe",
         "Wyznacznie",
         "zakaziciel",
         "zamodelowanie",
+        "zasymuluje",
         "zasymulujemy"
     ]
 }

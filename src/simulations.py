@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from tqdm import tqdm 
+
 
 def simulate_final_infection_SI(graph, p, source, t, trials):
     n = graph.number_of_nodes()

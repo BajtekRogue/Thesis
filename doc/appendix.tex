@@ -1,0 +1,41 @@
+\appendix
+\cleardoublepage
+\chapter*{Dodatek}
+\addcontentsline{toc}{chapter}{Dodatek}
+
+Ten dodatek zawiera opis kodu źródłowego użytego do przeprowadzenia symulacji propagacji oraz instrukcję jego uruchomienia.
+
+\section*{Struktura plików}
+\begin{itemize}
+    \item \texttt{utils.py} — konstrukcja grafów i wzory teoretyczne
+    \item \texttt{simulations.py} — algorytmy symulacji propagacji
+    \item \texttt{plotting.py} — generowanie wykresów
+    \item \texttt{main\_SI.py} — skrypt do symulacji w modelu SI
+    \item \texttt{main\_SIR.py} — skrypt do symulacji w modelu SIR
+    \item \texttt{main\_SIS.py} — skrypt do symulacji w modelu SIS
+\end{itemize}
+
+\section*{Wymagania}
+\begin{itemize}
+    \item System operacyjny: dowolny z obsługą Pythona (np. Linux Ubuntu 22.04, Windows 10/11)
+    \item Python 3.11
+    \item Menedżer pakietów pip
+    \item Pakiety Python: \texttt{numpy}, \texttt{matplotlib}, \texttt{networkx}, \texttt{scipy}, \texttt{sympy}
+\end{itemize}
+
+\section*{Uruchomienie skryptów}
+Aby uruchomić symulację, należy wykonać następujące kroki:
+\begin{enumerate}
+    \item Rozpakuj skompresowane pliki \texttt{*.py}.
+    \item Utwórz wirtualne środowisko w katalogu projektu: \texttt{python -m venv .venv}.
+    \item Aktywuj środowisko: Linux/macOS: \texttt{source .venv/bin/activate}, Windows (PowerShell): \texttt{.venv\textbackslash{}Scripts\textbackslash{}Activate.ps1}.
+    \item Zainstaluj wymagane biblioteki w aktywnym środowisku: 
+    \texttt{pip install numpy matplotlib networkx scipy sympy}.
+    \item Uruchom wybrany skrypt \texttt{python main\_*.py}.
+\end{enumerate}
+
+Program zasymuluje propagację w odpowiednim modelu, z konkretnymi parametrami.
+Następnie stworzy wykresy przedstawiające rozkłady i wartości oczekiwane zmiennych losowych omawianych w pracy.
+Pliki z wykresami automatycznie zapisują się w folderze \texttt{./img}.
+Parametry symulacji (rozmiar grafu, prawdopodobieństwa infekcji i wyzdrowienia, liczba iteracji)
+definiowane są bezpośrednio w plikach \texttt{main\_*.py}.

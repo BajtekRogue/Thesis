@@ -25,7 +25,7 @@ Zatem z Twierdzenia Lebesgue'a o zbieżności ograniczonej otrzymujemy
 
 Standardowo na pierwszy przykład grafu rozważamy graf o wierzchołkach $V=\{u,v\}$ i jednej krawędzi między nimi.
 Za wierzchołek początkowy przyjmijmy $u$.
-Istnieją cztery możliwe stany: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
+Istnieją cztery możliwe stany systemu: $\mathcal{I}_t=\varnothing, \; \mathcal{I}_t=\{u\}, \; \mathcal{I}_t=\{v\}, \; \mathcal{I}_t=\{u,v\}$. 
 Stan, w którym żaden wierzchołek nie jest zainfekowany, jest stanem absorbującym. 
 Ponadto, z każdego pozostałego stanu możemy przejść do dowolnego innego. 
 Rozkład $X_v$ będzie tutaj taki sam jak dla modelu SIR, a więc
@@ -104,7 +104,11 @@ Mamy więc
 \[
     \mathbb{E}[Z] = \sum_{t=0}^{\infty} \mathbb{P}[Z>t] = \sum_{t=0}^{\infty} \mathbf{1}^\top\mathbf{Q}^t \mathbf{z}_0 = \mathbf{1}^\top{(\mathbf{I}-\mathbf{Q})}^{-1} \mathbf{z}_0.
 \]
-Dalej:
+Macierz $\mathbf{P}$ ma jeden stan pochłaniający, a więc ma jeden trywialny rozkład stacjonarny.
+Co za tym idzie ma dokładnie jedną wartość własną $1$, która odpowiada wektorowi własnemu rozkładu stacjonarnego. 
+Po usunięciu wiersza z jedynym niezerowym elementem z pierwszej kolumny, dostajemy $\mathbf{Q}$, pozbywając się tej wartości własnej, przez co pozostałe wartości własne $\mathbf{Q}$ są mniejsze od $1$ co do modułu.
+Dlatego też ten szereg geometryczny jest zbieżny.
+Dalej
 \[
     {(\mathbf{I} - \mathbf{Q})}^{-1} = 
     \begin{bmatrix}
@@ -161,7 +165,7 @@ Możemy policzyć warunkową liczbę oczekiwanych zarażeń w $t+1$ kroku:
     \mathbb{E}[Y_{t+1}|Y_t=i]=\mathbb{E}[A_t+B_t]=i\beta+(n-i)(1-q^i).
 \]
 Oznaczmy $P_{i\to j}=\mathbb{P}[Y_{t+1}=j|Y_t=i]$ dla $j\in\{0,1,\dots,n\}$.
-Wtedy korzystając z \Cref{fact:sum_of_bin_RV_2} mamy
+Wtedy korzystając z \Cref{fact:sum_of_bin_RV_2}, mamy
 \[
     P_{i\to j} = \sum_{\ell=\max\{0,j-(n-i)\}}^{\min\{i,j\}} \binom{i}{\ell}\binom{n-i}{j-\ell}\beta^\ell\alpha^{i-\ell}{(1-q^i)}^{j-\ell}{(q^i)}^{n-i-(j-\ell)}.
 \]
@@ -194,7 +198,7 @@ Wartość oczekiwaną zmiennej $Y_t$ możemy obliczyć ze wzoru
 \[
     \mathbb{E}[Y_t] = \sum_{k=0}^{n} k\cdot \mathbf{y}_t^{(k)}.
 \]
-Macierz $\mathbf{P}$ jest kolumnowo stochastyczna, a więc
+Macierz $\mathbf{P}$ jest kolumnowo stochastyczna, a więc (\cref{theorem:infection_dies_out_SIS})
 \[
     \lim_{t\to\infty} \mathbf{P}^t = 
     \begin{bmatrix}

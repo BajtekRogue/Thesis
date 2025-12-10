@@ -238,6 +238,18 @@ Wtedy
 \]
 \end{fact}
 
+\begin{fact}[Centalne Twierdzenie Graniczne]\label{fact:CLT}
+Niech $X_1,X_2,\dots$ będzie ciągiem IID zmiennych losowych, takich że $\mathbb{E}[X_1]=\mu$ oraz $\mathrm{Var}[X_1]=\sigma^2<\infty$.
+Dla $n\in\mathbb{N}_+$ połóżmy $Y_n=X_1+\cdots+X_n$.
+Wówczas zachodzi zbieżność rozkładu
+\[
+    \frac{Y_n - n\mu}{\sigma \sqrt{n}} \xrightarrow{d} \mathcal{N}(0,1), \quad n \to \infty.
+\]
+W szczególności dla dużych $n$ rozkład $Y_n$ można przybliżyć zmienną normalną:
+\[
+    Y_n \approx \mathcal{N}(n\mu, n\sigma^2).
+\]
+\end{fact}
 
 \begin{summ}\label{summ:binomial_0}
 Niech $n\in\mathbb{N}$ oraz $x,y\in\mathbb{R}$. 

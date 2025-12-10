@@ -210,7 +210,6 @@ def plot_Z_distribution_SIS(samples, n, p, a, folder, title):
     plt.close()
 
 
-
 def plot_Z_expectation_SIS(n_values, means, theoretical, folder, title):
     plt.figure(figsize=(8, 5))
     plt.plot(n_values, means, 'o-', color='deeppink', linewidth=2, markersize=6, label='Symulacja')

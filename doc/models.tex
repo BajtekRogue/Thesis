@@ -21,17 +21,19 @@ I, & \text{jeśli } v = s,\\
 S, & \text{jeśli } v \neq s.
 \end{cases}
 \]
-W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$.  
+W każdej jednostce czasu dowolny zainfekowany wierzchołek może zarazić każdego swojego sąsiada z prawdopodobieństwem $p$, dla ustalonego $p \in (0;1)$. 
+Dla wygody będziemy oznaczać $q=1-p$. 
 Wierzchołek raz zainfekowany pozostaje w tym stanie na zawsze.  
 W modelu SI liczba zainfekowanych wierzchołków jest funkcją niemalejącą w czasie.  
-Dla uproszczenia notacji kładziemy 
+Dla $t\in\mathbb{N}_+$ definiujemy następujące zbiory:
 \[
-    q=1-p,\quad \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}, \quad i_v=|\mathrm{N}(v) \cap \mathcal{I}_t|.
+    \mathcal{S}_t=\{v\in V: \mathbf{X}_t(v) = S\}, \quad \mathcal{I}_t=\{v\in V: \mathbf{X}_t(v) = I\}
 \]
+Dalej dla uproszczenia notacji kładziemy $i(t,v)=|\mathrm{N}(v) \cap \mathcal{I}_t|$.
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i(t,v)}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i(t,v)}, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = 0, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = 1.
 \end{align*}
@@ -67,9 +69,9 @@ Wyznacznie rozkładu $Z$ oraz jej wartości oczekiwanej dla konkretnych rodzin g
 \begin{tikzpicture}[scale=1.5, node distance=3cm]
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
-    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i(t,v)}$} (S);
     \draw[->, thick, loop above] (I) to node[above] {$1$} (I);
-    \draw[->, thick] (S) to node[above] {$1-q^{i_v}$} (I);
+    \draw[->, thick] (S) to node[above] {$1-q^{i(t,v)}$} (I);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SI.}
 \label{fig:diag_SI}
@@ -83,17 +85,18 @@ Stanem tym jest $R$ (Recovered).
 W tym modelu mamy $\mathcal{Q} = \{S, I, R\}$.  
 Stan $R$ jest pochłaniający —  wierzchołek, który wyzdrowiał, nie może już ani się zarazić, ani nikogo zakazić.  
 Zarażony wierzchołek może przejść z $I$ do stanu $R$ z prawdopodobieństwem $\alpha \in (0;1)$.  
+Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.
 Przyjmujemy, że w każda runda odbywa się w dwóch etapach.
 W pierwszym z nich wierzchołki przekazują infekcje.
 W drugim z nich te, które były już wcześnie zainfekowane, mogą wyzdrowieć.
-Dla uproszczenia notacji kładziemy 
+Dodatkowo definiujemy zbiory
 \[
-    \beta=1-\alpha,\quad \mathcal{R}_t=\{v\in V: \mathbf{X}_t(v) = R\}.
+    \mathcal{R}_t=\{v\in V: \mathbf{X}_t(v) = R\}.
 \]
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i(t,v)}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i(t,v)}, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = R \mid \mathbf{X}_t(v) = S] = 0, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = 0, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = \beta, \\[0.3em]
@@ -136,10 +139,10 @@ Rozkłady $Z,W$ oraz ich wartości oczekiwane będą naszym głównym obiektem z
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (R) [right of=I] {$R$};
-    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i(t,v)}$} (S);
     \draw[->, thick, loop above] (I) to node[above] {$\beta$} (I);
     \draw[->, thick, loop above] (R) to node[above] {$1$} (R);
-    \draw[->, thick] (S) to node[above] {$1-q^{i_v}$} (I);
+    \draw[->, thick] (S) to node[above] {$1-q^{i(t,v)}$} (I);
     \draw[->, thick] (I) to node[above] {$\alpha$} (R);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SIR.}
@@ -151,9 +154,9 @@ Rozkłady $Z,W$ oraz ich wartości oczekiwane będą naszym głównym obiektem z
 
 Model \textbf{Susceptible-Infected-Susceptible (SIS)} rozszerza model SI o powracanie wierzchołków zarażonych do stanu podatnego.  
 Wierzchołek zainfekowany może powrócić do stanu podatnego z prawdopodobieństwem $\alpha \in (0;1)$.  
+Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.  
 Tutaj, tak jak w SI, mamy $\mathcal{Q} = \{S, I\}$.  
 W modelu SIS liczba zainfekowanych wierzchołków może oscylować w czasie i nie musi osiągnąć stanu pełnego zakażenia.  
-Dla uproszczenia notacji kładziemy $\beta=1-\alpha$.  
 Każda runda składa się z dwóch faz.
 W pierwszej z nich wierzchołki zarażone próbują przekazać infekcje.
 Natomiast w drugiej, te zarażone wierzchołki, które były juz zarażone przed fazą pierwszą, mogą powrócić do stanu podatności.
@@ -161,8 +164,8 @@ Jest to odzwierciedlenie naturalnego stanu rzeczy.
 Jeśli ktoś zostanie zakażony chorobą, to nie może wyzdrowieć szybciej niż jego zakaziciel.  
 Rozkład prawdopodobieństwa w tym modelu jest definiowany przez następujące zależności:
 \begin{align*}
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i_v}, \\[0.3em]
-&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i_v}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = S] = q^{i(t,v)}, \\[0.3em]
+&\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = S] = 1 - q^{i(t,v)}, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = S \mid \mathbf{X}_t(v) = I] = \alpha, \\[0.3em]
 &\mathbb{P}[\mathbf{X}_{t+1}(v) = I \mid \mathbf{X}_t(v) = I] = \beta.
 \end{align*}
@@ -192,9 +195,9 @@ Jeśli chodzi o zmienną $Z$, to przyjrzyjmy się zarówno jej rozkładowi, jak 
 \begin{tikzpicture}[scale=1.5, node distance=3.5cm]
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (S) {$S$};
     \node[circle, draw, thick, inner sep=8pt, minimum size=20pt] (I) [right of=S] {$I$};
-    \draw[->, thick, loop above] (S) to node[above] {$q^{i_v}$} (S);
+    \draw[->, thick, loop above] (S) to node[above] {$q^{i(t,v)}$} (S);
     \draw[->, thick, loop above] (I) to node[above] {$\beta$} (I);
-    \draw[->, thick, bend left=30] (S) to node[above] {$1-q^{i_v}$} (I);
+    \draw[->, thick, bend left=30] (S) to node[above] {$1-q^{i(t,v)}$} (I);
     \draw[->, thick, bend left=30] (I) to node[below] {$\alpha$} (S);
 \end{tikzpicture}
 \caption{Diagram przejść dla modelu SIS.}

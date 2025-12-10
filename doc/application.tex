@@ -17,7 +17,7 @@ Stan $S$ reprezentuje urządzenia podatne na infekcję, a $I$ te już zainfekowa
 
 Dla komputera $v \in V$ zmienna $X_v$ określa po jakim czasie zostanie on zainfekowany.
 W kontekście działań obronnych można priorytetyzować te urządzenia o mniejszej wartości $\mathbb{E}[X_v]$.
-Zmienna $Y_t$ określa, ile komputerów jest zainfekowanych w chwili $t$.
+Zmienna $Y_t$ określa, ile komputerów jest zainfekowanych w chwili $t\in\mathbb{N}$.
 Jej rozkład pokazuje, czy atak rozwija się szybko, czy powoli.
 Wartość $Z$ to moment, w którym cała infrastruktura zostaje skompromitowana.
 Wartość oczekiwana $\mathbb{E}[Z]$ wskazuje średni czas, jaki administrator ma na reakcję, zanim straci kontrolę nad całą siecią.
@@ -33,7 +33,7 @@ To bardziej realistyczne założenie w kontekście nowoczesnych systemów, gdzie
 Istnieje możliwość, że wirus wygaśnie zanim dotrze do wszystkich węzłów.
 
 Zmienna $X_v$ nadal określa czas zarażenia $v$.
-Do strefy dużego ryzyka należą urządzenia z dużą wartością $\mathbb{P}[X_v=\infty]$.
+Do strefy dużego ryzyka należą urządzenia z dużą wartością $\mathbb{P}[X_v<\infty]$.
 W tym modelu $Y_t$ jest zdefiniowana jako liczba komputerów, które nie są już w stanie podatnym.
 Wraz z czasem zmienna ta stabilizuje się, osiągając wartość równą $W$.
 Zmienna $W$ określa całkowitą liczbę komputerów, które zostały zainfekowane w trakcie całej epidemii.
